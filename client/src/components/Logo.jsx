@@ -1,7 +1,9 @@
-import {Box, Typography} from 'react';
+import {Box, Typography} from '@mui/material';
 
 export default function Logo(){
-    <Box variant="div">
-        <Typography variant="h4">Logo</Typography>
-    </Box>
+    return(
+        <Box variant="div">
+            <Typography variant="h4">Logo</Typography>
+        </Box>
+    );
 }

@@ -8,10 +8,14 @@ const StyledCartItem = styled('div')( ({theme}) => ({
     display: "flex",
     alignItems:"center",
     overflowY:"auto",
-    padding: theme.spacing(1)
 }));
 
-export default function CartItem({title, color, }){
+export default function CartItem({
+     title,
+     color,
+     quantity,
+     cost
+}){
     return (
         <StyledCartItem>
             <ProductImage />
@@ -22,7 +26,7 @@ export default function CartItem({title, color, }){
                 <Typography variant="body2">
                     {color}
                 </Typography>
-                <ProductControls />
+                <ProductControls quantity={quantity} />
             </Box>
             <Typography variant="subtitle2">
                 {cost}

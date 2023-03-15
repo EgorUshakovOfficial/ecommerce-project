@@ -1,7 +1,7 @@
 import {Box, Button} from '@mui/material';
 
 export default function NavLink({name, icon}){
-    <Box>
+    return (
         <Button
             disableRipple
             color="inherit"
@@ -12,5 +12,5 @@ export default function NavLink({name, icon}){
         >
             {name}
         </Button>
-    </Box>
+    );
 }

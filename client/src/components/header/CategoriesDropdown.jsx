@@ -1,4 +1,4 @@
-import {Box, Menu, MenuItem} from '@mui/material';
+import {Button, Menu, MenuItem} from '@mui/material';
 import {Fragment, useState} from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
@@ -6,7 +6,7 @@ export default function CategoriesDropdown(){
     // Anchor element
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const openMenu = (anchor !== null);
+    const openMenu = (anchorEl !== null);
 
     const handleClick = event => setAnchorEl(event.currentTarget);
 

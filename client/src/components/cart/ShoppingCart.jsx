@@ -1,11 +1,11 @@
 import {Fragment, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {Drawer, Button, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
+import {styled} from '@mui/material/styles';
+import CartItem from './CartItem';
+import {cartItems} from '../../data/mock/cartItems';
 import { DRAWER_WIDTH } from '../../data/constants/cartConstants';
-
-
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -16,8 +16,24 @@ const DrawerHeader = styled('div')(({theme}) => ({
     justifyContent:"space-between"
 }));
 
-// Cart content
-
+// Cart shopping items
+const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})
+(({theme, open}) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+    }),
+    marginRight: -DRAWER_WIDTH,
+    ...(open && {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen
+        }),
+        marginRight: 0
+    })
+}));
 
 export default function ShoppingCart(){
     const [openCart, setOpenCart] = useState(false);
@@ -53,11 +69,15 @@ export default function ShoppingCart(){
                         disableRipple
                         color="inherit"
                         size="medium"
-                        onClick={handleCarClose}
+                        onClick={handleCartClose}
                     >
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
+                <Main>
+                    {cartItems.length === 0 && <Typography variant="body2">Cart is empty</Typography>}
+                    {cartItems.map(product => <CartItem {...product} />)}
+                </Main>
             </Drawer>
         </Fragment>
     )

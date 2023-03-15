@@ -1,6 +1,7 @@
 import {Box} from '@mui/material';
 
-import image from '../assets/images/headphone.jpg';
+
+import image from '../../assets/images/headphone.jpg';
 
 const style = {width: 100, height: 100};
 
