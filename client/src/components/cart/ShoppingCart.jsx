@@ -4,7 +4,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
 import CartItem from './CartItem';
-import {cartItems} from '../../data/mock/cartItems';
+import {cartItems} from '../../mock/cartItems';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({

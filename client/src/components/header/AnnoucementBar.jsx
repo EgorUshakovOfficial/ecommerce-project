@@ -1,5 +1,5 @@
 import {Typography} from '@mui/material';
-export default function Banner(){
+export default function AnnoucementBar(){
     return(
         <Typography
             variant="subtitle1"
