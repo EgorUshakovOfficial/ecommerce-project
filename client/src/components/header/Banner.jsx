@@ -26,7 +26,7 @@ export default function Banner(){
                         marginBottom="0.5em"
                         fontWeight="600"
                     >
-                        Grab Upto 50% Off On <br />Selected Headphone
+                        Grab Upto 50% Off On Selected Headphone
                     </Typography>
                     <Button
                     disableRipple

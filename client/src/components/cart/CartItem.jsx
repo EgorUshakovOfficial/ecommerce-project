@@ -17,14 +17,14 @@ const StyledCartItem = styled('div')( ({theme}) => ({
 
 export default function CartItem({
      id,
-     title,
+     name,
      color,
      quantity,
      cost
 }){
     return (
         <StyledCartItem id={id}>
-            <ProductImage />
+            <ProductImage style={{width:"auto", height:PRODUCT_IMAGE_HEIGHT}} />
             <Box
                 display="flex"
                 flexDirection="column"
@@ -33,7 +33,7 @@ export default function CartItem({
                 gap="0.25em"
             >
                 <Typography variant="subtitle1" >
-                    {title}
+                    {name}
                 </Typography>
                 <Typography variant="body2">
                     {color}
