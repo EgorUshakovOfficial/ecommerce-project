@@ -5,7 +5,7 @@ import { bgColor } from '../../data/styles/colors';
 
 // Styled banner wrapper
 const BannerWrapper = styled('div')(({theme}) => ({
-    padding: theme.spacing(4, 16),
+    padding: theme.spacing(4, 0),
 }));
 
 // Styled banner

@@ -9,7 +9,6 @@ import ShoppingCart from '../../cart/ShoppingCart';
 
 const StyledNav = styled('nav')(({theme}) => ({
     position: "relative",
-    padding: theme.spacing(2, 16),
     display: "flex",
     alignItems:"center",
     justifyContent:"space-between"
