@@ -55,7 +55,7 @@ export default function Product({
             <Button
                 disableRipple
                 variant="outlined"
-                style={{borderRadius:"0.5em", }}
+                style={{borderRadius:"0.5em", textTransform:"none"}}
                 color="inherit"
                 onClick={() => {}}
             >

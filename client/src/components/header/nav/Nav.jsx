@@ -11,7 +11,8 @@ const StyledNav = styled('nav')(({theme}) => ({
     position: "relative",
     display: "flex",
     alignItems:"center",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    padding: theme.spacing(2, 0)
 }));
 
 export default function Nav(){
