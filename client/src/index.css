@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#search-bar{
+  width: 300px;
+  padding-inline:1em;
+  transition: width 0.75s ease-in-out;
+}
+
+#search-bar:focus{
+  width: 700px;
+  outline: none;
+}
+

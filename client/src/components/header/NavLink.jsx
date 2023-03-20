@@ -4,9 +4,13 @@ export default function NavLink({name, icon}){
     return (
         <Button
             disableRipple
-            color="inherit"
-            variant="text"
-            size="medium"
+            style={{
+                color:"inherit",
+                variant:"text",
+                background:"transparent",
+                textTransform:"none",
+                fontSize:"1em"
+            }}
             href="#"
             endIcon={icon}
         >

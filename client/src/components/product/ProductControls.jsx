@@ -4,8 +4,14 @@ import SubtractIcon from '@mui/icons-material/Remove';
 
 export default function ProductControls({quantity}){
     return (
-        <Box>
-            <IconButton>
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            gap="0.5em"
+            minHeight="100"
+        >
+            <IconButton disableRipple>
                 <SubtractIcon />
             </IconButton>
             <Typography
@@ -14,7 +20,7 @@ export default function ProductControls({quantity}){
             >
                 {quantity}
             </Typography>
-            <IconButton>
+            <IconButton disableRipple>
                 <AddIcon />
             </IconButton>
         </Box>
