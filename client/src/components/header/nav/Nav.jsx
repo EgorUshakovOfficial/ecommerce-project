@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import {styled} from '@mui/material';
-import Logo from '../Logo';
+import Logo from '../../Logo';
 import SearchBar from './SearchBar';
 import {Box} from '@mui/material';
 import CategoriesDropdown from './CategoriesDropdown';
 import NavLink from './NavLink';
-import ShoppingCart from '../cart/ShoppingCart';
+import ShoppingCart from '../../cart/ShoppingCart';
 
 const StyledNav = styled('nav')(({theme}) => ({
     position: "relative",

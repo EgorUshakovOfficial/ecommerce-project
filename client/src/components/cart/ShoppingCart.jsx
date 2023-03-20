@@ -81,26 +81,31 @@ export default function ShoppingCart(){
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                <Main>
-                    {cartItems.length === 0 && <Typography variant="body2">Cart is empty</Typography>}
-                    {cartItems.map(product => <CartItem {...product} />)}
-                </Main>
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                >
-                    <Typography variant="h6" fontWeight="600">Total</Typography>
-                    <Typography variant="h6">60.00</Typography>
-                </Box>
-                <Button
-                    disableRipple
-                    variant="contained"
-                    color="success"
-                    sx={{mb:"0.5em"}}
-                >
-                    Check out
-                </Button>
+
+                {cartItems.length > 0 ?
+                <Fragment>
+                    <Main>
+                        {cartItems.map(product => <CartItem key={product.id} {...product} />)}
+                    </Main>
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Typography variant="h6" fontWeight="600">Total</Typography>
+                        <Typography variant="h6">60.00</Typography>
+                    </Box>
+                    <Button
+                        disableRipple
+                        variant="contained"
+                        color="success"
+                        sx={{mb:"0.5em"}}
+                    >
+                        Check out
+                    </Button>
+                </Fragment>
+                :
+                <Typography>Cart is currently empty</Typography>}
             </Drawer>
         </Fragment>
     )

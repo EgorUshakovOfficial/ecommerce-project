@@ -16,13 +16,14 @@ const StyledCartItem = styled('div')( ({theme}) => ({
 }));
 
 export default function CartItem({
+     id,
      title,
      color,
      quantity,
      cost
 }){
     return (
-        <StyledCartItem>
+        <StyledCartItem id={id}>
             <ProductImage />
             <Box
                 display="flex"
