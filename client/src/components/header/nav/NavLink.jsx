@@ -9,7 +9,8 @@ export default function NavLink({name, icon}){
                 variant:"text",
                 background:"transparent",
                 textTransform:"none",
-                fontSize:"1em"
+                fontSize:"1em",
+                fontWeight:"600"
             }}
             href="#"
             endIcon={icon}

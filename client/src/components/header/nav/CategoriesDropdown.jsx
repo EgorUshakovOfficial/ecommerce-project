@@ -21,6 +21,8 @@ export default function CategoriesDropdown(){
             <Button
                 disableRipple
                 color="inherit"
+                style={{fontWeight:"600"}}
+                fontWeight="600"
                 size="medium"
                 onClick={handleClick}
                 aria-controls={openMenu ? 'categories-menu' : undefined}
