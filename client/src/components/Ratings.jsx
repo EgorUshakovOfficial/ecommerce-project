@@ -7,7 +7,7 @@ export default function Ratings({numReviews, avgRating}){
             alignItems="center"
             gap="0.5em"
         >
-            <Rating name="product-review" value={avgRating} readOnly />
+            <Rating name="product-review" value={4} readOnly />
             <Typography variant="caption">({numReviews})</Typography>
         </Box>
     )
