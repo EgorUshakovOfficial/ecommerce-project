@@ -1,8 +1,8 @@
 import {Box, Button, IconButton, Typography} from '@mui/material';
 import {FavoriteBorder} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
-import ProductImage from "../../../components/product/ProductImage";
-import ProductRatings from '../../../components/Ratings';
+import ProductImage from "./ProductImage";
+import ProductRatings from '../Ratings';
 
 // Styled product div
 const ProductDiv = styled('div')( ({theme}) => ({
