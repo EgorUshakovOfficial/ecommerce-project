@@ -1,5 +1,5 @@
 import {Fragment} from 'react';
-import {Container} from '@mui/material';
+import {Container} from '../containers';
 import {AnnouncementBar, Header, ProductCarousel} from '../components';
 import {Filters, ProductSection} from '../features/gallery';
 
@@ -7,7 +7,7 @@ export default function HomePage(){
     return (
         <Fragment>
             <AnnouncementBar />
-            <Container maxWidth="xl">
+            <Container>
                 <Header />
                 <Filters />
                 <ProductSection />
