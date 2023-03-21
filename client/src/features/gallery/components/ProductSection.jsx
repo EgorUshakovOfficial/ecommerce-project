@@ -2,7 +2,7 @@ import {Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {cartItems} from '../../../mock/cartItems'
 import {Section} from '../../../containers';
-import Product from '../../../components/product/Product';
+import {Product} from '../../../components';
 
 // Product gallery
 const ProductGallery = styled('div')({
