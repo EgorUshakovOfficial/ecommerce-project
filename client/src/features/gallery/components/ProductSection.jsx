@@ -1,6 +1,7 @@
 import {Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {cartItems} from '../../../mock/cartItems'
+import {Section} from '../../../containers';
 import Product from '../../../components/product/Product';
 
 // Product gallery
@@ -12,7 +13,7 @@ const ProductGallery = styled('div')({
 
 export default function ProductSection(){
     return (
-        <section id="product-gallery-section">
+        <Section id="product-gallery-section">
             <Typography
                 variant="h4"
                 fontWeight="600"
@@ -33,6 +34,6 @@ export default function ProductSection(){
                     return <Product {...productInfo} />
                 })}
             </ProductGallery>
-        </section>
+        </Section>
     )
 }
