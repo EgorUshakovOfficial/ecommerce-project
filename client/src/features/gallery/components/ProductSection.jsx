@@ -22,17 +22,7 @@ export default function ProductSection(){
                 Headphones For You!
             </Typography>
             <ProductGallery>
-                {cartItems.map(product => {
-                    // Product information-title, cost, and description
-                    const productInfo = {
-                        id:product.id,
-                        name: product.name,
-                        description: product.description,
-                        cost: product.cost
-                    };
-
-                    return <Product {...productInfo} />
-                })}
+                {cartItems.map(product => <Product {...product} />)}
             </ProductGallery>
         </Section>
     )

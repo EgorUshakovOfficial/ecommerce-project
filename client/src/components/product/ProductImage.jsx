@@ -1,7 +1,6 @@
 import {Box} from '@mui/material';
-import image from '../../assets/images/headphone.jpg';
 
-export default function ProductImage({style}){
+export default function ProductImage({image, style}){
     return (
         <Box
             style={style}
@@ -10,7 +9,7 @@ export default function ProductImage({style}){
                 style={{
                     width:"100%",
                     height:"100%",
-                    objectFit:"cover"
+                    objectFit:"contain"
                 }}
                 loading="lazy"
                 alt="Picture of headphones"

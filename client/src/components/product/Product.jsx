@@ -19,7 +19,8 @@ export default function Product({
     id,
     name,
     cost,
-    description
+    description,
+    image
 }){
     return (
         <ProductDiv>
@@ -30,7 +31,7 @@ export default function Product({
                 display="flex"
                 justifyContent="center"
             >
-                <ProductImage style={{width:250, height:"auto"}} />
+                <ProductImage image={image} style={{width:250, height:250}} />
                 <IconButton
                     style={{
                         position:"absolute",
