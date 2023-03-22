@@ -1,5 +1,5 @@
 import {Fragment} from 'react';
-import {Box} from '@mui/material';
+import { Box } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container, Section} from '../containers';
 import {AnnouncementBar, Nav} from '../components';
@@ -23,17 +23,19 @@ export default function ProductPage({
             <AnnouncementBar />
             <Container>
                 <Nav />
-                <ProductContainer>
-                    <ImageGallery />
-                    <Content
-                        name={name}
-                        description={description}
-                        monthlyPrice={monthlyPrice}
-                        yearlyPrice={yearlyPrice}
-                        numReviews={numReviews}
-                        avgRating={avgRating}
-                    />
-                </ProductContainer>
+                <Section>
+                    <ProductContainer>
+                        <ImageGallery />
+                        <Content
+                            name={name}
+                            description={description}
+                            monthlyPrice={monthlyPrice}
+                            yearlyPrice={yearlyPrice}
+                            numReviews={numReviews}
+                            avgRating={avgRating}
+                        />
+                    </ProductContainer>
+                </Section>
             </Container>
         </Fragment>
     )

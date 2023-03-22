@@ -6,20 +6,23 @@ const ControlContainer = styled('div')({
     display:"grid",
     gridTemplateRows:"repeat(2, 1fr)",
     gridTemplateColumns:"repeat(2, 1fr)",
-    gap:"0.5em"
+    gap:"0.5em",
 });
 
 export default function Controls({quantity}){
     return (
         <ControlContainer>
-            <ProductControls />
-            <Typography variant="caption" lineHeight="1.5">
-                Only <span class="bold">{quantity}</span> Left!<br />
+            <ProductControls quantity={1} />
+            <Typography variant="body1" lineHeight="1.5">
+                Only <Typography variant="span" fontWeight="600">{quantity} item</Typography> Left!<br />
                 Don't miss it
             </Typography>
             <Button
                 disableRipple
-                color="inherit"
+                style={{
+                    color:"white",
+                    background:"black"
+                }}
                 variant="contained"
                 size="large"
             >

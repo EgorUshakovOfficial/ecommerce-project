@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Tooltip, Box, Typography} from '@mui/material';
+import {Tooltip, RadioGroup, Radio, Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
 // Colors
@@ -19,35 +19,50 @@ const ColorContainer = styled('div')(({theme}) => ({
 }));
 
 export default function Colors(){
-    // Active state
-    const [active, setActive] = useState("Red");
+    // Selected color
+    const [selectedColor, setSelectedColor] = useState("Red");
 
-    // Handle color on click
-    const handleColorOnClick = event => setActive(event.target.value);
+    // Handle selected color on click
+    const handleClick = event => setSelectedColor(event.target.getAttribute('value'));
 
     return (
-        <Box>
-            <Typography variant="subtitle1" gutterBottom>Choose a Color</Typography>
+        <Box
+            pb="2em"
+            borderBottom="1px solid lightgray"
+        >
+            <Typography
+                variant="h5"
+                fontWeight="600"
+                gutterBottom
+            >
+                Choose a Color
+            </Typography>
             <ColorContainer>
                 {colors.map( ({color, hexCode}) => (
                     <Tooltip title={color}>
                         <Box
-                            onClick={handleColorOnClick}
-                            sx={{
-                                value: color,
-                                style:{
-                                    background:hexCode,
-                                    height:64,
-                                    width:64,
-                                    borderRadius:"50%",
-                                    border: (active === color)
-                                    ? "1px solid black": "none"
-                                }
+                            style={{
+                                padding:"0.25em",
+                                border:(selectedColor == color) ?
+                                    "1px solid black": "none",
+                                borderRadius:"50%"
                             }}
-                        />
-                    </Tooltip>
-                ))}
-            </ColorContainer>
+                        >
+                            <Box
+                                value={color}
+                                onClick={handleClick}
+                                style={{
+                                    cursor:"pointer",
+                                    background:hexCode,
+                                    height:40,
+                                    width:40,
+                                    borderRadius:"50%"
+                                }}
+                            />
+                        </Box>
+                    </Tooltip>)
+                )}
+             </ColorContainer>
         </Box>
     )
 };

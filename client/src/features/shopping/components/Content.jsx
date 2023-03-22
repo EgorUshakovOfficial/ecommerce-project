@@ -8,8 +8,7 @@ import Controls from './Controls';
 const ContentContainer = styled('div')({
     display:"flex",
     flexDirection:"column",
-    justifyContent:"center",
-    gap:"0.5em"
+    gap:"2em"
 });
 
 export default function Content({
@@ -24,40 +23,43 @@ export default function Content({
         <ContentContainer>
             <Box>
                 <Typography
-                    variant="h4"
+                    variant="h3"
                     fontWeight="600"
                     gutterBottom
                 >
                     {name}
                 </Typography>
                 <Typography
-                    variant="subtitle2"
-                    style={{color:"gray"}}
+                    variant="body1"
+                    color="gray"
                     gutterBottom
                 >
                     {description}
                 </Typography>
+                <Ratings numReviews={numReviews} avgRating={avgRating} />
             </Box>
-            <Ratings
-                numReviews={numReviews}
-                avgRating={avgRating}
-            />
             <Box
-                display="flex"
-                flexDirection="column"
-                gap="0.25em"
-            >
+                pt="2em"
+                pb="2em"
+                borderTop="1px solid lightgray"
+                borderBottom="1px solid lightgray"
+             >
                 <Typography
-                    variant="h5"
+                    variant="h4"
                     fontWeight="600"
                     gutterBottom
                 >
                     ${yearlyPrice} or {monthlyPrice}/month
                 </Typography>
-                <Typography variant="caption">Suggested payments with 6 months financing</Typography>
+                <Typography
+                    variant="body1"
+                    color="gray"
+                >
+                    Suggested payments with 6 months financing
+                </Typography>
             </Box>
             <Colors />
-            <Controls />
+            <Controls quantity={1} />
         </ContentContainer>
     )
 }
