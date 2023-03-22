@@ -18,7 +18,7 @@ export default function ProductControls({quantity}){
                 variant="subtitle1"
                 align="center"
             >
-                {quantity}
+                1
             </Typography>
             <IconButton disableRipple>
                 <AddIcon />

@@ -14,10 +14,11 @@ const ContentContainer = styled('div')({
 export default function Content({
     name,
     description,
-    yearlyPrice,
-    monthlyPrice,
+    cost,
+    halfMonthlyPrice,
+    quantity,
     numReviews,
-    avgRating
+    avgRating,
 }){
     return (
         <ContentContainer>
@@ -49,7 +50,7 @@ export default function Content({
                     fontWeight="600"
                     gutterBottom
                 >
-                    ${yearlyPrice} or {monthlyPrice}/month
+                    ${cost} or {halfMonthlyPrice}/month
                 </Typography>
                 <Typography
                     variant="body1"
@@ -59,7 +60,7 @@ export default function Content({
                 </Typography>
             </Box>
             <Colors />
-            <Controls quantity={1} />
+            <Controls quantity={quantity} />
         </ContentContainer>
     )
 }

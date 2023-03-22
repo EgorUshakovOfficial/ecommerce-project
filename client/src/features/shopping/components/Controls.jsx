@@ -12,7 +12,7 @@ const ControlContainer = styled('div')({
 export default function Controls({quantity}){
     return (
         <ControlContainer>
-            <ProductControls quantity={1} />
+            <ProductControls quantity={quantity} />
             <Typography variant="body1" lineHeight="1.5">
                 Only <Typography variant="span" fontWeight="600">{quantity} item</Typography> Left!<br />
                 Don't miss it

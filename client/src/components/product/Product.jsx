@@ -1,6 +1,7 @@
-import {Box, Button, IconButton, Typography} from '@mui/material';
+import {Box, IconButton, Typography} from '@mui/material';
 import {FavoriteBorder} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
+import Button from '../Button';
 import ProductImage from "./ProductImage";
 import ProductRatings from '../Ratings';
 
@@ -58,7 +59,7 @@ export default function Product({
                 variant="outlined"
                 style={{borderRadius:"0.5em", textTransform:"none"}}
                 color="inherit"
-                onClick={() => {}}
+                href={`/product-page/${id}`}
             >
                 Add to Cart
             </Button>

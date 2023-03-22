@@ -1,4 +1,3 @@
-import {Fragment} from 'react';
 import {
     BrowserRouter as Router,
     Routes,
@@ -11,7 +10,7 @@ export default function App(){
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/product-page" element={
+                <Route path="/product-page/:productId" element={
                     <ProductPage
                         name="Airpods- Max"
                         description="a perfect balance of exhiliarating high-fidelity audio and the effortless magic of AirPods"

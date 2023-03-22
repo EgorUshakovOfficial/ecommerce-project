@@ -1,9 +1,14 @@
 import {Fragment} from 'react';
+import {useParams} from 'react-router-dom';
 import { Box } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container, Section} from '../containers';
 import {AnnouncementBar, Nav} from '../components';
 import { ImageGallery, Content} from "../features/shopping";
+import { calculateHalfCost } from '../helper';
+
+// Mock data (replace with context API)
+import {cartItems as products} from '../mock/cartItems';
 
 const ProductContainer = styled(Box)({
     display:"flex",
@@ -18,6 +23,13 @@ export default function ProductPage({
     numReviews,
     avgRating
 }){
+
+    // Url parameters
+    const {productId} = useParams();
+
+    // Specified product
+    const product = products.filter(product => product.id == productId)[0];
+
     return (
         <Fragment>
             <AnnouncementBar />
@@ -25,14 +37,18 @@ export default function ProductPage({
                 <Nav />
                 <Section>
                     <ProductContainer>
-                        <ImageGallery />
+                        <ImageGallery
+                            mainImage={product.image}
+                            otherImages={product.otherImages}
+                        />
                         <Content
-                            name={name}
-                            description={description}
-                            monthlyPrice={monthlyPrice}
-                            yearlyPrice={yearlyPrice}
-                            numReviews={numReviews}
-                            avgRating={avgRating}
+                            name={product.name}
+                            description={product.description}
+                            numReviews={product.reviews.numReviews}
+                            avgRating={product.reviews.avgRating}
+                            halfMonthlyPrice={calculateHalfCost(product.cost)}
+                            cost={product.cost}
+                            quantity={product.quantity}
                         />
                     </ProductContainer>
                 </Section>

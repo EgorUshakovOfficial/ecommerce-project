@@ -85,7 +85,7 @@ export default function ShoppingCart(){
                 {cartItems.length > 0 ?
                 <Fragment>
                     <Main>
-                        {cartItems.map(product => <CartItem key={product.id} {...product} />)}
+                        {cartItems.map(product => <CartItem {...product} />)}
                     </Main>
                     <Box
                         display="flex"

@@ -19,15 +19,18 @@ const ImageList = styled(Box)({
     gap:"1em",
 });
 
-export default function ImageGallery(){
+export default function ImageGallery({mainImage, otherImages}){
     return (
         <ImageContainer>
-            <ProductImage style={{width:"auto", height:"600px"}} />
+            <ProductImage image={mainImage} style={{width:"auto", height:"600px"}} />
             <ImageList>
-                <ProductImage style={{width:IMAGE_WIDTH, height:IMAGE_HEIGHT}} />
-                <ProductImage style={{width:IMAGE_WIDTH, height:IMAGE_HEIGHT}} />
-                <ProductImage style={{width:IMAGE_WIDTH, height:IMAGE_HEIGHT}} />
-                <ProductImage style={{width:IMAGE_WIDTH, height:IMAGE_HEIGHT}} />
+                {otherImages.map(image => (<ProductImage
+                    image={image}
+                    style={{width:IMAGE_WIDTH,
+                        height:IMAGE_HEIGHT
+                    }}
+                />)
+                )}
             </ImageList>
         </ImageContainer>
     )

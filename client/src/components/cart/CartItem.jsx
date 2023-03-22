@@ -2,12 +2,15 @@ import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import ProductImage from '../product/ProductImage';
 import ProductControls from '../product/ProductControls';
-import { PRODUCT_IMAGE_HEIGHT } from '../../data/constants/productConstants';
+
+// Product width and height
+const PRODUCT_IMAGE_WIDTH = 100, PRODUCT_IMAGE_HEIGHT = 100;
 
 // Cart item container
 const StyledCartItem = styled('div')( ({theme}) => ({
     display: "flex",
     alignItems:"center",
+    justifyContent:"space-between",
     overflowY:"auto",
     gap:"0.5em",
     minHeight: PRODUCT_IMAGE_HEIGHT,
@@ -20,11 +23,12 @@ export default function CartItem({
      name,
      color,
      quantity,
+     image,
      cost
 }){
     return (
         <StyledCartItem id={id}>
-            <ProductImage style={{width:"auto", height:PRODUCT_IMAGE_HEIGHT}} />
+            <ProductImage image={image} style={{width:PRODUCT_IMAGE_WIDTH, height:PRODUCT_IMAGE_HEIGHT}} />
             <Box
                 display="flex"
                 flexDirection="column"
