@@ -6,11 +6,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 a{
   color:black;
   text-decoration: none;
 }
 
+#root{
+  min-height: 100vh;
+}
 #search-bar{
   width: 300px;
   padding-inline:1em;

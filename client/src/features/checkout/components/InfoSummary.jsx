@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Box, Typography} from '@mui/material';
-
+import {styled} from '@mui/material/styles';
 
 const StyledTable = styled('div')( ({theme}) => ({}));
 

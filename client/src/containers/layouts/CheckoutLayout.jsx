@@ -1,4 +1,5 @@
-import {Container, Section} from '../Container';
+import {Box} from '@mui/material';
+import Container from '../Container';
 
 import {
     CheckoutItems,
@@ -11,17 +12,25 @@ import {Logo} from '../../components';
 
 export default function CheckoutLayout({children}){
     return (
-        <Container>
-            <Section>
+        <Container
+            display="grid"
+            gridTemplateColumns="repeat(2, 1fr)"
+            gap="1em"
+            paddingBlock="3em"
+        >
+            <Box>
                 <Logo />
-                <Separator />
+                <Separator paddingBlock="1em" />
                 {children}
-            </Section>
-            <Section>
+            </Box>
+            <Box
+                width="60%"
+                marginInline="auto"
+            >
                 <CheckoutItems />
                 <DiscountCode />
                 <CostSummary />
-            </Section>
+            </Box>
         </Container>
     );
 }

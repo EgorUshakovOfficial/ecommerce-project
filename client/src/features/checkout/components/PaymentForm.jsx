@@ -1,7 +1,7 @@
 import {Box, Input, Tooltip} from '@mui/material';
 
 import {
-    LockedOutlined as LockOutlinedIcon,
+    HttpsOutlined as HttpsOutlinedIcon,
     HelpOutlineRounded as HelpOutlineRoundedIcon
 } from '@mui/icons-material';
 
@@ -22,7 +22,7 @@ export default function PaymentForm(){
                 onChange={props.handleCardNumberOnChange}
                 endAdornment={
                     <Tooltip title={secureCaption}>
-                        <LockOutlinedIcon />
+                        <HttpsOutlinedIcon />
                     </Tooltip>
                 }
             />
@@ -46,7 +46,7 @@ export default function PaymentForm(){
                     onChange={props.handleSecurityCodeOnChange}
                     endAdornment={
                         <Tooltip title={helpCaption}>
-                            <HelpOutlineRounded />
+                            <HelpOutlineRoundedIcon />
                         </Tooltip>
                     }
                 />

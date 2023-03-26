@@ -8,19 +8,34 @@ export default function Navigation({prevPage, nextPage}){
             display="flex"
             alignItems="center"
             justifyContent="space-between"
+            paddingBlock="1em"
         >
             <Button
                 disableRipple
-                to="/cart"
-                size="medium"
+                href="#"
                 startIcon={<KeyboardArrowLeft />}
+                sx={{
+                    textTransform:"none",
+                    fontSize:"1em",
+                    color:"black",
+                    "&.MuiButtonBase-root:hover": {
+                      bgcolor: "transparent"
+                    }
+                  }}
             >
                 {prevPage}
             </Button>
             <Button
                 disableRipple
-                to="/shipping"
-                size="medium"
+                href="#"
+                sx={{
+                    textTransform:"none",
+                    fontSize:"1em",
+                    color:"black",
+                    "&.MuiButtonBase-root:hover": {
+                      bgcolor: "transparent"
+                    }
+                }}
             >
                 {nextPage}
             </Button>

@@ -7,7 +7,7 @@ import {cartItems} from '../../../mock';
 export default function CheckoutItems(){
     return (
         <Table>
-            {cartItems.map(cartItem => <CheckoutItem {...cartItem} />)}
+            {cartItems.map(cartItem => <CheckoutItem key={cartItem.id} {...cartItem} />)}
         </Table>
     )
 }

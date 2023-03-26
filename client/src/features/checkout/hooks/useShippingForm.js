@@ -50,7 +50,7 @@ export default function useShippingForm(){
         region,
         postalCode,
         handleCountryRegionOnChange,
-        handleFirstnameOnChange,
+        handleFirstNameOnChange,
         handleLastNameOnChange,
         handleCompanyOnChange,
         handleAddressOnChange,

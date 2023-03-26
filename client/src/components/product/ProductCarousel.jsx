@@ -1,7 +1,6 @@
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import Product from './Product';
-import {Section} from '../../containers';
 import {cartItems} from '../../mock/cartItems';
 
 // Inner wrapper
@@ -16,7 +15,7 @@ const CarouselContainer = styled('div')( ({theme}) => ({
 
 export default function ProductCarousel({id, title}){
     return (
-        <Section id={id}>
+        <Box id={id}>
             <Typography
                 variant="h4"
                 gutterBottom
@@ -26,6 +25,6 @@ export default function ProductCarousel({id, title}){
             <CarouselContainer>
                 {cartItems.map(product => <Product {...product} />)}
             </CarouselContainer>
-        </Section>
+        </Box>
     )
 }

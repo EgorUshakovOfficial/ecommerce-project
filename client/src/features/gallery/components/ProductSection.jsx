@@ -1,7 +1,6 @@
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {cartItems} from '../../../mock/cartItems'
-import {Section} from '../../../containers';
 import {Product} from '../../../components';
 
 // Product gallery
@@ -13,7 +12,11 @@ const ProductGallery = styled('div')({
 
 export default function ProductSection(){
     return (
-        <Section id="product-gallery-section">
+        <Box
+            variant="section"
+            id="product-gallery-section"
+            paddingBlock="2em"
+        >
             <Typography
                 variant="h4"
                 fontWeight="600"
@@ -24,6 +27,6 @@ export default function ProductSection(){
             <ProductGallery>
                 {cartItems.map(product => <Product {...product} />)}
             </ProductGallery>
-        </Section>
+        </Box>
     )
 }

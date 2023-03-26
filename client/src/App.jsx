@@ -3,7 +3,7 @@ import {
     Routes,
     Route
 } from 'react-router-dom';
-import {Home, ProductPage} from './pages';
+import {Home, ProductPage, Checkout} from './pages';
 
 export default function App(){
     return(
@@ -20,6 +20,7 @@ export default function App(){
                         avgRating={4}
                     />
                 } />
+                <Route path="/checkout/:section" element={<Checkout />} />
             </Routes>
         </Router>
     );

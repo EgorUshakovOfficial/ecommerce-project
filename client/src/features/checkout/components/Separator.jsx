@@ -1,18 +1,13 @@
 import {Link} from 'react-router-dom';
-import {Breadcrumbs, Stack} from '@mui/material';
+import {Breadcrumbs} from '@mui/material';
 
-// Breadcrumb links
-const links = [
-    <Link to="/cart">Cart</Link>,
-    <Link to="/information">Information</Link>,
-    <Link to="/shipping">Shipping</Link>,
-    <Link to="/payment">Payment</Link>
-];
-
-export default function Separator(){
+export default function Separator(props){
     return (
-        <Stack spacing={2}>
-            {links.map(link => <Breadcrumbs>{link}</Breadcrumbs>)}
-        </Stack>
-    );
+        <Breadcrumbs separator=">" {...props}>
+            <Link to="/cart">Cart</Link>,
+            <Link to="/information" style={{color:"gray"}}>Information</Link>,
+            <Link to="/shipping" style={{color:"gray"}}>Shipping</Link>,
+            <Link to="/payment" style={{color:"gray"}}>Payment</Link>
+        </Breadcrumbs>
+    )
 }

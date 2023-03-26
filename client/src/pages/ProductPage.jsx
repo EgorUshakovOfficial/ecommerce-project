@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import {useParams} from 'react-router-dom';
 import { Box } from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {Container, Section} from '../containers';
+import {Container} from '../containers';
 import {AnnouncementBar, Nav} from '../components';
 import { ImageGallery, Content} from "../features/shopping";
 import { calculateHalfCost } from '../helper';
@@ -12,7 +12,9 @@ import {cartItems as products} from '../mock/cartItems';
 
 const ProductContainer = styled(Box)({
     display:"flex",
-    justifyContent:"space-evenly"
+    gap:"0.5em",
+    justifyContent:"space-evenly",
+    paddingBlock:"2em"
 });
 
 export default function ProductPage({
@@ -35,23 +37,21 @@ export default function ProductPage({
             <AnnouncementBar />
             <Container>
                 <Nav />
-                <Section>
-                    <ProductContainer>
-                        <ImageGallery
-                            mainImage={product.image}
-                            otherImages={product.otherImages}
-                        />
-                        <Content
-                            name={product.name}
-                            description={product.description}
-                            numReviews={product.reviews.numReviews}
-                            avgRating={product.reviews.avgRating}
-                            halfMonthlyPrice={calculateHalfCost(product.cost)}
-                            cost={product.cost}
-                            quantity={product.quantity}
-                        />
-                    </ProductContainer>
-                </Section>
+                <ProductContainer>
+                    <ImageGallery
+                        mainImage={product.image}
+                        otherImages={product.otherImages}
+                    />
+                    <Content
+                        name={product.name}
+                        description={product.description}
+                        numReviews={product.reviews.numReviews}
+                        avgRating={product.reviews.avgRating}
+                        halfMonthlyPrice={calculateHalfCost(product.cost)}
+                        cost={product.cost}
+                        quantity={product.quantity}
+                    />
+                </ProductContainer>
             </Container>
         </Fragment>
     )
