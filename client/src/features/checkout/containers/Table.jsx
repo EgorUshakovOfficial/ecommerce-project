@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 
 const Table = styled(Box)({
     display:"grid",
-    gap:"0.5em",
+    gap:"1em",
 });
 
 export default Table;

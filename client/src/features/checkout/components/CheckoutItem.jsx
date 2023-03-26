@@ -1,6 +1,5 @@
 import {Badge, Box, Typography} from '@mui/material';
 import {ProductImage} from '../../../components';
-import Row from '../containers/Row';
 
 export default function CheckoutItem({
     image,
@@ -13,13 +12,21 @@ export default function CheckoutItem({
     const amount = (cost*quantity).toFixed(2);
 
     return (
-        <Row>
+        <Box
+            display="grid"
+            gridTemplateColumns="64px 1fr auto"
+            gridTemplateRows="64px"
+            alignItems="center"
+            gap="1em"
+        >
             <Badge badgeContent={quantity} color="primary">
                 <ProductImage image={image} style={{width:64, height:64}} />
             </Badge>
             <Box paddingInline="1em">
                 <Typography
-                    variant="subtitle1"
+                    variant="h3"
+                    fontSize="1em"
+                    fontWeight="600"
                 >
                     {name}
                 </Typography>
@@ -31,11 +38,13 @@ export default function CheckoutItem({
                 </Typography>
             </Box>
             <Typography
+                display="flex"
                 fontWeight="600"
                 variant="body1"
+                justifyContent="flex-end"
             >
-                {amount}
+                ${amount}
             </Typography>
-        </Row>
+        </Box>
     )
 }

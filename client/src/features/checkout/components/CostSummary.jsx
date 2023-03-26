@@ -1,17 +1,28 @@
 import {Box, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import { calculateTotal } from '../../../helper';
-import Row from '../containers/Row';
 
-export default function CostSummary({subtotal, shippingCost}){
+const Row = styled(Box)({
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"space-between"
+})
+
+export default function CostSummary(props){
+    const {subtotal, shippingCost} = props;
     return (
-        <Box>
+        <Box
+            display="grid"
+            gap="0.5em"
+            {...props}
+        >
             <Row>
                 <Typography variant="body1">Subtotal</Typography>
                 <Typography
                     variant="body1"
                     fontWeight="600"
                 >
-                    {subtotal}
+                    ${subtotal}
                 </Typography>
             </Row>
             <Row>
@@ -23,9 +34,21 @@ export default function CostSummary({subtotal, shippingCost}){
                     {shippingCost === 0 ? "Free" : `$${shippingCost}`}
                 </Typography>
             </Row>
-            <Row>
-                <Typography>Total</Typography>
-                <Typography>{calculateTotal(subtotal, shippingCost)}</Typography>
+            <Row
+                pt="1em"
+                borderTop="1px solid lightgray"
+            >
+                <Typography
+                    fontWeight="600"
+                >
+                    Total
+                </Typography>
+                <Typography
+                    fontWeight="600"
+                    fontSize="1.5em"
+                >
+                    ${calculateTotal(subtotal, shippingCost)}
+                </Typography>
             </Row>
         </Box>
     )
