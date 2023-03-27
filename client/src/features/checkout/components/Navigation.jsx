@@ -8,7 +8,6 @@ export default function Navigation({prevPage, nextPage}){
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            paddingBlock="1em"
         >
             <Button
                 disableRipple

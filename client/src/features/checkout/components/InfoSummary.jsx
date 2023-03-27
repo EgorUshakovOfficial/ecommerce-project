@@ -2,37 +2,39 @@ import {Link} from 'react-router-dom';
 import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
-const StyledTable = styled('div')( ({theme}) => ({}));
+const StyledTable = styled(Box)({
+    border:"1px solid lightgray",
+    borderRadius:"0.5em",
+});
 
-export default function SummaryInfo(){
-    <StyledTable>
-        <Box
-            display="flex"
-            alignItems="center"
-            width="96%"
-            margin="auto"
-            gap="0.5em"
-        >
-            <Box>
+
+const Row = styled(Box)({
+    display:"grid",
+    gridTemplateColumns:"max-content 3fr 1fr",
+    alignItems:"center",
+    padding:"0.5em 1em",
+});
+
+export default function SummaryInfo(props){
+    return (
+        <StyledTable {...props}>
+            <Row borderBottom="1px solid lightgray">
                 <Typography variant="body1" color="gray">Contact</Typography>
-                <Typography variant="body1">egorushakov@gmail.com</Typography>
-            </Box>
-            <Link to="#">
-                Change
-            </Link>
-        </Box>
-        <Box
-            display="flex"
-            alignItems="center"
-            width="96%"
-            margin="auto"
-            gap="0.5em"
-        >
-            <Box>
-                <Typography variant="body1" color="gray">Ship to</Typography>
-                <Typography> 584 Stonegate Way Northwest, Airdrie AB T4B 3C9, Canada</Typography>
-            </Box>
-            <Link to="#">Change</Link>
-        </Box>
-    </StyledTable>
+                <Typography variant="body1" pl="1em">egorushakov@gmail.com</Typography>
+                <Link to="#" style={{textAlign:"right"}}>
+                    Change
+                </Link>
+            </Row>
+            <Row>
+                <Typography
+                    variant="body1"
+                    color="gray"
+                >
+                    Ship to
+                </Typography>
+                <Typography variant="body1" pl="1em"> 584 Stonegate Way Northwest, Airdrie AB T4B 3C9, Canada</Typography>
+                <Link to="#" style={{textAlign:"right"}}>Change</Link>
+            </Row>
+        </StyledTable>
+    );
 };

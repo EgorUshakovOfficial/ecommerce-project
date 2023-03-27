@@ -1,4 +1,5 @@
 import {Box} from '@mui/material';
+import {styled} from '@mui/material/styles';
 import {
     CheckoutItems,
     DiscountCode,
@@ -7,6 +8,14 @@ import {
 } from '../../features/checkout';
 import {Logo} from '../../components';
 
+const Section = styled(Box)({
+    display:"flex",
+    flexDirection:"column",
+    gap:"1.6em",
+    paddingBlock:"3em",
+    maxWidth:540
+});
+
 export default function CheckoutLayout({children}){
     return (
         <Box
@@ -14,17 +23,11 @@ export default function CheckoutLayout({children}){
             gridTemplateColumns="repeat(2, 1fr)"
             minHeight="100vh"
         >
-            <Box
-                sx={{
-                    paddingBlock:"3em",
-                    maxWidth:540,
-                    marginInline:"auto"
-                }}
-            >
+            <Section sx={{marginInline:"auto"}}>
                 <Logo />
-                <Separator paddingBlock="1em" />
+                <Separator />
                 {children}
-            </Box>
+            </Section>
             <Box
                 variant="aside"
                 sx={{
@@ -33,15 +36,7 @@ export default function CheckoutLayout({children}){
                     borderLeft:"1px solid lightgray",
                 }}
             >
-                <Box
-                    sx={{
-                        display:"flex",
-                        flexDirection:"column",
-                        gap:"2em",
-                        maxWidth:540,
-                        marginLeft:"2em"
-                    }}
-                >
+                <Section sx={{marginLeft:"2em"}}>
                     <CheckoutItems
                         style={{
                             paddingBlock:"0.5em",
@@ -57,7 +52,7 @@ export default function CheckoutLayout({children}){
                         subtotal={1718.19}
                         shippingCost={12.99}
                     />
-                </Box>
+                </Section>
             </Box>
         </Box>
     );

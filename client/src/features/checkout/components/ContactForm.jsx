@@ -9,11 +9,7 @@ export default function ContactForm(){
     const handleEmailOnChange = event => setEmail(event.target.value);
 
     return (
-        <Box
-            display="grid"
-            gap="0.5em"
-            paddingBlock="1em"
-        >
+        <Box display="grid" gap="0.5em">
             <Typography
                 variant="h2"
                 fontSize="1.125em"
