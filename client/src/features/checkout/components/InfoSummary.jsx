@@ -21,7 +21,7 @@ export default function SummaryInfo(props){
             <Row borderBottom="1px solid lightgray">
                 <Typography variant="body1" color="gray">Contact</Typography>
                 <Typography variant="body1" pl="1em">egorushakov@gmail.com</Typography>
-                <Link to="#" style={{textAlign:"right"}}>
+                <Link to="/checkout/information" style={{textAlign:"right"}}>
                     Change
                 </Link>
             </Row>
@@ -33,7 +33,7 @@ export default function SummaryInfo(props){
                     Ship to
                 </Typography>
                 <Typography variant="body1" pl="1em"> 584 Stonegate Way Northwest, Airdrie AB T4B 3C9, Canada</Typography>
-                <Link to="#" style={{textAlign:"right"}}>Change</Link>
+                <Link to="/checkout/information" style={{textAlign:"right"}}>Change</Link>
             </Row>
         </StyledTable>
     );
