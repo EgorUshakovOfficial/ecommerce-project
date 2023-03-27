@@ -11,7 +11,7 @@ export default function Navigation({prevPage, nextPage}){
         >
             <Button
                 disableRipple
-                href="#"
+                href={prevPage.href}
                 startIcon={<KeyboardArrowLeft />}
                 sx={{
                     textTransform:"none",
@@ -22,11 +22,11 @@ export default function Navigation({prevPage, nextPage}){
                     }
                   }}
             >
-                {prevPage}
+                {prevPage.name}
             </Button>
             <Button
                 disableRipple
-                href="#"
+                href={nextPage.href}
                 sx={{
                     textTransform:"none",
                     fontSize:"1em",
@@ -36,7 +36,7 @@ export default function Navigation({prevPage, nextPage}){
                     }
                 }}
             >
-                {nextPage}
+                {nextPage.name}
             </Button>
         </Box>
     );

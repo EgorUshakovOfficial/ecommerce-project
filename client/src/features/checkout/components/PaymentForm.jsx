@@ -73,7 +73,7 @@ export default function PaymentForm(){
                     />
                     <TextField
                         placeholder='Security code'
-                        type="text"
+                        type="password"
                         label="Security code"
                         size="small"
                         sx={{background:"white"}}

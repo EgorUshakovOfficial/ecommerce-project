@@ -1,8 +1,9 @@
 import {Fragment, useState} from 'react';
-import {Box, Button, Drawer, Typography, IconButton} from '@mui/material';
+import {Box, Drawer, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
+import Button from '../Button';
 import CartItem from './CartItem';
 import {cartItems} from '../../mock/cartItems';
 
@@ -99,6 +100,7 @@ export default function ShoppingCart(){
                         disableRipple
                         variant="contained"
                         color="success"
+                        href="/checkout/information"
                         sx={{mb:"0.5em"}}
                     >
                         Check out

@@ -6,8 +6,8 @@ export default function Payment(){
         <CheckoutLayout>
             <PaymentForm />
             <Navigation
-                prevPage="Return to shipping"
-                nextPage="Pay now"
+                prevPage={{name:"Return to shipping", href:"/checkout/information"}}
+                nextPage={{name:"Pay now", href:"#"}}
             />
         </CheckoutLayout>
     );

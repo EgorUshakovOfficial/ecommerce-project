@@ -7,8 +7,8 @@ export default function Information(){
             <ContactForm />
             <ShippingForm />
             <Navigation
-                prevPage="Return to cart"
-                nextPage="Continue to shipping"
+                prevPage={{name:"Return to cart", href:"/checkout/cart"}}
+                nextPage={{name:"Continue to shipping", href:"/checkout/shipping"}}
             />
         </CheckoutLayout>
     )
