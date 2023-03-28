@@ -1,6 +1,7 @@
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import useSearch from '../../../hooks/useSearch';
 
 const StyledSearchWrapper = styled('div')({
     position: "relative",
@@ -9,12 +10,18 @@ const StyledSearchWrapper = styled('div')({
 });
 
 export default function SearchBar(){
+    const {filter, handleFilterOnChange, onBlur, onFocus} = useSearch();
+
     return (
         <StyledSearchWrapper id="search-bar-div">
             <input
                 id="search-bar"
                 placeholder="Search Product"
                 type="text"
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onChange={handleFilterOnChange}
+                value={filter}
                 style={{
                     borderRadius:"1em",
                     background:"#F1F3F4",

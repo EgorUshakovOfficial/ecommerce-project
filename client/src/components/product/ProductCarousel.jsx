@@ -1,28 +1,36 @@
-import {Box, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, Typography, useMediaQuery} from '@mui/material';
+import {styled, useTheme} from '@mui/material/styles';
 import Product from './Product';
 import {cartItems} from '../../mock/cartItems';
 
 // Inner wrapper
-const CarouselContainer = styled('div')( ({theme}) => ({
+const CarouselContainer = styled(Box)( ({theme}) => ({
     display:"grid",
-    gridAutoColumns: "calc(25% - 0.5em)",
-    gridAutoFlow:"column",
     gap:"0.5em",
     overflowX:"auto",
-    padding: theme.spacing(2, 1)
+    padding: theme.spacing(2, 0),
 }));
 
 export default function ProductCarousel({id, title}){
+    // Theme
+    const theme = useTheme();
+
+    // Matches screen sizes with width of up to and including 600px
+    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
-        <Box id={id}>
+        <Box id={id} paddingBlock="2em">
             <Typography
                 variant="h4"
-                gutterBottom
                 fontWeight="600"
-            > {title}
+                gutterBottom
+            >
+                {title}
             </Typography>
-            <CarouselContainer>
+            <CarouselContainer
+                gridAutoColumns={matchDesktop ? "350px" : "90%"}
+                gridAutoFlow={matchDesktop ? "column" : "none"}
+            >
                 {cartItems.map(product => <Product {...product} />)}
             </CarouselContainer>
         </Box>

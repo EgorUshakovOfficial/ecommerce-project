@@ -10,10 +10,13 @@ const ProductDiv = styled('div')( ({theme}) => ({
     gap:"0.5em",
     display:"flex",
     flexDirection:"column",
+    justifyContent:"space-between",
     alignItems:"flex-start",
     boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+    border:"1px solid lightgray",
     borderRadius:"0.5em",
     padding: theme.spacing(2),
+    minWidth:250
 }));
 
 export default function Product({

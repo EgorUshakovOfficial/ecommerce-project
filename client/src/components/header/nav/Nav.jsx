@@ -1,33 +1,45 @@
-import {useState} from 'react';
-import {styled} from '@mui/material';
-import Logo from '../../Logo';
-import SearchBar from './SearchBar';
-import {Box} from '@mui/material';
+import {Box, styled } from '@mui/material';
+import { SearchProvider } from '../../../context/SearchProvider';
 import CategoriesDropdown from './CategoriesDropdown';
+import Logo from '../../Logo';
 import NavLink from './NavLink';
+import NavLinks from './NavLinks';
+import SearchBar from './SearchBar';
 import ShoppingCart from '../../cart/ShoppingCart';
+
 
 const StyledNav = styled('nav')(({theme}) => ({
     position: "relative",
     display: "flex",
-    alignItems:"center",
+    gridTemplateColumns:"repeat(5, max-content)",
     justifyContent:"space-between",
-    padding: theme.spacing(2, 0)
+    padding: theme.spacing(2, 0),
+
 }));
 
+// Search Wrapper
+const Wrapper = styled('div')({
+    display:"flex",
+    justifyContent:"space-evenly",
+    alignItems:"center",
+    gap:"0.5em"
+})
+
 export default function Nav(){
-    const [searchFocus, setSearchFocus] = useState(false);
-    const handleFocus = () => setSearchFocus(true);
     return (
         <StyledNav>
             <Logo />
-            <CategoriesDropdown />
-            <NavLink name="Deals" icon={null} />
-            <NavLink name="What's New" icon={null} />
-            <NavLink name="Delivery" icon={null} />
-            <SearchBar />
-            <NavLink name="Sign in" icon={null} />
-            <ShoppingCart />
+            <SearchProvider>
+                <Wrapper>
+                    <CategoriesDropdown />
+                    <NavLinks />
+                    <SearchBar />
+                </Wrapper>
+            </SearchProvider>
+            <Wrapper>
+                <NavLink name="Sign in" icon={null} />
+                <ShoppingCart  />
+            </Wrapper>
         </StyledNav>
     )
 }

@@ -4,57 +4,55 @@ import bannerImg from '../../assets/images/banner-image.jpg'
 import { bgColor } from '../../data/styles/colors';
 
 // Styled banner wrapper
-const BannerWrapper = styled('div')(({theme}) => ({
+const BannerWrapper = styled(Box)(({theme}) => ({
     padding: theme.spacing(4, 0),
 }));
 
 // Styled banner
-const StyledBanner = styled('div')(({theme}) => ({
-    display:"flex",
-    justifyContent:"space-evenly",
+const StyledBanner = styled(Box)(({theme}) => ({
+    background:"#FAFAFA",
+    display:"grid",
+    gap:"0.5em",
+    gridTemplateColumns:"repeat(auto-fit, minmax(500px, 1fr))",
     alignItems:"center",
-    gap:"1em",
+    justifyItems:"center",
+    borderRadius:"1em",
+    padding: theme.spacing(2, 1)
 }))
 
 export default function Banner(){
     return (
         <BannerWrapper>
             <StyledBanner>
+                <Box minWidth="500px">
+                    <img src={bannerImg}/>
+                </Box>
                 <Box>
                     <Typography
                         variant="h4"
                         marginBottom="0.5em"
                         fontWeight="600"
                     >
-                        Grab Upto 50% Off On Selected Headphone
+                        Grab Upto 50% Off On <br /> Selected Headphone
                     </Typography>
-                    <Button
-                    disableRipple
-                        variant="contained"
-                        size="large"
-                        style={{
-                            background:bgColor,
-                            fontSize:"1em",
-                            borderRadius:"0.5em",
-                            textTransform:"none",
-                            fontWeight:600,
-                        }}
+                    <Box display="flex" justifyContent="center">
+                        <Button
+                        disableRipple
+                            variant="contained"
+                            size="large"
+                            style={{
+                                background:bgColor,
+                                fontSize:"1em",
+                                borderRadius:"0.5em",
+                                textTransform:"none",
+                                fontWeight:600,
+                            }}
 
-                    >
-                        Buy Now
-                    </Button>
+                        >
+                            Buy Now
+                        </Button>
+                    </Box>
                 </Box>
-                <div>
-                <img
-                    style={{
-                        width:"100%",
-                        height:"100%",
-                        objectFit:"cover",
-                        borderRadius:"1em"
-                    }}
-                    src={bannerImg}
-                />
-                </div>
             </StyledBanner>
         </BannerWrapper>
     )

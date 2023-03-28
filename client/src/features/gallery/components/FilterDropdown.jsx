@@ -32,11 +32,11 @@ export default function FilterDropdown({typeFilter, typeFilterOptions}){
                     textTransform:"none",
                     fontWeight:600,
                     borderRadius:"0.75em",
-                    boxShadow:"none"
+                    boxShadow:"none",
+                    minWidth:"max-content"
                 }}
                 onClick={handleClick}
                 endIcon={<KeyboardArrowDownIcon />}
-
             >
                 {typeFilter}
             </Button>

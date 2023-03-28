@@ -13,7 +13,7 @@ const Container = styled(Box)(({theme}) => ({
 
 export default function Filters(){
     return (
-        <Container justifyContent="space-between">
+        <Container justifyContent="space-between" style={{width:"100%", overflowX:"auto"}}>
             <Container>
                 {filters.map(filter => <Filter {...filter} />)}
                 <Button

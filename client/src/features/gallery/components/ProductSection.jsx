@@ -1,16 +1,22 @@
-import {Box, Typography} from '@mui/material';
+import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {cartItems} from '../../../mock/cartItems'
 import {Product} from '../../../components';
 
 // Product gallery
-const ProductGallery = styled('div')({
+const ProductGallery = styled(Box)({
     display: "grid",
     gap:"0.5em",
-    gridTemplateColumns:"repeat(4, 1fr)",
+    gridTemplateColumns:"repeat(auto-fill, minmax(350px, 1fr))"
 })
 
 export default function ProductSection(){
+    // Theme
+    const theme = useTheme();
+
+    // Matches screen sizes with width up to and including 600px
+    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Box
             variant="section"
@@ -24,7 +30,7 @@ export default function ProductSection(){
             >
                 Headphones For You!
             </Typography>
-            <ProductGallery>
+            <ProductGallery width={matchDesktop ? "100%" : "90%"}>
                 {cartItems.map(product => <Product {...product} />)}
             </ProductGallery>
         </Box>

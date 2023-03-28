@@ -12,17 +12,28 @@ a{
   text-decoration: none;
 }
 
+img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:0.5em;
+}
+
 #root{
   min-height: 100vh;
 }
+
 #search-bar{
-  width: 300px;
+  width:100%;
   padding-inline:1em;
-  transition: width 0.75s ease-in-out;
+  transition: width 0.75s linear;
 }
 
 #search-bar:focus{
-  width: 700px;
+  width: 400px;
   outline: none;
 }
+
+
+
 
