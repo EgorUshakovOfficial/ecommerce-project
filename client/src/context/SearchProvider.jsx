@@ -6,10 +6,10 @@ const SearchContext = createContext({});
 // Search provider
 const SearchProvider = ({children}) => {
     // Search state
-    const [hide, setHide] = useState(false);
+    const [focus, setFocus] = useState(false);
 
     return (
-        <SearchContext.Provider value={{hide, setHide}}>
+        <SearchContext.Provider value={{focus, setFocus}}>
             {children}
         </SearchContext.Provider>
     );

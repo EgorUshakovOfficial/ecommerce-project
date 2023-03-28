@@ -5,11 +5,11 @@ import { SearchContext } from '../../../context/SearchProvider';
 import NavLink from './NavLink';
 
 export default function NavLinks(){
-    const {hide} = useContext(SearchContext);
+    const {focus} = useContext(SearchContext);
 
     return (
         <Box
-            display={hide ? "none" : "flex"}
+            display={focus ? "none" : "flex"}
             gap="0.5em"
         >
             <NavLink name="Deals" icon={null} />

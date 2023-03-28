@@ -1,11 +1,7 @@
-import {Box, styled } from '@mui/material';
-import { SearchProvider } from '../../../context/SearchProvider';
-import CategoriesDropdown from './CategoriesDropdown';
+import {styled, useMediaQuery} from '@mui/material';
 import Logo from '../../Logo';
-import NavLink from './NavLink';
-import NavLinks from './NavLinks';
-import SearchBar from './SearchBar';
-import ShoppingCart from '../../cart/ShoppingCart';
+import NavCenter from './NavCenter';
+import NavRight from './NavRight';
 
 
 const StyledNav = styled('nav')(({theme}) => ({
@@ -14,32 +10,17 @@ const StyledNav = styled('nav')(({theme}) => ({
     gridTemplateColumns:"repeat(5, max-content)",
     justifyContent:"space-between",
     padding: theme.spacing(2, 0),
-
 }));
 
-// Search Wrapper
-const Wrapper = styled('div')({
-    display:"flex",
-    justifyContent:"space-evenly",
-    alignItems:"center",
-    gap:"0.5em"
-})
-
 export default function Nav(){
+    // Matches screen size of width of at most 1015px
+    const matchMobile = useMediaQuery('(max-width: 1015px)', {noSsr:true});
+
     return (
         <StyledNav>
             <Logo />
-            <SearchProvider>
-                <Wrapper>
-                    <CategoriesDropdown />
-                    <NavLinks />
-                    <SearchBar />
-                </Wrapper>
-            </SearchProvider>
-            <Wrapper>
-                <NavLink name="Sign in" icon={null} />
-                <ShoppingCart  />
-            </Wrapper>
+            <NavCenter />
+            <NavRight />
         </StyledNav>
     )
 }

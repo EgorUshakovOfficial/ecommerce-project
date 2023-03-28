@@ -1,7 +1,8 @@
+import {useContext, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Box} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import useSearch from '../../../hooks/useSearch';
+import { SearchContext } from '../../../context/SearchProvider';
 
 const StyledSearchWrapper = styled('div')({
     position: "relative",
@@ -10,7 +11,13 @@ const StyledSearchWrapper = styled('div')({
 });
 
 export default function SearchBar(){
-    const {filter, handleFilterOnChange, onBlur, onFocus} = useSearch();
+    // State of the search filter
+    const [filter, setFilter] = useState('');
+
+    const {setFocus} = useContext(SearchContext);
+
+    // On change callback
+    const handleFilterOnChange = event => setFilter(event.target.value);
 
     return (
         <StyledSearchWrapper id="search-bar-div">
@@ -18,8 +25,8 @@ export default function SearchBar(){
                 id="search-bar"
                 placeholder="Search Product"
                 type="text"
-                onFocus={onFocus}
-                onBlur={onBlur}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
                 onChange={handleFilterOnChange}
                 value={filter}
                 style={{
