@@ -7,7 +7,7 @@ import {Product} from '../../../components';
 const ProductGallery = styled(Box)({
     display: "grid",
     gap:"0.5em",
-    gridTemplateColumns:"repeat(auto-fill, minmax(350px, 1fr))"
+    gridTemplateColumns:"repeat(auto-fill, minmax(350px, 1fr))",
 })
 
 export default function ProductSection(){
@@ -22,15 +22,25 @@ export default function ProductSection(){
             variant="section"
             id="product-gallery-section"
             paddingBlock="2em"
+            sx={{
+                width:matchDesktop ? "100%" : "90%",
+                marginInline:"auto"
+            }}
         >
             <Typography
                 variant="h4"
                 fontWeight="600"
+                fontSize={matchDesktop ? "2.1em" : "1.5em"}
                 gutterBottom
             >
                 Headphones For You!
             </Typography>
-            <ProductGallery width={matchDesktop ? "100%" : "90%"}>
+            <ProductGallery
+                sx={{
+                    gridTemplateColumns:matchDesktop
+                    ? "repeat(auto-fill, minmax(350px, 1fr))" : "100%"
+                }}
+            >
                 {cartItems.map(product => <Product {...product} />)}
             </ProductGallery>
         </Box>

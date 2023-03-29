@@ -1,7 +1,8 @@
-import {Box, Button, Typography} from '@mui/material';
+import {Box, Button, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import bannerImg from '../../assets/images/banner-image.jpg'
 import { bgColor } from '../../data/styles/colors';
+import ProductImage from '../product/ProductImage';
 
 // Styled banner wrapper
 const BannerWrapper = styled(Box)(({theme}) => ({
@@ -13,7 +14,6 @@ const StyledBanner = styled(Box)(({theme}) => ({
     background:"#FAFAFA",
     display:"grid",
     gap:"0.5em",
-    gridTemplateColumns:"repeat(auto-fit, minmax(500px, 1fr))",
     alignItems:"center",
     justifyItems:"center",
     borderRadius:"1em",
@@ -21,15 +21,31 @@ const StyledBanner = styled(Box)(({theme}) => ({
 }))
 
 export default function Banner(){
+    // Theme
+    const theme = useTheme();
+
+    // Matches width size of at least 600px-desktop view
+    const matchMobile = useMediaQuery('(max-width: 886px)', {noSsr:true});
+
     return (
-        <BannerWrapper>
-            <StyledBanner>
-                <Box minWidth="500px">
-                    <img src={bannerImg}/>
-                </Box>
+        <BannerWrapper
+            sx={{
+                marginInline:"auto",
+                width: matchMobile ? "90%" : "100%"
+            }}
+        >
+            <StyledBanner
+                sx={{
+                    gridTemplateColumns: matchMobile ?
+                    "100%" : "repeat(2, 1fr)",
+                    background: matchMobile ? "white" : "#FAFAFA"
+                }}
+            >
+                <ProductImage image={bannerImg} style={{minWidth: matchMobile ? 0 : 500}} />
                 <Box>
                     <Typography
-                        variant="h4"
+                        variant="h2"
+                        fontSize={matchMobile ? "1.5em" : "2.1em"}
                         marginBottom="0.5em"
                         fontWeight="600"
                     >

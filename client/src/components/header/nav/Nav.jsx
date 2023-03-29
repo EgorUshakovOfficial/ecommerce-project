@@ -1,5 +1,7 @@
+import {Fragment} from 'react';
 import {styled, useMediaQuery} from '@mui/material';
 import Logo from '../../Logo';
+import NavMobile from './NavMobile';
 import NavCenter from './NavCenter';
 import NavRight from './NavRight';
 
@@ -18,8 +20,17 @@ export default function Nav(){
 
     return (
         <StyledNav>
-            <Logo />
-            <NavCenter />
+            {matchMobile ?
+                <Fragment>
+                    <NavMobile />
+                    <Logo />
+                </Fragment>
+                :
+                <Fragment>
+                    <Logo />
+                    <NavCenter />
+                </Fragment>
+            }
             <NavRight />
         </StyledNav>
     )

@@ -21,6 +21,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})
 (({theme, open}) => ({
     flexGrow: 1,
+    overflowY:"auto",
     transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
@@ -34,8 +35,10 @@ const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})
 }));
 
 export default function ShoppingCart(){
+    // State of the cart
     const [openCart, setOpenCart] = useState(false);
 
+    // Callbacks on specified events
     const handleCartOpen = () => setOpenCart(true);
 
     const handleCartClose = () => setOpenCart(false);

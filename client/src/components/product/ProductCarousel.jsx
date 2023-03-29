@@ -7,28 +7,37 @@ import {cartItems} from '../../mock/cartItems';
 const CarouselContainer = styled(Box)( ({theme}) => ({
     display:"grid",
     gap:"0.5em",
-    overflowX:"auto",
-    padding: theme.spacing(2, 0),
+    overflowX:"auto"
 }));
 
-export default function ProductCarousel({id, title}){
+export default function ProductCarousel(props){
+    const {id, title} = props;
+
     // Theme
     const theme = useTheme();
 
-    // Matches screen sizes with width of up to and including 600px
+    // Matches width screen sizes with of at least 600px
     const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
     return (
-        <Box id={id} paddingBlock="2em">
+        <Box
+            id={id}
+            sx={{
+                width: matchDesktop ? "100%" : "90%",
+                marginInline:"auto"
+            }}
+            {...props}
+        >
             <Typography
-                variant="h4"
+                variant="h2"
+                fontSize={matchDesktop ? "2.1em" : "1.5em"}
                 fontWeight="600"
                 gutterBottom
             >
                 {title}
             </Typography>
             <CarouselContainer
-                gridAutoColumns={matchDesktop ? "350px" : "90%"}
+                gridAutoColumns={matchDesktop ? "350px" : "100%"}
                 gridAutoFlow={matchDesktop ? "column" : "none"}
             >
                 {cartItems.map(product => <Product {...product} />)}

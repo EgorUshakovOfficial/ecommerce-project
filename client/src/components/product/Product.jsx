@@ -16,7 +16,7 @@ const ProductDiv = styled('div')( ({theme}) => ({
     border:"1px solid lightgray",
     borderRadius:"0.5em",
     padding: theme.spacing(2),
-    minWidth:250
+    minWidth:250,
 }));
 
 export default function Product({

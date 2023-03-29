@@ -11,7 +11,11 @@ export default function HomePage(){
                 <Header />
                 <Filters />
                 <ProductSection />
-                <ProductCarousel title="Similar Items You Might Like" id="similar-products-section" />
+                <ProductCarousel
+                    title="Similar Items You Might Like"
+                    id="similar-products-section"
+                    style={{paddingBottom:"2em"}}
+                />
                 <ProductCarousel title="Recentedly Viewed" id="recentedly-viewed-section" />
             </Container>
         </Fragment>
