@@ -20,7 +20,7 @@ export default function SummaryInfo(props){
         <StyledTable {...props}>
             <Row borderBottom="1px solid lightgray">
                 <Typography variant="body1" color="gray">Contact</Typography>
-                <Typography variant="body1" pl="1em">egorushakov@gmail.com</Typography>
+                <Typography variant="body1" pl="1em">egor@gmail.com</Typography>
                 <Link to="/checkout/information" style={{textAlign:"right"}}>
                     Change
                 </Link>

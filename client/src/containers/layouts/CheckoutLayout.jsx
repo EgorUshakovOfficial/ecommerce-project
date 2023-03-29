@@ -1,59 +1,47 @@
-import {Box} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, useMediaQuery, useTheme} from '@mui/material';
 import {
-    CheckoutItems,
-    DiscountCode,
+    Section,
     Separator,
-    CostSummary
+    SummaryMobileSection,
+    SummarySection
 } from '../../features/checkout';
 import {Logo} from '../../components';
 
-const Section = styled(Box)({
-    display:"flex",
-    flexDirection:"column",
-    gap:"1.6em",
-    paddingBlock:"3em",
-    maxWidth:540
-});
-
 export default function CheckoutLayout({children}){
+    // Theme
+    const theme = useTheme();
+
+    // Matches width screen size of at least 600px
+    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Box
-            display="grid"
-            gridTemplateColumns="repeat(2, 1fr)"
-            minHeight="100vh"
+            sx={{
+                display:"grid",
+                gridTemplateColumns:matchDesktop ? "repeat(2, 1fr)" : "100%",
+                minHeight:"100vh",
+                width:matchDesktop ? "100%" : "90%",
+                marginInline: matchDesktop ? "none" : "auto"
+            }}
         >
-            <Section sx={{marginInline:"auto"}}>
+            <Section style={{marginInline:"auto"}}>
                 <Logo />
+                {matchDesktop === false && <SummaryMobileSection />}
                 <Separator />
                 {children}
             </Section>
-            <Box
-                variant="aside"
-                sx={{
-                    background:"#FAFAFA",
-                    paddingBlock:"3em",
-                    borderLeft:"1px solid lightgray",
-                }}
-            >
-                <Section sx={{marginLeft:"2em"}}>
-                    <CheckoutItems
-                        style={{
-                            paddingBlock:"0.5em",
-                            borderBottom:"1px solid lightgray"
-                        }}
-                    />
-                    <DiscountCode  />
-                    <CostSummary
-                        style={{
-                            borderTop:"1px solid lightgray",
-                            paddingBlock:"0.5em"
-                        }}
-                        subtotal={1718.19}
-                        shippingCost={12.99}
-                    />
-                </Section>
-            </Box>
+            {matchDesktop &&
+                <Box
+                    variant="aside"
+                    sx={{
+                        background:"#FAFAFA",
+                        paddingBlock:"3em",
+                        borderLeft:"1px solid lightgray",
+                    }}
+                >
+                    <SummarySection style={{marginLeft:"2em"}} />
+                </Box>
+            }
         </Box>
     );
 }

@@ -1,13 +1,23 @@
-import {Box} from '@mui/material';
+import {Box, useMediaQuery, useTheme} from '@mui/material';
 import { KeyboardArrowLeft } from '@mui/icons-material';
 import {Button} from '../../../components';
 
 export default function Navigation({prevPage, nextPage}){
+    // Theme
+    const theme = useTheme();
+
+    // Matches width screen size of at least 600px
+    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
+            sx={{
+                display:"flex",
+                alignItems:"center",
+                justifyContent:"space-between",
+                flexDirection: matchDesktop ? "row" : "column",
+                gap: matchDesktop ? 0 : "0.25em"
+            }}
         >
             <Button
                 disableRipple

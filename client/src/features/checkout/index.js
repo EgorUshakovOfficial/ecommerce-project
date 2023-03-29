@@ -1,24 +1,24 @@
-import CheckoutItems from './components/CheckoutItems';
 import ContactForm from './components/ContactForm';
-import CostSummary from './components/CostSummary';
-import DiscountCode from './components/DiscountCode';
 import InfoSummary from './components/InfoSummary';
 import Navigation from './components/Navigation';
 import PaymentForm from './components/PaymentForm';
 import Separator from './components/Separator';
+import Section from './containers/Section';
 import ShippingForm from './components/ShippingForm';
 import ShippingMethod from './components/ShippingMethod';
+import SummaryMobileSection from './components/SummaryMobileSection';
+import SummarySection from './components/SummarySection';
 
 export {
-    CheckoutItems,
     ContactForm,
-    CostSummary,
-    DiscountCode,
     InfoSummary,
     Navigation,
     PaymentForm,
+    Section,
     Separator,
     ShippingForm,
-    ShippingMethod
+    ShippingMethod,
+    SummaryMobileSection,
+    SummarySection
 };
 
