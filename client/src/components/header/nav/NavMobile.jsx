@@ -65,8 +65,12 @@ export default function NavMobile(){
                 >
                     <IconButton
                         onClick={handleMobileOpenOnClose}
+                        style={{
+                            color:"inherit",
+                            background:"transparent"
+                        }}
                     >
-                        <CloseIcon fontSize="large" />
+                        <CloseIcon />
                     </IconButton>
                 </Box>
                 <Box variant="nav">

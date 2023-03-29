@@ -9,7 +9,6 @@ const Container = styled(Box)(({theme}) => ({
     alignItems:"center",
     gap:"0.5em",
     padding: theme.spacing(1, 0),
-    marginInline:"auto"
 }));
 
 export default function Filters(){
@@ -23,7 +22,8 @@ export default function Filters(){
         <Container
             justifyContent="space-between"
             style={{
-                width:matchDesktop ? '100%' : "90%",
+                width: matchDesktop ? '100%' : "90%",
+                marginInline: matchDesktop ? "none" : "auto",
                 overflowX:"auto"
             }}
         >

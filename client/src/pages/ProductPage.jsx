@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {useParams} from 'react-router-dom';
-import { Box } from '@mui/material';
+import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container} from '../containers';
 import {AnnouncementBar, Nav} from '../components';
@@ -14,17 +14,13 @@ const ProductContainer = styled(Box)({
     display:"flex",
     gap:"0.5em",
     justifyContent:"space-evenly",
-    paddingBlock:"2em"
+    paddingBlock:"2em",
+    marginInline:"auto"
 });
 
-export default function ProductPage({
-    name,
-    description,
-    monthlyPrice,
-    yearlyPrice,
-    numReviews,
-    avgRating
-}){
+export default function ProductPage(props){
+    // Matches width screen size of at most 1016px
+    const matchMobile = useMediaQuery('(max-width:1016px)', {noSsr:true});
 
     // Url parameters
     const {productId} = useParams();
@@ -37,7 +33,13 @@ export default function ProductPage({
             <AnnouncementBar />
             <Container>
                 <Nav />
-                <ProductContainer>
+                <ProductContainer
+                    sx={{
+                        flexDirection: matchMobile ? "column" : "row",
+                        width: matchMobile ? "90%" : "100%"
+                    }}
+
+                >
                     <ImageGallery
                         mainImage={product.image}
                         otherImages={product.otherImages}
