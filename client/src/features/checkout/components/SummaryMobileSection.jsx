@@ -22,6 +22,7 @@ export default function SummaryMobileSection(props){
                 borderRadius="0.5em"
                 alignItems="center"
                 gap="0.5em"
+                sx={{background:"#FAFAFA"}}
             >
                 <Box
                     display="flex"

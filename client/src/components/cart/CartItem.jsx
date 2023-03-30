@@ -3,7 +3,6 @@ import {styled} from '@mui/material/styles';
 import ProductImage from '../product/ProductImage';
 import ProductControls from '../product/ProductControls';
 
-
 // Cart item container
 const StyledCartItem = styled('div')( ({theme}) => ({
     display: "flex",
@@ -26,7 +25,6 @@ export default function CartItem(props){
     // Product width and height sizes
     const PRODUCT_IMAGE_WIDTH = matchDesktop ? 100 : 60;
     const PRODUCT_IMAGE_HEIGHT = PRODUCT_IMAGE_WIDTH;
-
 
     return (
         <StyledCartItem id={id} style={props.style}>
