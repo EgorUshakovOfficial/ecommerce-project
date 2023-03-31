@@ -8,7 +8,6 @@ import ProductControls from './product/ProductControls';
 import ProductImage from './product/ProductImage';
 import Product from "./product/Product";
 import Ratings from './Ratings';
-import ShoppingCart from './cart/ShoppingCart';
 
 export {
     AnnouncementBar,
@@ -20,6 +19,5 @@ export {
     ProductCarousel,
     ProductControls,
     ProductImage,
-    Ratings,
-    ShoppingCart
+    Ratings
 };

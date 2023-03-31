@@ -1,7 +1,7 @@
 import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import ProductImage from '../product/ProductImage';
-import ProductControls from '../product/ProductControls';
+import ProductImage from '../../../components/product/ProductImage';
+import ProductControls from '../../../components/product/ProductControls';
 
 // Cart item container
 const StyledCartItem = styled('div')( ({theme}) => ({

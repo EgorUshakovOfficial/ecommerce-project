@@ -1,6 +1,6 @@
 import NavWrapper from "./NavWrapper";
 import NavLink from './NavLink';
-import ShoppingCart from '../../cart/ShoppingCart';
+import {ShoppingCart} from '../../../features/shopping';
 
 export default function NavRight(){
     return (

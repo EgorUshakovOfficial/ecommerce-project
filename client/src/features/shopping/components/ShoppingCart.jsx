@@ -3,9 +3,9 @@ import {Box, Drawer, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
-import Button from '../Button';
+import Button from '../../../components/Button';
 import CartItem from './CartItem';
-import {products} from '../../mock/products';
+import {products} from '../../../mock/products';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({
