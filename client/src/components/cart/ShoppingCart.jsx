@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
 import Button from '../Button';
 import CartItem from './CartItem';
-import {cartItems} from '../../mock/cartItems';
+import {products} from '../../mock/products';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -86,10 +86,10 @@ export default function ShoppingCart(){
                     </IconButton>
                 </DrawerHeader>
 
-                {cartItems.length > 0 ?
+                {products.length > 0 ?
                 <Fragment>
                     <Main>
-                        {cartItems.map(product => <CartItem {...product} />)}
+                        {products.map(product => <CartItem {...product} />)}
                     </Main>
                     <Box
                         display="flex"

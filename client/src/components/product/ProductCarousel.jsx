@@ -1,7 +1,7 @@
 import {Box, Typography, useMediaQuery} from '@mui/material';
 import {styled, useTheme} from '@mui/material/styles';
 import Product from './Product';
-import {cartItems} from '../../mock/cartItems';
+import {products} from '../../mock/products';
 
 // Inner wrapper
 const CarouselContainer = styled(Box)( ({theme}) => ({
@@ -40,7 +40,7 @@ export default function ProductCarousel(props){
                 gridAutoColumns={matchDesktop ? "350px" : "100%"}
                 gridAutoFlow={matchDesktop ? "column" : "none"}
             >
-                {cartItems.map(product => <Product {...product} />)}
+                {products.map(product => <Product {...product} />)}
             </CarouselContainer>
         </Box>
     )

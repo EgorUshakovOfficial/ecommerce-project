@@ -1,6 +1,6 @@
 import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {cartItems} from '../../../mock/cartItems'
+import {products} from '../../../mock/products'
 import {Product} from '../../../components';
 
 // Product gallery
@@ -41,7 +41,7 @@ export default function ProductSection(){
                     ? "repeat(auto-fill, minmax(350px, 1fr))" : "100%"
                 }}
             >
-                {cartItems.map(product => <Product {...product} />)}
+                {products.map(product => <Product {...product} />)}
             </ProductGallery>
         </Box>
     )

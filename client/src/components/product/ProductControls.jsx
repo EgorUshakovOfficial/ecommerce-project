@@ -1,8 +1,16 @@
+import {useMemo, useState} from 'react';
 import {Box, Typography, IconButton} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SubtractIcon from '@mui/icons-material/Remove';
 
-export default function ProductControls({quantity}){
+export default function ProductControls(){
+    // Quantity state
+    const [quantity, setQuantity] = useState(1);
+
+    // Maximum number of items available for specified cart item
+    const maxItems = useMemo(() => {
+    }, []);
+
     return (
         <Box
             display="flex"
@@ -18,7 +26,7 @@ export default function ProductControls({quantity}){
                 variant="subtitle1"
                 align="center"
             >
-                1
+               {quantity}
             </Typography>
             <IconButton disableRipple>
                 <AddIcon />

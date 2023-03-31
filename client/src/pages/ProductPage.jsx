@@ -8,7 +8,7 @@ import { ImageGallery, Content} from "../features/shopping";
 import { calculateHalfCost } from '../helper';
 
 // Mock data (replace with context API)
-import {cartItems as products} from '../mock/cartItems';
+import {products} from '../mock/products';
 
 const ProductContainer = styled(Box)({
     display:"flex",

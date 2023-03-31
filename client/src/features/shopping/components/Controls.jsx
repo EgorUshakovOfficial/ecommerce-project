@@ -11,7 +11,7 @@ const ControlContainer = styled('div')({
     gap:"0.5em",
 });
 
-export default function Controls({quantity, productId}){
+export default function Controls({quantity}){
     // Cart state
     const cart = useSelector(state => state.cart);
 

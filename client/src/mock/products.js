@@ -4,9 +4,9 @@ import earphones from '../assets/images/earphones.jpg';
 import headphones from '../assets/images/headphone.jpg';
 import skullCandy from '../assets/images/skull-candy.jpg';
 
-export const cartItems = [
+export const products = [
     {
-        id:"1",
+        productId:"1",
         name: "Headphones",
         description:"Some cool headphones",
         color:"Red",
@@ -17,7 +17,7 @@ export const cartItems = [
         cost: 49.99,
     },
     {
-        id:"2",
+        productId:"2",
         name: "Airpods",
         description:"Some cool airpods",
         color:"White",
@@ -28,7 +28,7 @@ export const cartItems = [
         cost: 119.99
     },
     {
-        id:"3",
+        productId:"3",
         name: "Skull Candy Airpods",
         description:"High quality airpods",
         color:"Black",
@@ -39,7 +39,7 @@ export const cartItems = [
         cost: 129.99
     },
     {
-        id:"4",
+        productId:"4",
         name: "Dr Dre Headphones",
         description:"High quality headphones",
         color:"Black",
@@ -50,7 +50,7 @@ export const cartItems = [
         cost: 119.99
     },
     {
-        id:"5",
+        productId:"5",
         name: "Earphones",
         description:"Basic earphones",
         color:"Black",
