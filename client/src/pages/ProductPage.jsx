@@ -26,7 +26,7 @@ export default function ProductPage(props){
     const {productId} = useParams();
 
     // Specified product
-    const product = products.filter(product => product.id == productId)[0];
+    const product = products.filter(product => product.productId == productId)[0];
 
     return (
         <Fragment>

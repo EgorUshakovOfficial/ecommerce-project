@@ -22,6 +22,7 @@ export const cartSlice = createSlice({
             return state;
         },
 
+        // Increments the quantity of the product in the shopping cart
         increment: (state, action) => {
             const { payload } = action;
 
@@ -31,23 +32,24 @@ export const cartSlice = createSlice({
             // Targeted cart item
             let cartItem = state[index];
 
-            // Increment the quantity of the cart item by one
-            cartItem.quantity += 1;
+            // Increment the quantity of the cart item by the value in the payload
+            cartItem.quantity += payload.quantityToAdd;
 
             return state;
         },
 
+        // Decrements the quantity of the product in the shopping cart
         decrement: (state, action) => {
-            const { payload } = action.payload;
+            const { payload } = action;
 
             // Index of the cart item to be decremented
-            let index = state.findIndex(( {productId} ) => payload.productId === productId);
+            let index = state.findIndex(({ productId }) => payload.productId === productId);
 
             // Targeted cart item
             let cartItem = state[index];
 
-            // Decrement the quantity of the cart item by one
-            cartItem.quantity -= 1;
+            // Decrements the quantity of the cart item by the value in the payload
+            cartItem.quantity -= payload.quantityToRemove;
 
             return state;
         }

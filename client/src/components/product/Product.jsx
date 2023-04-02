@@ -20,7 +20,7 @@ const ProductDiv = styled('div')( ({theme}) => ({
 }));
 
 export default function Product({
-    id,
+    productId,
     name,
     cost,
     description,
@@ -62,7 +62,8 @@ export default function Product({
                 variant="outlined"
                 style={{borderRadius:"0.5em", textTransform:"none"}}
                 color="inherit"
-                href={`/product-page/${id}`}
+                onClick={() => {}}
+                href={`/product-page/${productId}`}
             >
                 Add to Cart
             </Button>

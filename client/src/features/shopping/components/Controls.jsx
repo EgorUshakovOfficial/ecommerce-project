@@ -1,8 +1,9 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {Button, Typography} from '@mui/material';
+import {useParams} from 'react-router-dom';
+import {Box, Button, IconButton, Typography} from '@mui/material';
+import {Add as AddIcon, Remove as SubtractIcon} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
+import useControls from '../hooks/useControls';
 import {ProductControls} from '../../../components';
-import {add, remove, increment, decrement} from '../state/cartSlice';
 
 const ControlContainer = styled('div')({
     display:"grid",
@@ -12,22 +13,44 @@ const ControlContainer = styled('div')({
 });
 
 export default function Controls({quantity}){
-    // Cart state
-    const cart = useSelector(state => state.cart);
+    // Retrieve product id from url
+    const {productId} = useParams();
 
-    // Dispatch
-    const dispatch = useDispatch();
-
-    // Adds cart item to the cart when clicked
-    const addCartItemOnClick = () => {
-        // Case 1: Item is in cart
-        // Case 2: Item has been already added to cart
-        // Case 3: Item is sold out
-    };
+    const {
+        addCartItemOnClick,
+        decrementQuantityToAddOnClick,
+        incrementQuantityToAddOnClick,
+        quantityToAdd
+    } = useControls(productId);
 
     return (
         <ControlContainer>
-            <ProductControls quantity={quantity} />
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                gap="0.5em"
+                minHeight="100"
+            >
+                <IconButton
+                    disableRipple
+                    onClick={decrementQuantityToAddOnClick}
+                >
+                    <SubtractIcon />
+                </IconButton>
+                <Typography
+                    variant="subtitle1"
+                    align="center"
+                >
+                    {quantityToAdd}
+                </Typography>
+                <IconButton
+                    disableRipple
+                    onClick={incrementQuantityToAddOnClick}
+                >
+                    <AddIcon />
+                </IconButton>
+            </Box>
             <Typography variant="body1" lineHeight="1.5">
                 Only <Typography variant="span" fontWeight="600">{quantity} item</Typography> Left!<br />
                 Don't miss it

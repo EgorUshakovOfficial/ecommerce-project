@@ -1,11 +1,13 @@
+import {useMemo} from 'react';
+import {useSelector} from 'react-redux';
 import {Fragment, useState} from 'react';
-import {Box, Drawer, Typography, IconButton} from '@mui/material';
+import {Badge, Box, Drawer, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
 import Button from '../../../components/Button';
 import CartItem from './CartItem';
-import {products} from '../../../mock/products';
+import useShoppingCart from '../hooks/useShoppingCart';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -35,31 +37,39 @@ const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})
 }));
 
 export default function ShoppingCart(){
-    // State of the cart
-    const [openCart, setOpenCart] = useState(false);
+    // Cart state
+    const cart = useSelector(state => state.cart);
 
-    // Callbacks on specified events
-    const handleCartOpen = () => setOpenCart(true);
+    const {handleCartClose, handleCartOpen, openCart} = useShoppingCart(cart);
 
-    const handleCartClose = () => setOpenCart(false);
+    // Subtotal
+    let subtotal = cart.reduce((total, {cost, quantity}) => total + cost*quantity, 0);
+
+    // Number of products in the shopping cart
+    const numItems = cart.length;
 
     return (
         <Fragment>
-            <IconButton
-                disableRipple
-                style={{
-                    color:"inherit",
-                    size:"medium",
-                    variant:"text",
-                    textTransform:"none",
-                    background:"transparent",
-                    fontSize:"1em"
-                }}
-                aria-label="open cart"
-                onClick={handleCartOpen}
+            <Badge
+                badgeContent={numItems}
+                color="primary"
             >
-               <ShoppingCartIcon />
-            </IconButton>
+                <IconButton
+                    disableRipple
+                    style={{
+                        color:"inherit",
+                        size:"medium",
+                        variant:"text",
+                        textTransform:"none",
+                        background:"transparent",
+                        fontSize:"1em"
+                    }}
+                    aria-label="open cart"
+                    onClick={handleCartOpen}
+                >
+                <ShoppingCartIcon />
+                </IconButton>
+            </Badge>
             <Drawer
                 sx={{
                     '& .MuiDrawer-paper':{
@@ -86,10 +96,10 @@ export default function ShoppingCart(){
                     </IconButton>
                 </DrawerHeader>
 
-                {products.length > 0 ?
+                {cart.length > 0 ?
                 <Fragment>
                     <Main>
-                        {products.map(product => <CartItem {...product} />)}
+                        {cart.map(cartItem => <CartItem cartItem={cartItem} />)}
                     </Main>
                     <Box
                         display="flex"
@@ -97,7 +107,7 @@ export default function ShoppingCart(){
                         justifyContent="space-between"
                     >
                         <Typography variant="h6" fontWeight="600">Total</Typography>
-                        <Typography variant="h6">60.00</Typography>
+                        <Typography variant="h6">{subtotal.toFixed(2)}</Typography>
                     </Box>
                     <Button
                         disableRipple
