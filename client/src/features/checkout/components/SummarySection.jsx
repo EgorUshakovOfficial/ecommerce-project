@@ -18,8 +18,6 @@ export default function SummarySection(props){
                     borderTop:"1px solid lightgray",
                     paddingBlock:"0.5em"
                 }}
-                subtotal={1718.19}
-                shippingCost={12.99}
             />
         </Section>
     )

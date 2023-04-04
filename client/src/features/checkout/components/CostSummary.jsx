@@ -1,6 +1,7 @@
+import {useSelector} from 'react-redux';
 import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import { calculateTotal } from '../../../helper';
+import { calculateSubtotal, calculateTotal } from '../../../helper';
 
 const Row = styled(Box)({
     display:"flex",
@@ -9,7 +10,14 @@ const Row = styled(Box)({
 })
 
 export default function CostSummary(props){
-    const {subtotal, shippingCost} = props;
+    const cart = useSelector(state => state.cart);
+
+    // Subtotal
+    let subtotal = calculateSubtotal(cart);
+
+    // Shipping cost
+    let shippingCost = 0;
+
     return (
         <Box
             display="grid"

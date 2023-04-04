@@ -3,7 +3,7 @@ import {
     Section,
     Separator,
     SummaryMobileSection,
-    SummarySection
+    SummarySection,
 } from '../../features/checkout';
 import {Logo} from '../../components';
 
@@ -42,6 +42,7 @@ export default function CheckoutLayout({children}){
                     <SummarySection style={{marginLeft:"2em"}} />
                 </Box>
             }
+
         </Box>
     );
 }

@@ -1,22 +1,22 @@
-import ContactForm from './components/ContactForm';
+import checkoutSlice from './state/checkoutSlice';
 import InfoSummary from './components/InfoSummary';
 import Navigation from './components/Navigation';
 import PaymentForm from './components/PaymentForm';
+import PersonalForm from './components/PersonalForm';
 import Separator from './components/Separator';
 import Section from './containers/Section';
-import ShippingForm from './components/ShippingForm';
 import ShippingMethod from './components/ShippingMethod';
 import SummaryMobileSection from './components/SummaryMobileSection';
 import SummarySection from './components/SummarySection';
 
 export {
-    ContactForm,
+    checkoutSlice,
     InfoSummary,
     Navigation,
     PaymentForm,
+    PersonalForm,
     Section,
     Separator,
-    ShippingForm,
     ShippingMethod,
     SummaryMobileSection,
     SummarySection

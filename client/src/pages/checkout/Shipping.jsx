@@ -6,10 +6,6 @@ export default function Shipping(){
         <CheckoutLayout>
             <InfoSummary />
             <ShippingMethod />
-            <Navigation
-                prevPage={{name:"Return to information", href:"/checkout/information"}}
-                nextPage={{name:"Continue to payment", href:"/checkout/payment"}}
-            />
         </CheckoutLayout>
     )
 }

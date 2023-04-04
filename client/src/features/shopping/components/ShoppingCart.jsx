@@ -1,6 +1,5 @@
-import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {Fragment, useState} from 'react';
+import {Fragment} from 'react';
 import {Badge, Box, Drawer, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,6 +7,7 @@ import {styled} from '@mui/material/styles';
 import Button from '../../../components/Button';
 import CartItem from './CartItem';
 import useShoppingCart from '../hooks/useShoppingCart';
+import {calculateSubtotal} from '../../../helper';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -43,7 +43,7 @@ export default function ShoppingCart(){
     const {handleCartClose, handleCartOpen, openCart} = useShoppingCart(cart);
 
     // Subtotal
-    let subtotal = cart.reduce((total, {cost, quantity}) => total + cost*quantity, 0);
+    let subtotal = calculateSubtotal(cart);
 
     // Number of products in the shopping cart
     const numItems = cart.length;
@@ -107,7 +107,7 @@ export default function ShoppingCart(){
                         justifyContent="space-between"
                     >
                         <Typography variant="h6" fontWeight="600">Total</Typography>
-                        <Typography variant="h6">{subtotal.toFixed(2)}</Typography>
+                        <Typography variant="h6">{subtotal}</Typography>
                     </Box>
                     <Button
                         disableRipple

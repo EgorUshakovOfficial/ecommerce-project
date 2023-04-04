@@ -30,7 +30,7 @@ export default function Navigation({prevPage, nextPage}){
                     "&.MuiButtonBase-root:hover": {
                       bgcolor: "transparent"
                     }
-                  }}
+                }}
             >
                 {prevPage.name}
             </Button>
@@ -45,6 +45,7 @@ export default function Navigation({prevPage, nextPage}){
                       bgcolor: "transparent"
                     }
                 }}
+                onClick={event => nextPage.callback(event, nextPage.payload)}
             >
                 {nextPage.name}
             </Button>

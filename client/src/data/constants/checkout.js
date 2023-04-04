@@ -4,3 +4,4 @@ export const shippingOptions = [
     {name:"Standard Shipping", value:"standard-shipping", price:6.99},
     {name:"Express shipping", value:"express-shipping", price:16.99}
 ];
+

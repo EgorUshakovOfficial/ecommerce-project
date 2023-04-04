@@ -1,4 +1,5 @@
 import calculateHalfCost from "./calculateHalfCost";
 import calculateTotal from "./calculateTotal";
+import calculateSubtotal from "./calculateSubtotal";
 
-export {calculateHalfCost, calculateTotal};
+export {calculateHalfCost, calculateSubtotal, calculateTotal};

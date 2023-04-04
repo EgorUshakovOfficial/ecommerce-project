@@ -1,6 +1,6 @@
 export default function calculateTotal(subtotal, shippingCost){
-    // Total amount
     let total = subtotal + shippingCost;
 
-    return total.toFixed(2);
+    let roundedTotal = Math.round(total * 100) / 100;
+    return roundedTotal;
 }
