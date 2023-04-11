@@ -2,3 +2,15 @@
 
 # dependencies
 *node_modules
+*venv
+
+# Environment variables
+*.env
+
+# Ignore database files
+*.sqlite3
+*.db
+*.db.sqlite3
+
+# Py cache
+*__pycache__
