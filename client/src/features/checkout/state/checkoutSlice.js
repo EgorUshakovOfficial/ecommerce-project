@@ -17,12 +17,6 @@ const initialState = {
     shipping:{
         shippingMethod:'free-shipping',
         shippingCost:0
-    },
-    payment:{
-        cardNumber:'',
-        cardholder:'',
-        expirationDate:'',
-        securityCode:''
     }
 };
 
@@ -37,7 +31,7 @@ const checkoutSlice = createSlice({
     }
 });
 
-export const {populatePersonal, populatePayment, populateShipping} = checkoutSlice.actions;
+export const {populatePersonal, populateShipping} = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
 

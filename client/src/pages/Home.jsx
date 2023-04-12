@@ -1,14 +1,14 @@
 import {Fragment} from 'react';
-import {Container} from '../containers';
-import {AnnouncementBar, Header, ProductCarousel} from '../components';
+import {AnnouncementBar, Banner, ProductCarousel} from '../components';
 import {Filters, ProductSection} from '../features/gallery';
+import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 
 export default function HomePage(){
     return (
         <Fragment>
             <AnnouncementBar />
-            <Container>
-                <Header />
+            <ShoppingLayout>
+                <Banner />
                 <Filters />
                 <ProductSection />
                 <ProductCarousel
@@ -17,7 +17,7 @@ export default function HomePage(){
                     style={{paddingBottom:"2em"}}
                 />
                 <ProductCarousel title="Recentedly Viewed" id="recentedly-viewed-section" />
-            </Container>
+            </ShoppingLayout>
         </Fragment>
     )
 }

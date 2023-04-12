@@ -8,6 +8,8 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers:{
+        clear: (state, action) => [],
+
         add: (state, action) => state.concat(action.payload),
 
         remove: (state, action) => {
@@ -57,7 +59,7 @@ export const cartSlice = createSlice({
 });
 
 // Actions
-export const {add, remove, increment, decrement} = cartSlice.actions;
+export const {add, clear, remove, increment, decrement} = cartSlice.actions;
 
 // Reducer
 export default cartSlice.reducer;

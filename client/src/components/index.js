@@ -1,6 +1,6 @@
 import AnnouncementBar from './AnnoucementBar';
+import Banner from './header/Banner';
 import Button from './Button';
-import Header from './header/Header';
 import Logo from './Logo';
 import Nav from './header/nav/Nav';
 import ProductCarousel from "./product/ProductCarousel";
@@ -10,8 +10,8 @@ import Ratings from './Ratings';
 
 export {
     AnnouncementBar,
+    Banner,
     Button,
-    Header,
     Logo,
     Nav,
     Product,

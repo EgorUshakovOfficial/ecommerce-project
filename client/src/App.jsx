@@ -3,13 +3,14 @@ import {
     Routes,
     Route
 } from 'react-router-dom';
-import {Home, ProductPage, Checkout} from './pages';
+import {Checkout, Confirmation, Home, ProductPage} from './pages';
 
 export default function App(){
     return(
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/success" element={<Confirmation />} />
                 <Route path="/product-page/:productId" element={
                     <ProductPage
                         name="Airpods- Max"

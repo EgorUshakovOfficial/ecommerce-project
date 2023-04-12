@@ -1,23 +1,31 @@
 import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import { populatePayment } from '../state/checkoutSlice';
-import { validateCardNumber, validateExpirationDate, validateName, valida, validateNumber } from '../../../utils/validators';
+import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {useAddNewOrderMutation} from '../services/checkoutApi';
+import { validateCardNumber, validateExpirationDate, validateName, validateNumber } from '../../../utils/validators';
+import { calculateSubtotal } from '../../../helper';
 
 export default function usePaymentForm(){
-    // Dispatch
-    const dispatch = useDispatch();
+    // Navigate
+    const navigate = useNavigate();
 
-    // Payment
-    const {payment} = useSelector(state => state.checkout);
+    // Adds new order mutation
+    const [addNewOrder] = useAddNewOrderMutation();
+
+    // Checkout
+    const {cart, checkout} = useSelector(state => state);
+
+    // Subtotal
+    let subtotal = calculateSubtotal(cart);
 
     // Field values
-    const [cardNumber, setCardNumber] = useState(payment.cardNumber);
+    const [cardNumber, setCardNumber] = useState('');
 
-    const [cardholder, setCardholder] = useState(payment.cardholder);
+    const [cardholder, setCardholder] = useState('');
 
-    const [expirationDate, setExpirationDate] = useState(payment.expirationDate);
+    const [expirationDate, setExpirationDate] = useState('');
 
-    const [securityCode, setSecurityCode] = useState(payment.securityCode);
+    const [securityCode, setSecurityCode] = useState('');
 
     // Handles on change events
     const handleCardNumberOnChange = event => setCardNumber(event.target.value);
@@ -39,7 +47,7 @@ export default function usePaymentForm(){
     });
 
     // Handles payment form on click
-    const handlePaymentFormOnClick = (event, payload) => {
+    const handlePaymentFormOnClick = async () => {
         // Required payment form fields
         const requiredFields = document.querySelectorAll('input[required]');
 
@@ -63,7 +71,29 @@ export default function usePaymentForm(){
 
         // Send request to Stripe API
         if (missingFields.length === 0 && validData){
-            dispatch(populatePayment(payload));
+            // Payload
+            const payload = {
+                cardNumber,
+                cardholder,
+                expirationDate,
+                securityCode,
+                subtotal,
+                shippingCost:checkout.shipping.shippingCost,
+            }
+
+            try{
+                // Change loading from false to true here...
+
+                // Sends POST request to /api/orders
+                let response = await addNewOrder(payload)
+
+                // Navigates user to the thank you page
+                navigate('/success', {replace:true});
+            }
+
+            catch(err){
+                console.log(err);
+            }
         }
     }
 

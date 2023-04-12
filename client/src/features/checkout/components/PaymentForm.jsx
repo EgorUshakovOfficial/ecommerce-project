@@ -14,8 +14,6 @@ export default function PaymentForm(){
     // Field values and on change events
     const paymentProps = usePaymentForm();
 
-    console.log(useSelector(state => state.checkout))
-
     // Payload
     const payload = {
         cardNumber: paymentProps.cardNumber,

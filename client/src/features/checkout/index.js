@@ -1,4 +1,6 @@
+import checkoutApi from './services/checkoutApi';
 import checkoutSlice from './state/checkoutSlice';
+import ConfirmationMessage from './components/ConfirmationMessage';
 import InfoSummary from './components/InfoSummary';
 import Navigation from './components/Navigation';
 import PaymentForm from './components/PaymentForm';
@@ -10,7 +12,9 @@ import SummaryMobileSection from './components/SummaryMobileSection';
 import SummarySection from './components/SummarySection';
 
 export {
+    checkoutApi,
     checkoutSlice,
+    ConfirmationMessage,
     InfoSummary,
     Navigation,
     PaymentForm,
