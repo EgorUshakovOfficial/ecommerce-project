@@ -2,3 +2,4 @@ django
 djangorestframework
 stripe
 python-dotenv
+django-cors-headers
