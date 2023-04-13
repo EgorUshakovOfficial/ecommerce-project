@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import {Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
+import createShippingAddress from '../utils/createShippingAddress';
 
 const StyledTable = styled(Box)({
     border:"1px solid lightgray",
@@ -16,11 +18,19 @@ const Row = styled(Box)({
 });
 
 export default function SummaryInfo(props){
+    // Personal information in checkout
+    const {personal} = useSelector(state => state.checkout);
+
+    const {email, address, city, region, postalCode, countryRegion} = personal;
+
+    // Creates shipping address
+    const shippingAddress = createShippingAddress(address, city, region, postalCode, countryRegion);
+
     return (
         <StyledTable {...props}>
             <Row borderBottom="1px solid lightgray">
                 <Typography variant="body1" color="gray">Contact</Typography>
-                <Typography variant="body1" pl="1em">egor@gmail.com</Typography>
+                <Typography variant="body1" pl="1em">{email}</Typography>
                 <Link to="/checkout/information" style={{textAlign:"right"}}>
                     Change
                 </Link>
@@ -32,7 +42,7 @@ export default function SummaryInfo(props){
                 >
                     Ship to
                 </Typography>
-                <Typography variant="body1" pl="1em"> 584 Stonegate Way Northwest, Airdrie AB T4B 3C9, Canada</Typography>
+                <Typography variant="body1" pl="1em">{shippingAddress}</Typography>
                 <Link to="/checkout/information" style={{textAlign:"right"}}>Change</Link>
             </Row>
         </StyledTable>

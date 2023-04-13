@@ -1,6 +1,6 @@
 import {useState, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {add, increment} from '../state/cartSlice';
+import {addProduct, incrementProduct} from '../state/cartSlice';
 
 
 // Product mock data
@@ -39,7 +39,7 @@ export default function useControls(productId){
                 quantity:quantityToAdd
             };
 
-            dispatch(add(payload));
+            dispatch(addProduct(payload));
             return;
         }
 
@@ -47,7 +47,7 @@ export default function useControls(productId){
         let cartItem = {...cart[index]};
 
         if (cartItem.quantity + quantityToAdd <= product.quantity)
-            dispatch(increment({productId: cartItem.productId, quantityToAdd}));
+            dispatch(incrementProduct({productId: cartItem.productId, quantityToAdd}));
     };
 
     // Increments the quantity of the product to be added to the shopping cart

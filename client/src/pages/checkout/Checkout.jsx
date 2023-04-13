@@ -1,5 +1,6 @@
 import {useSelector} from 'react-redux';
 import {useParams, Navigate} from 'react-router-dom';
+import { Loading } from '../../components';
 import Information from './Information';
 import Payment from './Payment';
 import Shipping from './Shipping';
@@ -13,15 +14,16 @@ const sectionLookup = {
 
 export default function Checkout(){
     // Cart
-    const cart = useSelector(state => state.cart);
+    const {cart, loading} = useSelector(state => state);
 
     // Section parameter
     const { section } = useParams();
 
+    // Checkout is in loading state
+    if (loading) return <Loading />
+
     // Cart is empty
-    if (cart.length === 0){
-        return <Navigate to="/" replace />
-    }
+    if (cart.length === 0) return <Navigate to="/" replace />
 
     // If section is not valid, redirect the user to the home page
     // Otherwise, direct the user to the specified section

@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {decrement, increment, remove} from '../state/cartSlice';
+import {decrementProduct, incrementProduct, removeProduct} from '../state/cartSlice';
 
 // Mock data
 import { products } from '../../../mock';
@@ -19,7 +19,7 @@ export default function useCartItem(cartItem){
         // Quantity of the cart item with addition to the quantity to be added
         // does not exceed the product supply
         if (cartItem.quantity + quantityToAdd <= product.quantity){
-            dispatch(increment({productId: cartItem.productId, quantityToAdd}));
+            dispatch(incrementProduct({productId: cartItem.productId, quantityToAdd}));
         }
     };
 
@@ -30,13 +30,13 @@ export default function useCartItem(cartItem){
 
         // Quantity of the product in the shopping cart is one
         if (cartItem.quantity === 1){
-            dispatch(remove(payload));
+            dispatch(removeProduct(payload));
             return;
         }
 
         // Otherwise, decrement the quantity by one
         payload.quantityToRemove = 1;
-        dispatch(decrement(payload));
+        dispatch(decrementProduct(payload));
     }
 
     return {decrementQuantityOnClick, incrementQuantityOnClick}

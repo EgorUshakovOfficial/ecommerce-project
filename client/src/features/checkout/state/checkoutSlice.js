@@ -15,8 +15,8 @@ const initialState = {
         postalCode:''
     },
     shipping:{
-        shippingMethod:'free-shipping',
-        shippingCost:0
+        shippingMethod:'',
+        shippingCost:''
     }
 };
 

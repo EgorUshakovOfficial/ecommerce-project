@@ -8,11 +8,11 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers:{
-        clear: (state, action) => [],
+        clearCart: () => [],
 
-        add: (state, action) => state.concat(action.payload),
+        addProduct: (state, action) => state.concat(action.payload),
 
-        remove: (state, action) => {
+        removeProduct: (state, action) => {
             const { payload } = action;
 
             // Index of the cart item to be removed
@@ -25,7 +25,7 @@ export const cartSlice = createSlice({
         },
 
         // Increments the quantity of the product in the shopping cart
-        increment: (state, action) => {
+        incrementProduct: (state, action) => {
             const { payload } = action;
 
             // Index of the cart item to be incremented
@@ -41,7 +41,7 @@ export const cartSlice = createSlice({
         },
 
         // Decrements the quantity of the product in the shopping cart
-        decrement: (state, action) => {
+        decrementProduct: (state, action) => {
             const { payload } = action;
 
             // Index of the cart item to be decremented
@@ -59,7 +59,13 @@ export const cartSlice = createSlice({
 });
 
 // Actions
-export const {add, clear, remove, increment, decrement} = cartSlice.actions;
+export const {
+    addProduct,
+    clearCart,
+    removeProduct,
+    incrementProduct,
+    decrementProduct
+} = cartSlice.actions;
 
 // Reducer
 export default cartSlice.reducer;

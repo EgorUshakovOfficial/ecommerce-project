@@ -11,6 +11,7 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/success" element={<Confirmation />} />
+                <Route path="/checkout/:section" element={<Checkout />} />
                 <Route path="/product-page/:productId" element={
                     <ProductPage
                         name="Airpods- Max"
@@ -21,7 +22,6 @@ export default function App(){
                         avgRating={4}
                     />
                 } />
-                <Route path="/checkout/:section" element={<Checkout />} />
             </Routes>
         </Router>
     );
