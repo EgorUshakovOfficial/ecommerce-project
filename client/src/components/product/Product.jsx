@@ -1,7 +1,7 @@
 import {Box, IconButton, Typography} from '@mui/material';
 import {FavoriteBorder} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
-import Button from '../Button';
+import Button from '../utils/Button';
 import ProductImage from "./ProductImage";
 import ProductRatings from '../Ratings';
 

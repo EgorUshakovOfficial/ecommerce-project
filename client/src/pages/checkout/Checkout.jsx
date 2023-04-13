@@ -20,7 +20,7 @@ export default function Checkout(){
     const { section } = useParams();
 
     // Checkout is in loading state
-    if (loading) return <Loading />
+    if (loading.isLoading) return <Loading />
 
     // Cart is empty
     if (cart.length === 0) return <Navigate to="/" replace />

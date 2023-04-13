@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import { useSelector } from 'react-redux';
-import {Box, TextField, Tooltip, Typography} from '@mui/material';
+import {Alert, Box, TextField, Tooltip, Typography} from '@mui/material';
 import {
     HttpsOutlined as HttpsOutlinedIcon,
     HelpOutlineRounded as HelpOutlineRoundedIcon
@@ -11,8 +11,11 @@ import Navigation from './Navigation';
 import { validateCardNumber, validateExpirationDate} from '../../../utils/validators';
 
 export default function PaymentForm(){
-    // Field values and on change events
+    // Field values and callabcks on different trigger events
     const paymentProps = usePaymentForm();
+
+    // Loading state
+    const {loading} = useSelector(state => state);
 
     // Payload
     const payload = {
@@ -24,6 +27,13 @@ export default function PaymentForm(){
 
     return (
         <Fragment>
+            {loading.error !== null && <Alert
+                severity="error"
+                color="error"
+                onClose={paymentProps.handleCardErrorOnClick}
+            >
+                {loading.error.data.error}
+            </Alert>}
             <Box>
                 <Typography
                     variant="h2"

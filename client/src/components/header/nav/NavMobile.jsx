@@ -6,7 +6,7 @@ import {
     Menu as MenuIcon,
     Close as CloseIcon
 } from '@mui/icons-material';
-import Button from '../../Button';
+import Button from '../../utils/Button';
 
 // Button style
 const btnStyle = {
