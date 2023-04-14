@@ -1,3 +1,4 @@
+// Calculates total, determined by subtotal and shipping cost, owed by the customer
 export default function calculateTotal(subtotal, shippingCost){
     let total = subtotal + shippingCost;
 

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Tooltip, RadioGroup, Radio, Box, Typography} from '@mui/material';
+import {Tooltip, Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 
 // Colors

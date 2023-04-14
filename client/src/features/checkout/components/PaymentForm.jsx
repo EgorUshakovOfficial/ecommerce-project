@@ -6,7 +6,7 @@ import {
     HelpOutlineRounded as HelpOutlineRoundedIcon
 } from '@mui/icons-material';
 import usePaymentForm from '../hooks/usePaymentForm';
-import {helpCaption, secureCaption} from '../../../data/constants/captions';
+import {helpCaption, secureCaption} from '../../../utils/constants';
 import Navigation from './Navigation';
 import { validateCardNumber, validateExpirationDate} from '../../../utils/validators';
 

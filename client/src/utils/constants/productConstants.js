@@ -1,3 +1,4 @@
+// Filter options
 export const filters = [
     {typeFilter:"Headphone Type", typeFilterOptions:['Earphones', 'Headphones', 'Airpods']},
     {typeFilter:"Price", typeFilterOptions:["Lowest", "Highest"]},
@@ -6,4 +7,3 @@ export const filters = [
     {typeFilter:"Material", typeFilterOptions:[]},
     {typeFilter:"Offer", typeFilterOptions:[]}
 ]
-export const PRODUCT_IMAGE_HEIGHT = 100

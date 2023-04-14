@@ -1,7 +1,7 @@
 import {Box, Button, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import bannerImg from '../../assets/images/banner-image.jpg'
-import { bgColor } from '../../data/styles/colors';
+import { bgColor } from '../../utils/constants';
 import ProductImage from '../product/ProductImage';
 
 // Styled banner wrapper

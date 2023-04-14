@@ -1,12 +1,13 @@
 import {useState} from 'react';
 
-export default function useShoppingCart(cart){
-    // State of the cart
+export default function useShoppingCart(){
+    // Determines the open state of the cart
     const [openCart, setOpenCart] = useState(false);
 
-    // Callbacks on specified events
+    // Opens cart on click
     const handleCartOpen = () => setOpenCart(true);
 
+    // Closes cart on click
     const handleCartClose = () => setOpenCart(false);
 
     return {handleCartClose, handleCartOpen, openCart}

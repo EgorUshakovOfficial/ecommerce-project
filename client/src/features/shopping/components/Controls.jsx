@@ -3,7 +3,6 @@ import {Box, Button, IconButton, Typography} from '@mui/material';
 import {Add as AddIcon, Remove as SubtractIcon} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
 import useControls from '../hooks/useControls';
-import {ProductControls} from '../../../components';
 
 const ControlContainer = styled('div')({
     display:"grid",
@@ -13,7 +12,7 @@ const ControlContainer = styled('div')({
 });
 
 export default function Controls({quantity}){
-    // Retrieve product id from url
+    // Retrieve product id from the url
     const {productId} = useParams();
 
     const {

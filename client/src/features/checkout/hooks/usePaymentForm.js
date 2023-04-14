@@ -23,19 +23,23 @@ export default function usePaymentForm(){
     // Subtotal
     let subtotal = calculateSubtotal(cart);
 
-    // Field values
+    // 16 digit card number on the debit or credit card
     const [cardNumber, setCardNumber] = useState('');
 
+    // Owner of the card
     const [cardholder, setCardholder] = useState('');
 
+    // Date of expiry in mm/yy format
     const [expirationDate, setExpirationDate] = useState('');
 
+    // CSV code
     const [securityCode, setSecurityCode] = useState('');
 
 
-    // Handles on change events
+    // Handles card number when input is changed
     const handleCardNumberOnChange = event => setCardNumber(event.target.value);
 
+    // Handle card holder when input is changed
     const handleCardholderOnChange = event => setCardholder(prevState => {
         // New cardholder
         let newCardholder = event.target.value;
@@ -43,15 +47,18 @@ export default function usePaymentForm(){
         return validateName(newCardholder) ? newCardholder : prevState;
     });
 
-    // Handles card error on click
+    // Clears error in Redux store on click
     const handleCardErrorOnClick = () => dispatch(clearError());
 
+    // Handles expiration date as input changes
     const handleExpirationDateOnChange = event => setExpirationDate(event.target.value);
 
+    // Handles and validates security code as input changes
     const handleSecurityCodeOnChange = event => setSecurityCode(prevState => {
         // New security code
         let newSecurityCode = event.target.value;
 
+        // Validates if new security code only contains numerical characters
         return validateNumber(newSecurityCode) ? newSecurityCode : prevState;
     });
 
@@ -75,11 +82,12 @@ export default function usePaymentForm(){
             input.classList.add('error')
         });
 
-        // Validate payment data
+        // Both card number and expiration date are valid
         let validData = validateCardNumber(cardNumber) || validateExpirationDate(expirationDate);
 
-        // Send request to Stripe API
+        // No missing fields and all required input fields contain valid data
         if (missingFields.length === 0 && validData){
+
             // Payload
             const payload = {
                 cardNumber,
@@ -91,21 +99,21 @@ export default function usePaymentForm(){
             }
 
             try{
-                // Change state of the loading state from false to true
+                // Changes state of the loading state from false to true
                 dispatch(setLoading());
 
-                // Sends POST request to /api/orders
+                // Sends POST request /api/orders endpoint and processes payment using Stripe API
                 let response = await addNewOrder(payload).unwrap()
 
-                // Navigates user to the thank you page
+                // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
 
-                // Clear loading
+                // Clears loading state and changes it from true to false
                 dispatch(clearLoading());
             }
 
             catch(err){
-                // Sets error
+                // Sets error if response from the API is not okay
                 dispatch(setError(err));
             }
         }

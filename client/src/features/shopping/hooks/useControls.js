@@ -7,7 +7,10 @@ import {addProduct, incrementProduct} from '../state/cartSlice';
 import {products} from '../../../mock';
 
 export default function useControls(productId){
-    // Quantity to add
+    // Dispatch API
+    const dispatch = useDispatch();
+
+    // State of the quantity to add to the cart
     const [quantityToAdd, setQuantityToAdd] = useState(1);
 
     // Cart state
@@ -20,15 +23,12 @@ export default function useControls(productId){
         return product;
     }, []);
 
-    // Dispatch
-    const dispatch = useDispatch();
-
-    // Adds product to the shopping cart on click
+    // Add product to the shopping cart on click
     const addCartItemOnClick = () => {
-        // Position of the product in the cart state
+        // Position of the product in the array
         let index = cart.findIndex(cartItem => cartItem.productId === productId);
 
-        // If product is not in the shopping cart, add it
+        // If product is not in the shopping cart indicated by -1, add it
         if (index === -1){
             const payload = {
                 productId:product.productId,
@@ -43,9 +43,11 @@ export default function useControls(productId){
             return;
         }
 
-        // Increments the quantity of the product in the shopping cart by desired amount
+        // Otherwiese, increments the quantity of the product in the shopping cart by desired amount
         let cartItem = {...cart[index]};
 
+        // If the sum of the quantity of the item in cart and quantity to be added to cart
+        // is at most equal to the product quantity, dispatch the increment product against the Redux store
         if (cartItem.quantity + quantityToAdd <= product.quantity)
             dispatch(incrementProduct({productId: cartItem.productId, quantityToAdd}));
     };

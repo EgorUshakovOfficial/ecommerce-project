@@ -1,3 +1,4 @@
+// Ensures only name consists of only alpha characters
 const validateName = name => {
     const nameRegex = /^[a-zA-Z ]+$/;
 

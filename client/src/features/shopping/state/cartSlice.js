@@ -8,14 +8,17 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers:{
+        // Clears cart of all products
         clearCart: () => [],
 
+        // Adds new product into the cart
         addProduct: (state, action) => state.concat(action.payload),
 
+        // Removes product from the cart
         removeProduct: (state, action) => {
             const { payload } = action;
 
-            // Index of the cart item to be removed
+            // Index of the cart item in the array to be removed
             let index = state.findIndex( ({ productId }) => payload.productId === productId);
 
             // Exclude the cart item from the state

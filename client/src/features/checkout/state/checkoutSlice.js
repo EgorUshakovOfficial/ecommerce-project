@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-// Initial state
+// Initial state of the checkout
 const initialState = {
+    // Personal information
     personal:{
         email:'',
         countryRegion:'',
@@ -14,6 +15,7 @@ const initialState = {
         region:'',
         postalCode:''
     },
+    // Shipping address
     shipping:{
         shippingMethod:'',
         shippingCost:''
@@ -25,9 +27,11 @@ const checkoutSlice = createSlice({
     name:'checkout',
     initialState,
     reducers:{
+        // Populates personal information of the user in the checkout state
         populatePersonal: (state, {payload}) => ({...state, personal:{...payload}}),
+
+        // Populates shipping information of the user in the checkout state
         populateShipping: (state, {payload}) => ({...state, shipping:{...payload}}),
-        populatePayment: (state, {payload}) => ({...state, payment:{...payload}})
     }
 });
 

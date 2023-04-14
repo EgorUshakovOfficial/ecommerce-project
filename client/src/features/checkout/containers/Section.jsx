@@ -1,7 +1,7 @@
 import {Box, useMediaQuery, useTheme} from '@mui/material';
 
 export default function Section({children, style}){
-    // Theme
+    // Theme API
     const theme = useTheme();
 
     // Matches width screen size of at least 600px

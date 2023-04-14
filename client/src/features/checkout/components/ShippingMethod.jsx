@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography} from '@mui/material';
-import { shippingOptions } from '../../../data/constants';
+import { shippingOptions } from '../../../utils/constants';
 import useShippingMethod from '../hooks/useShippingMethod';
 import Navigation from './Navigation';
 

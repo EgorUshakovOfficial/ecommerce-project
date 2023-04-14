@@ -1,3 +1,4 @@
+// Validates shipping address
 const validateAddress = address => {
     const addressRegex = /^[a-zA-Z0-9\s,'-]*$/;
 

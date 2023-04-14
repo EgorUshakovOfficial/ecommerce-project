@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import {clearCart} from '../features/shopping';
 import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 import {ConfirmationMessage} from '../features/checkout';
-import { clearLoading } from '../app/state/loadingSlice';
 
 export default function Confirmation(){
     // Dispatch
@@ -12,7 +11,7 @@ export default function Confirmation(){
     useLayoutEffect(() => {
         // Clears cart
         dispatch(clearCart())
-    }, []);
+    }, [dispatch]);
 
     return (
         <ShoppingLayout>

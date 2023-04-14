@@ -1,14 +1,14 @@
 import {useDispatch} from 'react-redux';
 import {decrementProduct, incrementProduct, removeProduct} from '../state/cartSlice';
 
-// Mock data
+// Mock data-replace with data from the database
 import { products } from '../../../mock';
 
 export default function useCartItem(cartItem){
-    // Product
+    // Specified product that is in cart
     const product = products.filter(product => product.productId === cartItem.productId)[0];
 
-    // Dispatch
+    // Dispatch API
     const dispatch = useDispatch();
 
     // Increment the quantity of the product in the shopping cart
@@ -28,7 +28,9 @@ export default function useCartItem(cartItem){
         // Payload
         const payload = {productId: cartItem.productId};
 
-        // Quantity of the product in the shopping cart is one
+        // If quantity of the product in the shopping cart is one
+        // and the desired action is to decrement it,
+        // remove the product from the cart
         if (cartItem.quantity === 1){
             dispatch(removeProduct(payload));
             return;

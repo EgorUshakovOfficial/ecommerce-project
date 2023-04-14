@@ -4,6 +4,7 @@ import earphones from '../assets/images/earphones.jpg';
 import headphones from '../assets/images/headphone.jpg';
 import skullCandy from '../assets/images/skull-candy.jpg';
 
+// Mock products
 export const products = [
     {
         productId:"1",
