@@ -1,5 +1,5 @@
 import {Fragment} from 'react';
-import {styled, useMediaQuery} from '@mui/material';
+import {Box, styled, useMediaQuery} from '@mui/material';
 import Logo from '../../Logo';
 import NavMobile from './NavMobile';
 import NavCenter from './NavCenter';
@@ -19,7 +19,12 @@ export default function Nav(){
     const matchMobile = useMediaQuery('(max-width: 1015px)', {noSsr:true});
 
     return (
-        <StyledNav>
+        <StyledNav
+            style={{
+                width: matchMobile ? "calc(100% - 40px)" : "100%",
+                marginInline: matchMobile ? "auto": "none"
+            }}
+        >
             {matchMobile ?
                 <Fragment>
                     <NavMobile />

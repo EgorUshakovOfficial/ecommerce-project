@@ -1,10 +1,17 @@
 import {Fragment} from 'react';
-import {Box, Checkbox, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from '@mui/material';
+import {Box, Checkbox, FormControl, InputLabel, MenuItem, Select, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import Navigation from './Navigation';
 import usePersonalForm from '../hooks/usePersonalForm';
 import { validateAddress, validateEmail } from '../../../utils/validators';
 
 export default function PersonalForm(){
+    // Theme API
+    const theme = useTheme();
+
+    // Matches mobile if screen width size is at most 600px
+    const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    // Personal props
     const personalProps = usePersonalForm();
 
     // Payload
@@ -54,7 +61,7 @@ export default function PersonalForm(){
                     <Typography variant="body2" color="gray">Email me with news and offers</Typography>
                 </Box>
             </Box>
-                    <Box
+            <Box
                 display="grid"
                 gap="1em"
             >
@@ -74,7 +81,7 @@ export default function PersonalForm(){
                 </FormControl>
                 <Box
                     display="grid"
-                    gridTemplateColumns="repeat(2, 1fr)"
+                    gridTemplateColumns={matchMobile ? "100%" : "repeat(2, 1fr)"}
                     gap="1em"
                 >
                     <TextField
@@ -130,7 +137,7 @@ export default function PersonalForm(){
                 />
                 <Box
                     display="grid"
-                    gridTemplateColumns="repeat(3, 1fr)"
+                    gridTemplateColumns={matchMobile ? "100%" :"repeat(3, 1fr)"}
                     gap="0.5em"
                 >
                     <TextField

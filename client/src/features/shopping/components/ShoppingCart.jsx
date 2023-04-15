@@ -62,7 +62,7 @@ export default function ShoppingCart(){
                         variant:"text",
                         textTransform:"none",
                         background:"transparent",
-                        fontSize:"1em"
+                        fontSize:"1em",
                     }}
                     aria-label="open cart"
                     onClick={handleCartOpen}

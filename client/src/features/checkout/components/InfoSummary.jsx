@@ -14,7 +14,7 @@ const Row = styled(Box)({
     display:"grid",
     gridTemplateColumns:"max-content 3fr 1fr",
     alignItems:"center",
-    padding:"0.5em 1em",
+    padding:"0.5em 1em"
 });
 
 export default function SummaryInfo(props){
@@ -30,7 +30,14 @@ export default function SummaryInfo(props){
         <StyledTable {...props}>
             <Row borderBottom="1px solid lightgray">
                 <Typography variant="body1" color="gray">Contact</Typography>
-                <Typography variant="body1" pl="1em">{email}</Typography>
+                <Typography
+                    variant="body1"
+                    pl="1em"
+                    maxWidth={200}
+                    sx={{wordWrap:"break-word"}}
+                 >
+                    {email}
+                </Typography>
                 <Link to="/checkout/information" style={{textAlign:"right"}}>
                     Change
                 </Link>
