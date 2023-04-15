@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import { useSelector } from 'react-redux';
-import {Alert, Box, TextField, Tooltip, Typography} from '@mui/material';
+import {Alert, Box, TextField, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {
     HttpsOutlined as HttpsOutlinedIcon,
     HelpOutlineRounded as HelpOutlineRoundedIcon
@@ -11,6 +11,12 @@ import Navigation from './Navigation';
 import { validateCardNumber, validateExpirationDate} from '../../../utils/validators';
 
 export default function PaymentForm(){
+    // Theme API
+    const theme = useTheme();
+
+    // Matches width screen size of at most 600px
+    const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     // Field values and callabcks on different trigger events
     const paymentProps = usePaymentForm();
 
@@ -83,8 +89,8 @@ export default function PaymentForm(){
                     />
                     <Box
                         display="grid"
-                        gridTemplateColumns="repeat(2, 1fr)"
-                        gap="0.25em"
+                        gridTemplateColumns={matchMobile ? "100%" : "repeat(2, 1fr)"}
+                        gap={matchMobile ? "0.5em" : "0.25em"}
                     >
                         <TextField
                             placeholder='Expiration date (MM/YY)'

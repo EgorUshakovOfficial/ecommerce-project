@@ -138,7 +138,7 @@ export default function PersonalForm(){
                 <Box
                     display="grid"
                     gridTemplateColumns={matchMobile ? "100%" :"repeat(3, 1fr)"}
-                    gap="0.5em"
+                    gap={matchMobile ? "1em" : "0.5em"}
                 >
                     <TextField
                         id="city"

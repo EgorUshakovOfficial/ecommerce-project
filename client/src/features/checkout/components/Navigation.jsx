@@ -7,7 +7,7 @@ export default function Navigation({prevPage, nextPage}){
     const theme = useTheme();
 
     // Matches width screen size of at least 600px
-    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+    const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Box
@@ -15,8 +15,8 @@ export default function Navigation({prevPage, nextPage}){
                 display:"flex",
                 alignItems:"center",
                 justifyContent:"space-between",
-                flexDirection: matchDesktop ? "row" : "column",
-                gap: matchDesktop ? 0 : "0.25em"
+                flexDirection: matchMobile ? "column":"row",
+                gap: matchMobile ? "0.25em" : 0
             }}
         >
             <Button

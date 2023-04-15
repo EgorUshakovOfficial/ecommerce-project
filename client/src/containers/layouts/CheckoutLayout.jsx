@@ -11,26 +11,26 @@ export default function CheckoutLayout({children}){
     // Theme
     const theme = useTheme();
 
-    // Matches width screen size of at least 600px
-    const matchDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+    // Matches width screen size of at most 600px
+    const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Box
             sx={{
                 display:"grid",
-                gridTemplateColumns:matchDesktop ? "repeat(2, 1fr)" : "100%",
+                gridTemplateColumns: matchMobile ? "100%" : "repeat(2, 1fr)",
                 minHeight:"100vh",
-                width:matchDesktop ? "100%" : "90%",
-                marginInline: matchDesktop ? "none" : "auto"
+                width:matchMobile ? "90%" : "100%",
+                marginInline: matchMobile ? "auto" : "none"
             }}
         >
-            <Section style={{marginInline:"auto"}}>
+            <Section style={{marginInline: matchMobile ? "none" : "auto"}}>
                 <Logo />
-                {matchDesktop === false && <SummaryMobileSection />}
+                {matchMobile && <SummaryMobileSection />}
                 <Separator />
                 {children}
             </Section>
-            {matchDesktop &&
+            {matchMobile === false &&
                 <Box
                     variant="aside"
                     sx={{

@@ -17,10 +17,14 @@ const Row = styled(Box)({
     padding:"0.5em 1em"
 });
 
+// Max width for info
+const MAX_INFO_WIDTH = 150;
+
 export default function SummaryInfo(props){
     // Personal information in checkout
     const {personal} = useSelector(state => state.checkout);
 
+    // Personal information fields
     const {email, address, city, region, postalCode, countryRegion} = personal;
 
     // Creates shipping address
@@ -33,7 +37,7 @@ export default function SummaryInfo(props){
                 <Typography
                     variant="body1"
                     pl="1em"
-                    maxWidth={200}
+                    maxWidth={MAX_INFO_WIDTH}
                     sx={{wordWrap:"break-word"}}
                  >
                     {email}
@@ -46,6 +50,8 @@ export default function SummaryInfo(props){
                 <Typography
                     variant="body1"
                     color="gray"
+                    maxWidth={MAX_INFO_WIDTH}
+                    sx={{wordWrap:"break-word"}}
                 >
                     Ship to
                 </Typography>
