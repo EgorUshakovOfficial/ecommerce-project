@@ -7,7 +7,9 @@ import useControls from '../hooks/useControls';
 const ControlContainer = styled('div')({
     display:"grid",
     gridTemplateRows:"repeat(2, 1fr)",
-    gridTemplateColumns:"repeat(2, 1fr)",
+    gridTemplateColumns:"repeat(2, max-content)",
+    alignItems:"center",
+    alignContent:"center",
     gap:"0.5em",
 });
 
