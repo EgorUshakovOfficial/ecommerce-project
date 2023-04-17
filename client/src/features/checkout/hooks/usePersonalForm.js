@@ -115,7 +115,7 @@ export default function usePersonalForm(){
         missingFields.forEach(input => input.classList.add('error'));
 
         // Validate email and street address
-        let validData = validateEmail(email) || validateAddress(address)
+        let validData = validateEmail(email) && validateAddress(address)
 
         if (missingFields.length === 0 && validData){
             // Populate personal form

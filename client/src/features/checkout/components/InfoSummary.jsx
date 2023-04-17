@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {Box, Typography} from '@mui/material';
+import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import createShippingAddress from '../utils/createShippingAddress';
 
@@ -12,15 +12,18 @@ const StyledTable = styled(Box)({
 
 const Row = styled(Box)({
     display:"grid",
-    gridTemplateColumns:"max-content 3fr 1fr",
+    gridTemplateColumns:"max-content minmax(180px, 3fr) max-content",
     alignItems:"center",
     padding:"0.5em 1em"
 });
 
-// Max width for info
-const MAX_INFO_WIDTH = 150;
-
 export default function SummaryInfo(props){
+    // Theme API
+    const theme = useTheme();
+
+    // Matches screen width size of at most 600px
+    const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     // Personal information in checkout
     const {personal} = useSelector(state => state.checkout);
 
@@ -32,12 +35,13 @@ export default function SummaryInfo(props){
 
     return (
         <StyledTable {...props}>
-            <Row borderBottom="1px solid lightgray">
+            <Row
+                borderBottom="1px solid lightgray"
+            >
                 <Typography variant="body1" color="gray">Contact</Typography>
                 <Typography
                     variant="body1"
                     pl="1em"
-                    maxWidth={MAX_INFO_WIDTH}
                     sx={{wordWrap:"break-word"}}
                  >
                     {email}
@@ -50,12 +54,15 @@ export default function SummaryInfo(props){
                 <Typography
                     variant="body1"
                     color="gray"
-                    maxWidth={MAX_INFO_WIDTH}
-                    sx={{wordWrap:"break-word"}}
                 >
                     Ship to
                 </Typography>
-                <Typography variant="body1" pl="1em">{shippingAddress}</Typography>
+                <Typography
+                    variant="body1"
+                    pl="1em"
+                >
+                    {shippingAddress}
+                </Typography>
                 <Link to="/checkout/information" style={{textAlign:"right"}}>Change</Link>
             </Row>
         </StyledTable>

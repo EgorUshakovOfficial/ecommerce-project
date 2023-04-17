@@ -83,7 +83,7 @@ export default function usePaymentForm(){
         });
 
         // Both card number and expiration date are valid
-        let validData = validateCardNumber(cardNumber) || validateExpirationDate(expirationDate);
+        let validData = validateCardNumber(cardNumber) && validateExpirationDate(expirationDate);
 
         // No missing fields and all required input fields contain valid data
         if (missingFields.length === 0 && validData){
@@ -103,7 +103,7 @@ export default function usePaymentForm(){
                 dispatch(setLoading());
 
                 // Sends POST request /api/orders endpoint and processes payment using Stripe API
-                let response = await addNewOrder(payload).unwrap()
+                await addNewOrder(payload).unwrap()
 
                 // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
