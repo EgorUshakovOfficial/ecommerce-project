@@ -58,13 +58,9 @@ class PaymentCard:
 
             return payment_method
 
-        except stripe.error.CardError as e:
-            # Handles card error
-            raise e
-
         except Exception as e:
-            # Handles general error
-            return e
+            # Throws any error on payment creations
+            raise e
 
     # Process payment
     def process_payment(self, subtotal, shipping_cost):
@@ -72,7 +68,7 @@ class PaymentCard:
             # Creates payment method id from the card details
             payment_method = self.create_payment_method()
 
-            # Amount owed in pennies
+            # Calculates total amount owed in pennies
             amount = self.calculate_total(subtotal, shipping_cost)
 
             # Creates a charge with payment method id and amount
@@ -85,10 +81,8 @@ class PaymentCard:
 
             return charge
 
-        except stripe.error.CardError as e:
-            raise e
-
         except Exception as e:
+            # Throws any error on payment intent
             raise e
 
     # Calculates total amount

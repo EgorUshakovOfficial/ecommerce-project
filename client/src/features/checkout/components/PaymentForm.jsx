@@ -38,7 +38,7 @@ export default function PaymentForm(){
                 color="error"
                 onClose={paymentProps.handleCardErrorOnClick}
             >
-                {loading.error.data.error}
+                {loading.error.data.message}
             </Alert>}
             <Box>
                 <Typography

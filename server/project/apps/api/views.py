@@ -1,4 +1,5 @@
 import stripe
+from stripe.error import CardError
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -34,9 +35,11 @@ def order_view(request):
 
         return Response({"message": "Charge created successfully"}, status=status.HTTP_201_CREATED)
 
-    except stripe.error.CardError as e:
-        return Response({"error":e.error.message}, status=status.HTTP_400_BAD_REQUEST)
+    # Handles any Stripe errors pertaining to card details
+    except CardError as e:
+        return Response({"error":e.code, "message":e.error.message}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Handles any other errors
     except Exception as e:
         message = e.message if hasattr(e, "message") else e
-        return Response({"error": message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({"error":"Internal server error", "message": message}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
