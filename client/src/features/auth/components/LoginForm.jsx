@@ -1,7 +1,7 @@
 import {Box, IconButton, styled} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LoginHeader from './LoginHeader';
-import LoginOptions from './LoginOptions';
+import LoginServices from './LoginServices';
 
 const StyledForm = styled(Box)( ({theme}) => ({
     position:"absolute",
@@ -31,7 +31,7 @@ export default function LoginForm({handleOpenModalOnClose}){
                 <CloseIcon size="" />
             </IconButton>
            <LoginHeader />
-           <LoginOptions />
+           <LoginServices />
         </StyledForm>
     )
 }

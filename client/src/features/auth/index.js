@@ -1,3 +1,3 @@
-import Login from "./components/Login";
+import Login from "./components/LoginModal";
 
 export {Login};

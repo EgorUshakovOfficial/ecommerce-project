@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-export default function useLogin(){
+export default function useLoginModal(){
     const [openModal, setOpenModal] = useState(false);
 
     // Handles the state of login modal when it's clicked

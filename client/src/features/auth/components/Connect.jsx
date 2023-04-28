@@ -1,6 +1,10 @@
 import {Button} from '@mui/material';
 
-export default function Connect({icon, strategyName}){
+export default function Connect({
+    icon,
+    strategyName,
+    callback
+}){
     return (
         <Button
             color="inherit"
@@ -17,7 +21,7 @@ export default function Connect({icon, strategyName}){
                 borderRadius:"0.25em",
                 border:"1px solid lightgray"
             }}
-            onClick={() => {}}
+            onClick={() => callback()}
         >
             {strategyName}
         </Button>
