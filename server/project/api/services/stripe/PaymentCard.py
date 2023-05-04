@@ -1,4 +1,4 @@
-from apps.api.config.stripe import StripeSingleton
+from api.config.stripe import StripeSingleton
 
 # Stripe instance
 stripe = StripeSingleton.get_instance()
