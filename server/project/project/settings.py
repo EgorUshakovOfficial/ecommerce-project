@@ -34,11 +34,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api'
+    'apps',
+    'apps.authentication',
+    'apps.cart',
+    'apps.discount',
+    'apps.orders',
+    'apps.products',
+    'apps.reviews',
+    'apps.transactions',
+    'apps.users'
 ]
 
 # Customized User model
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Middleware
 MIDDLEWARE = [
