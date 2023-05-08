@@ -20,3 +20,6 @@ class ProductImage(models.Model):
 
     # Product's Image url
     image_url = models.TextField()
+
+    def __str__(self):
+        return f'{self.product.title} ({self.color_name})'
