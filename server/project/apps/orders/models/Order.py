@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 # Order Details
-class OrderDetails(models.Model):
+class Order(models.Model):
     # Order ID number
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 

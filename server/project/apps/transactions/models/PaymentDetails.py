@@ -1,8 +1,10 @@
 import uuid
 from django.db import models
 
-# Order Details and User
-from apps.orders.models.OrderDetails import OrderDetails
+# Order
+from apps.orders.models.Order import Order
+
+# User
 from apps.users.models.User import User
 
 # Order Details and User
@@ -11,7 +13,7 @@ class PaymentDetails(models.Model):
     payment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Order Details
-    order_details = models.OneToOneField(OrderDetails, on_delete=models.SET_NULL, null=True)
+    order_details = models.OneToOneField(Order, on_delete=models.SET_NULL, null=True)
 
     # User
     user = models.OneToOneField(User, on_delete=models.CASCADE)
