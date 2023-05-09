@@ -1,12 +1,12 @@
 import {Box} from '@mui/material';
 
-export default function ProductImage({image, style}){
+export default function Image({image, style}){
     return (
         <Box
             style={style}
         >
             <img
-                style={{
+                style={{ // Inline style-fix this
                     width:"100%",
                     height:"100%",
                     objectFit:"contain"

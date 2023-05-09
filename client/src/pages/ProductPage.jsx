@@ -3,7 +3,8 @@ import {useParams} from 'react-router-dom';
 import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container} from '../containers';
-import {AnnouncementBar, Nav} from '../components';
+import {AnnouncementBar} from '../components';
+import {Nav} from '../features/nav';
 import { ImageGallery, Content} from "../features/shopping";
 import { calculateHalfCost } from '../helper';
 

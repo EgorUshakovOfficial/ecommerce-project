@@ -1,7 +1,7 @@
 import {Box, Typography, useMediaQuery} from '@mui/material';
 import {styled, useTheme} from '@mui/material/styles';
 import Product from './Product';
-import {products} from '../../mock/products';
+import {products} from '../../../../mock/products';
 
 // Inner wrapper
 const CarouselContainer = styled(Box)( ({theme}) => ({

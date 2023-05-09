@@ -2,7 +2,7 @@ import {Box, Button, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Filter from './FilterDropdown';
-import {filters} from '../../../utils/constants';
+import {filters} from '../../../../utils/constants';
 
 const Container = styled(Box)(({theme}) => ({
     display:"flex",

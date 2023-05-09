@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
 import {Box, styled, useMediaQuery} from '@mui/material';
-import Logo from '../../Logo';
+import {Logo} from '../../../components';
 import NavMobile from './NavMobile';
 import NavCenter from './NavCenter';
 import NavRight from './NavRight';

@@ -1,6 +1,6 @@
 import {Fragment} from 'react';
-import {AnnouncementBar, Banner, ProductCarousel} from '../components';
-import {Filters, ProductSection} from '../features/gallery';
+import {AnnouncementBar} from '../components';
+import {Banner, Filters, ProductCarousel, ProductSection} from '../features/productCatalog';
 import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 
 export default function HomePage(){

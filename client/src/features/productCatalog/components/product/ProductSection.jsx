@@ -1,7 +1,7 @@
 import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {products} from '../../../mock/products'
-import {Product} from '../../../components';
+import {products} from '../../../../mock/products'
+import Product from './Product';
 
 // Product gallery
 const ProductGallery = styled(Box)({

@@ -4,7 +4,7 @@ import {
     Remove as SubtractIcon
 } from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
-import ProductImage from '../../../components/product/ProductImage';
+import {Image} from '../../../components';
 import useCartItem from '../hooks/useCartItem';
 
 // Cart item container
@@ -36,7 +36,7 @@ export default function CartItem(props){
 
     return (
         <StyledCartItem productId={productId} style={props.style}>
-            <ProductImage
+            <Image
                 image={image}
                 style={{
                     width:PRODUCT_IMAGE_WIDTH,

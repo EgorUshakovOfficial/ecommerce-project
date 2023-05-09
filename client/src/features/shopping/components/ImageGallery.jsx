@@ -1,6 +1,6 @@
 import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import { ProductImage } from "../../../components";
+import { Image } from "../../../components";
 
 const IMAGE_WIDTH = 140, IMAGE_HEIGHT = 140;
 
@@ -22,9 +22,12 @@ const ImageList = styled(Box)({
 export default function ImageGallery({mainImage, otherImages}){
     return (
         <ImageContainer>
-            <ProductImage image={mainImage} style={{width:"auto", height:"600px"}} />
+            <Image
+                image={mainImage}
+                style={{width:"auto", height:"600px"}} // Fix this inline style
+            />
             <ImageList>
-                {otherImages.map(image => (<ProductImage
+                {otherImages.map(image => (<Image
                     image={image}
                     style={{width:IMAGE_WIDTH,
                         height:IMAGE_HEIGHT

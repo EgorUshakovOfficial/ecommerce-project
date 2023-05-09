@@ -1,5 +1,5 @@
 import Container from '../Container';
-import {Nav} from "../../components";
+import {Nav} from "../../features/nav";
 
 
 export default function ShoppingLayout({children}){

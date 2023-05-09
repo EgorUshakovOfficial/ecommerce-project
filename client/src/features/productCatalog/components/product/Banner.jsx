@@ -1,8 +1,8 @@
 import {Box, Button, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import bannerImg from '../../assets/images/banner-image.jpg'
-import { bgColor } from '../../utils/constants';
-import ProductImage from '../product/ProductImage';
+import bannerImg from '../../../../assets/images/banner-image.jpg'
+import { bgColor } from '../../../../utils/constants';
+import {Image} from '../../../../components';
 
 // Styled banner wrapper
 const BannerWrapper = styled(Box)(({theme}) => ({
@@ -41,7 +41,10 @@ export default function Banner(){
                     background: matchMobile ? "white" : "#FAFAFA"
                 }}
             >
-                <ProductImage image={bannerImg} style={{minWidth: matchMobile ? 0 : 500}} />
+                <Image
+                    image={bannerImg}
+                    style={{minWidth: matchMobile ? 0 : 500}} // Fix this inline isse-performance optimization
+                />
                 <Box>
                     <Typography
                         variant="h2"

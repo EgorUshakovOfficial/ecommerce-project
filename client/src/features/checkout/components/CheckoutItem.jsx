@@ -1,5 +1,5 @@
 import {Badge, Box, Typography} from '@mui/material';
-import {ProductImage} from '../../../components';
+import {Image} from '../../../components';
 
 export default function CheckoutItem({
     image,
@@ -20,7 +20,10 @@ export default function CheckoutItem({
             gap="1em"
         >
             <Badge badgeContent={quantity} color="primary">
-                <ProductImage image={image} style={{width:64, height:64}} />
+                <Image
+                    image={image}
+                    style={{width:64, height:64}} // Fix this inline style
+                />
             </Badge>
             <Box paddingInline="1em">
                 <Typography
