@@ -6,7 +6,7 @@ from .Product import Product
 
 # Product Image
 class ProductImage(models.Model):
-    # Product Image ID number
+    # Product Image id
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Product
@@ -14,6 +14,9 @@ class ProductImage(models.Model):
 
     # Product color
     color_name = models.CharField(max_length=20)
+
+    # Main image
+    main_image = models.BooleanField(default=False)
 
     # Product color's hexacode
     hexacode = models.CharField(max_length=6)

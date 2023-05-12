@@ -1,3 +1,9 @@
-from django.shortcuts import render
+# from rest_framework import generics
+# from rest_framework.response import Response
+# from rest_framework import status
 
-# Create your views here.
+# # Authentication Details
+# class AuthenticationDetails(generics.GenericAPIView):
+#     # Post
+#     def post(self, request):
+
