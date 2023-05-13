@@ -10,13 +10,13 @@ const Row = styled(Box)({
 })
 
 export default function CostSummary(props){
-    const cart = useSelector(state => state.cart);
+    const {cart, checkout} = useSelector(state => state);
+
+    // Shipping cost
+    const shippingCost = checkout.shipping.price;
 
     // Subtotal
     let subtotal = calculateSubtotal(cart);
-
-    // Shipping cost
-    let shippingCost = 0;
 
     return (
         <Box

@@ -17,8 +17,8 @@ const initialState = {
     },
     // Shipping address
     shipping:{
-        shippingMethod:'',
-        shippingCost:''
+        shippingMethod:'free-shipping',
+        shippingCost:0
     }
 };
 

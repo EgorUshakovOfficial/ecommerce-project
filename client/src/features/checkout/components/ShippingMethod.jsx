@@ -1,23 +1,18 @@
 import {Fragment} from 'react';
+import { useSelector } from 'react-redux';
 import {Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import { shippingOptions } from '../../../utils/constants';
 import useShippingMethod from '../hooks/useShippingMethod';
 import Navigation from './Navigation';
 
 export default function ShippingMethod(){
-    const {
-        shippingMethod,
-        handleShippingMethodOnClick,
-        handleShippingMethodOnChange
-    } = useShippingMethod();
+    const {handleShippingMethodOnClick, handleShippingMethodOnChange} = useShippingMethod();
 
-    // Shipping cost
-    let index = shippingOptions.findIndex(shippingOption => shippingOption.value === shippingMethod);
-    let shippingOption = shippingOptions[index];
-    const shippingCost = shippingOption.price;
+    // Shipping option
+    const shippingOption = useSelector(state => state.checkout.shipping);
 
     // Payload
-    const payload = {shippingMethod, shippingCost};
+    const payload = shippingOption;
 
     return (
         <Fragment>
@@ -34,7 +29,7 @@ export default function ShippingMethod(){
                     name="shipping-options"
                     sx={{border:"1px solid lightgray", borderRadius:"0.5em"}}
                     onChange={handleShippingMethodOnChange}
-                    value={shippingMethod}
+                    value={shippingOption.shippingMethod}
                 >
                     {shippingOptions.map(({value, name, price}, idx) => {
                         // Shipping cost
@@ -49,7 +44,11 @@ export default function ShippingMethod(){
                                 padding="0.5em 1em"
                                 borderBottom={idx < shippingOptions.length-1 ?  "1px solid lightgray" : "none"}
                             >
-                                <FormControlLabel value={value} control={<Radio />} label={name} />
+                                <FormControlLabel
+                                    value={value}
+                                    control={<Radio />}
+                                    label={name}
+                                />
                                 <Typography
                                     variant="body1"
                                     fontWeight="600"
