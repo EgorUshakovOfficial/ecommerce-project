@@ -2,7 +2,7 @@ import {Box, IconButton, Typography} from '@mui/material';
 import {FavoriteBorder} from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
 import Button from '../../../../components/utils/Button';
-import ProductImage from "../../../../components/utils/Image";
+import {Image} from "../../../../components";
 import ProductRatings from '../../../../components/Ratings';
 
 // Styled product div
@@ -19,13 +19,10 @@ const ProductDiv = styled('div')( ({theme}) => ({
     minWidth:250,
 }));
 
-export default function Product({
-    productId,
-    name,
-    cost,
-    description,
-    image
-}){
+export default function Product({product}){
+    // Main image
+    const mainImage = product.product_images.filter(image => image.main_image)[0];
+
     return (
         <ProductDiv>
             <Box
@@ -35,7 +32,7 @@ export default function Product({
                 display="flex"
                 justifyContent="center"
             >
-                <ProductImage image={image} style={{width:250, height:250}} />
+                <Image image={mainImage.image_url} style={{width:250, height:250}} />
                 <IconButton
                     style={{
                         position:"absolute",
@@ -52,10 +49,10 @@ export default function Product({
                 display="flex"
                 justifyContent="space-between"
             >
-                <Typography variant="subtitle1" fontWeight="600">{name}</Typography>
-                <Typography variant="subtitle1" fontWeight="600">{cost}</Typography>
+                <Typography variant="subtitle1" fontWeight="600">{product.title}</Typography>
+                <Typography variant="subtitle1" fontWeight="600">{product.price}</Typography>
             </Box>
-            <Typography variant="caption">{description}</Typography>
+            <Typography variant="caption">{product.description}</Typography>
             <ProductRatings avgRating={4} numReviews={121} />
             <Button
                 disableRipple
@@ -63,7 +60,7 @@ export default function Product({
                 style={{borderRadius:"0.5em", textTransform:"none"}}
                 color="inherit"
                 onClick={() => {}}
-                href={`/product-page/${productId}`}
+                href={`/product-page/${product.id}`}
             >
                 Add to Cart
             </Button>

@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
             const { payload } = action;
 
             // Index of the cart item in the array to be removed
-            let index = state.findIndex( ({ productId }) => payload.productId === productId);
+            let index = state.findIndex( ({ id }) => payload.id === id);
 
             // Exclude the cart item from the state
             state = [...state.slice(0, index), ...state.slice(index+1)];
@@ -32,7 +32,7 @@ export const cartSlice = createSlice({
             const { payload } = action;
 
             // Index of the cart item to be incremented
-            let index = state.findIndex(({ productId }) => payload.productId === productId);
+            let index = state.findIndex(({ id }) => payload.id === id);
 
             // Targeted cart item
             let cartItem = state[index];
@@ -48,7 +48,7 @@ export const cartSlice = createSlice({
             const { payload } = action;
 
             // Index of the cart item to be decremented
-            let index = state.findIndex(({ productId }) => payload.productId === productId);
+            let index = state.findIndex(({ id }) => payload.id === id);
 
             // Targeted cart item
             let cartItem = state[index];

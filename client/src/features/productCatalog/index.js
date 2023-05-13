@@ -7,5 +7,5 @@ export {
     Banner,
     Filters,
     ProductCarousel,
-    ProductSection
+    ProductSection,
 };

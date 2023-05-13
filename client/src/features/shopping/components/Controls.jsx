@@ -13,7 +13,7 @@ const ControlContainer = styled('div')({
     gap:"0.5em",
 });
 
-export default function Controls({quantity}){
+export default function Controls({selectedColor, quantity}){
     // Retrieve product id from the url
     const {productId} = useParams();
 
@@ -22,7 +22,7 @@ export default function Controls({quantity}){
         decrementQuantityToAddOnClick,
         incrementQuantityToAddOnClick,
         quantityToAdd
-    } = useControls(productId);
+    } = useControls(selectedColor);
 
     return (
         <ControlContainer>

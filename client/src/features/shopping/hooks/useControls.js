@@ -1,12 +1,13 @@
-import {useState, useMemo} from 'react';
+import {useState} from 'react';
+import { useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {addProduct, incrementProduct} from '../state/cartSlice';
+import {useGetProductQuery} from '../../../services/productsApi';
 
+export default function useControls(selectedColor){
+    // Product Id
+    const {productId} = useParams();
 
-// Product mock data
-import {products} from '../../../mock';
-
-export default function useControls(productId){
     // Dispatch API
     const dispatch = useDispatch();
 
@@ -16,26 +17,25 @@ export default function useControls(productId){
     // Cart state
     const cart = useSelector(state => state.cart);
 
-    // Specified product
-    const product = useMemo(() => {
-        let product = products.filter(product => product.productId === productId)[0]
+    // Product
+    const {data:product} = useGetProductQuery(productId);
 
-        return product;
-    }, []);
+    // Main image
+    const mainImage = product.product_images.filter(image => image.main_image)[0];
 
     // Add product to the shopping cart on click
     const addCartItemOnClick = () => {
         // Position of the product in the array
-        let index = cart.findIndex(cartItem => cartItem.productId === productId);
+        let index = cart.findIndex(cartItem => cartItem.id === productId);
 
         // If product is not in the shopping cart indicated by -1, add it
         if (index === -1){
             const payload = {
-                productId:product.productId,
-                color:product.color,
-                cost: product.cost,
-                image: product.image,
-                name:product.name,
+                id:product.id,
+                color:selectedColor,
+                price: product.price,
+                image: mainImage.image_url,
+                title:product.title,
                 quantity:quantityToAdd
             };
 
@@ -49,7 +49,7 @@ export default function useControls(productId){
         // If the sum of the quantity of the item in cart and quantity to be added to cart
         // is at most equal to the product quantity, dispatch the increment product against the Redux store
         if (cartItem.quantity + quantityToAdd <= product.quantity)
-            dispatch(incrementProduct({productId: cartItem.productId, quantityToAdd}));
+            dispatch(incrementProduct({id: cartItem.id, quantityToAdd}));
     };
 
     // Increments the quantity of the product to be added to the shopping cart

@@ -3,13 +3,10 @@ import {useParams} from 'react-router-dom';
 import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container} from '../containers';
-import {AnnouncementBar} from '../components';
+import {AnnouncementBar, Loading} from '../components';
 import {Nav} from '../features/nav';
 import { ImageGallery, Content} from "../features/shopping";
-import { calculateHalfCost } from '../helper';
-
-// Mock data (replace with context API)
-import {products} from '../mock/products';
+import { useGetProductQuery } from '../services/productsApi';
 
 const ProductContainer = styled(Box)({
     display:"flex",
@@ -26,8 +23,25 @@ export default function ProductPage(props){
     // Url parameters
     const {productId} = useParams();
 
-    // Specified product
-    const product = products.filter(product => product.productId == productId)[0];
+    const {error, isLoading, data:product} = useGetProductQuery(productId);
+
+    // Application is loading
+    if (isLoading) return <Loading />
+
+    // Application experiences an error
+    if (error) return <div>Error! Something has gone wrong!</div>
+
+    // Product images
+    const productImages = product.product_images;
+
+    // Main image
+    const mainImage = productImages.filter(image => image.main_image)[0];
+
+    // Other images
+    const otherImages = productImages.filter(image => image.main_image === false);
+
+    // Colors
+    const colors = productImages.map( ({color_name:colorName, hexacode}) => ({colorName, hexacode}));
 
     return (
         <Fragment>
@@ -42,18 +56,11 @@ export default function ProductPage(props){
 
                 >
                     <ImageGallery
-                        mainImage={product.image}
-                        otherImages={product.otherImages}
+                        mainImage={mainImage.image_url}
+                        otherImages={otherImages}
+                        colors={colors}
                     />
-                    <Content
-                        name={product.name}
-                        description={product.description}
-                        numReviews={product.reviews.numReviews}
-                        avgRating={product.reviews.avgRating}
-                        halfMonthlyPrice={calculateHalfCost(product.cost)}
-                        cost={product.cost}
-                        quantity={product.quantity}
-                    />
+                    <Content product={product} />
                 </ProductContainer>
             </Container>
         </Fragment>

@@ -1,7 +1,7 @@
 // Calculates the subtotal of all the cart items
 const calculateSubtotal = cart => {
     let subtotal = cart.reduce(
-        (total, {cost, quantity}) => total + cost*quantity, 0
+        (total, {price, quantity}) => total + price*quantity, 0
     );
 
     // Rounds subtotal to two decimal places

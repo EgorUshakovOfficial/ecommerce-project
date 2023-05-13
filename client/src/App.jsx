@@ -1,28 +1,11 @@
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route
-} from 'react-router-dom';
-import {Checkout, Confirmation, Home, ProductPage} from './pages';
+import { AppRouter} from './components';
 
-export default function App(){
-    return(
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/success" element={<Confirmation />} />
-                <Route path="/checkout/:section" element={<Checkout />} />
-                <Route path="/product-page/:productId" element={
-                    <ProductPage
-                        name="Airpods- Max"
-                        description="a perfect balance of exhiliarating high-fidelity audio and the effortless magic of AirPods"
-                        yearlyPrice={599}
-                        monthlyPrice={99.99}
-                        numReviews={121}
-                        avgRating={4}
-                    />
-                } />
-            </Routes>
-        </Router>
-    );
+export default function App() {
+    // // Application is loading
+    // if (isLoading) return <Loading />
+
+    // // Application experiences an error
+    // if (error) return <p>Error! Something has gone wrong</p>
+
+    return <AppRouter />;
 }

@@ -1,6 +1,5 @@
 import {Box, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import {products} from '../../../../mock/products'
 import Product from './Product';
 
 // Product gallery
@@ -10,7 +9,7 @@ const ProductGallery = styled(Box)({
     gridTemplateColumns:"repeat(auto-fill, minmax(350px, 1fr))",
 })
 
-export default function ProductSection(){
+export default function ProductSection({products}){
     // Theme
     const theme = useTheme();
 
@@ -41,7 +40,7 @@ export default function ProductSection(){
                     ? "repeat(auto-fill, minmax(350px, 1fr))" : "100%"
                 }}
             >
-                {products.map(product => <Product {...product} />)}
+                {products.map(product => <Product product={product} />)}
             </ProductGallery>
         </Box>
     )

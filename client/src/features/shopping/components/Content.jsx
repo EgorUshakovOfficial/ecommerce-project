@@ -3,6 +3,8 @@ import {styled} from '@mui/material/styles';
 import { Ratings } from '../../../components';
 import Colors from './Colors';
 import Controls from './Controls';
+import { calculateHalfCost } from '../../../helper';
+import useColors from '../hooks/useColors';
 
 // Content container
 const ContentContainer = styled('div')({
@@ -11,15 +13,16 @@ const ContentContainer = styled('div')({
     gap:"2em"
 });
 
-export default function Content({
-    name,
-    description,
-    cost,
-    halfMonthlyPrice,
-    quantity,
-    numReviews,
-    avgRating,
-}){
+export default function Content({product}){
+    // Colors
+    const colors = product.product_images
+    .map(({color_name:colorName, hexacode, main_image:mainImage}) => ({colorName, hexacode, mainImage}));
+
+    const {selectedColor, handleColorClick} = useColors(colors);
+
+    // Half-monthly payment
+    const halfYearlyPrice = calculateHalfCost(product.price);
+
     return (
         <ContentContainer>
             <Box>
@@ -28,16 +31,16 @@ export default function Content({
                     fontWeight="600"
                     gutterBottom
                 >
-                    {name}
+                    {product.title}
                 </Typography>
                 <Typography
                     variant="body1"
                     color="gray"
                     gutterBottom
                 >
-                    {description}
+                    {product.description}
                 </Typography>
-                <Ratings numReviews={numReviews} avgRating={avgRating} />
+                <Ratings numReviews={21} avgRating={4} />
             </Box>
             <Box
                 pt="2em"
@@ -50,7 +53,7 @@ export default function Content({
                     fontWeight="600"
                     gutterBottom
                 >
-                    ${cost} or {halfMonthlyPrice}/month
+                    ${product.price} or {halfYearlyPrice}/month
                 </Typography>
                 <Typography
                     variant="body1"
@@ -59,8 +62,15 @@ export default function Content({
                     Suggested payments with 6 months financing
                 </Typography>
             </Box>
-            <Colors />
-            <Controls quantity={quantity} />
+            <Colors
+                selectedColor={selectedColor}
+                colors={colors}
+                handleColorClick={handleColorClick}
+            />
+            <Controls
+                selectedColor={selectedColor}
+                quantity={product.quantity}
+            />
         </ContentContainer>
     )
 }

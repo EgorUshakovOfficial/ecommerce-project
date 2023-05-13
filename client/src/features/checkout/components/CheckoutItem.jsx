@@ -3,13 +3,13 @@ import {Image} from '../../../components';
 
 export default function CheckoutItem({
     image,
-    name,
+    title,
     color,
-    cost,
+    price,
     quantity
 }){
     // Amount owed for the quantity of the item selected
-    const amount = (cost*quantity).toFixed(2);
+    const amount = (price*quantity).toFixed(2);
 
     return (
         <Box
@@ -31,7 +31,7 @@ export default function CheckoutItem({
                     fontSize="1em"
                     fontWeight="600"
                 >
-                    {name}
+                    {title}
                 </Typography>
                 <Typography
                     variant="caption"

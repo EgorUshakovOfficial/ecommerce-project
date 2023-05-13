@@ -1,15 +1,6 @@
-import {useState} from 'react';
 import {Tooltip, Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
-
-// Colors
-const colors = [
-    {color:"Red", hexCode:"#8b0000"},
-    {color:"Blue", hexCode:"#00004D"},
-    {color:"Pink", hexCode:"#F699CD"},
-    {color:"Green", hexCode:"#028A0F"},
-    {color:"Gray", hexCode:"#787276"}
-];
+import useColors from '../hooks/useColors';
 
 // Color Container
 const ColorContainer = styled('div')(({theme}) => ({
@@ -18,13 +9,7 @@ const ColorContainer = styled('div')(({theme}) => ({
     gap: "0.5em"
 }));
 
-export default function Colors(){
-    // Selected color
-    const [selectedColor, setSelectedColor] = useState("Red");
-
-    // Handle selected color on click
-    const handleClick = event => setSelectedColor(event.target.getAttribute('value'));
-
+export default function Colors({colors, handleColorClick, selectedColor}){
     return (
         <Box
             pb="2em"
@@ -38,22 +23,22 @@ export default function Colors(){
                 Choose a Color
             </Typography>
             <ColorContainer>
-                {colors.map( ({color, hexCode}) => (
-                    <Tooltip title={color}>
+                {colors.map( ({colorName, hexacode}) => (
+                    <Tooltip title={colorName}>
                         <Box
                             style={{
                                 padding:"0.25em",
-                                border:(selectedColor == color) ?
+                                border:(selectedColor == colorName) ?
                                     "1px solid black": "none",
                                 borderRadius:"50%"
                             }}
                         >
                             <Box
-                                value={color}
-                                onClick={handleClick}
+                                value={colorName}
+                                onClick={handleColorClick}
                                 style={{
                                     cursor:"pointer",
-                                    background:hexCode,
+                                    background:`#${hexacode}`,
                                     height:40,
                                     width:40,
                                     borderRadius:"50%"

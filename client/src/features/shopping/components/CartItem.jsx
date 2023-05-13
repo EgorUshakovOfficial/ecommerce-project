@@ -17,10 +17,8 @@ const StyledCartItem = styled('div')( ({theme}) => ({
     borderBottom:"1px solid lightgray",
 }));
 
-export default function CartItem(props){
-    const {cartItem} = props;
-
-    const {productId, name, color, image, cost, quantity} = cartItem;
+export default function CartItem({cartItem, style}){
+    const {id, title, image, color, price, quantity} = cartItem;
 
     const {decrementQuantityOnClick, incrementQuantityOnClick} = useCartItem(cartItem);
 
@@ -35,7 +33,7 @@ export default function CartItem(props){
     const PRODUCT_IMAGE_HEIGHT = PRODUCT_IMAGE_WIDTH;
 
     return (
-        <StyledCartItem productId={productId} style={props.style}>
+        <StyledCartItem productId={id} style={style}>
             <Image
                 image={image}
                 style={{
@@ -51,7 +49,7 @@ export default function CartItem(props){
                 gap="0.25em"
             >
                 <Typography variant="subtitle1" >
-                    {name}
+                    {title}
                 </Typography>
                 <Typography variant="body2">
                     {color}
@@ -84,7 +82,7 @@ export default function CartItem(props){
                 </Box>
             </Box>
             <Typography variant="subtitle2" fontWeight="600">
-                {cost}
+                {price}
             </Typography>
         </StyledCartItem>
     );
