@@ -20,8 +20,6 @@ export default function PaymentForm(){
     // Order
     const order = useSelector(state => state.order);
 
-    console.log(order);
-
     // Field values and callabcks on different trigger events
     const paymentProps = usePaymentForm();
 

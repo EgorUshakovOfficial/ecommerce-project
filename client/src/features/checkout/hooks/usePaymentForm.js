@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import {useAddNewOrderMutation} from '../../../services/orders';
 import { validateCardNumber, validateExpirationDate, validateName, validateNumber } from '../../../utils/validators';
 import { calculateSubtotal } from '../../../helper';
+import { clearOrderError } from '../../../app/state/orderSlice';
 
 export default function usePaymentForm(){
     // Navigate
@@ -46,7 +47,7 @@ export default function usePaymentForm(){
     });
 
     // Clears error in Redux store on click
-    const handleCardErrorOnClick = () => {};
+    const handleCardErrorOnClick = () => dispatch(clearOrderError());
 
     // Handles expiration date as input changes
     const handleExpirationDateOnChange = event => setExpirationDate(event.target.value);
@@ -96,20 +97,17 @@ export default function usePaymentForm(){
                 shippingCost:checkout.shipping.price,
             }
 
-            try{
-                // Sends POST request /api/orders endpoint and processes payment using Stripe API
-                addNewOrder(payload).unwrap();
 
+            // Sends POST request /api/orders endpoint and processes payment using Stripe API
+            let response = await addNewOrder(payload);
+
+            response
+            .then(data => {
                 // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
+            })
+            .catch(err => console.log('Do something with the error')) // Fix this and handle error more elegantly
 
-                console.log("executed...")
-            }
-
-            catch(err){
-                // Sets error if response from the API is not okay
-                console.log(err)
-            }
         }
     }
 

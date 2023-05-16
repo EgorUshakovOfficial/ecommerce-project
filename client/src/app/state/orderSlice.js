@@ -15,6 +15,11 @@ const ordersApi = api.orders;
 const ordersSlice = createSlice({
     name:'orders',
     initialState,
+    reducers:{
+        clearOrderError: (state, action) => {
+            state.error = null;
+        }
+    },
     extraReducers: builder => {
         builder
         .addMatcher(
@@ -39,5 +44,7 @@ const ordersSlice = createSlice({
         )
     }
 })
+
+export const {clearOrderError} = ordersSlice.actions;
 
 export default ordersSlice.reducer;
