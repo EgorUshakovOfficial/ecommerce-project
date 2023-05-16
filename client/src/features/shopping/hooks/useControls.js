@@ -2,7 +2,7 @@ import {useState} from 'react';
 import { useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {addProduct, incrementProduct} from '../state/cartSlice';
-import {useGetProductQuery} from '../../../services/productsApi';
+import {useGetProductQuery} from '../../../services/products';
 
 export default function useControls(selectedColor){
     // Product Id

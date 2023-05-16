@@ -1,3 +1,4 @@
+import {useRef} from 'react';
 import {Box, useMediaQuery, useTheme} from '@mui/material';
 import {
     Section,

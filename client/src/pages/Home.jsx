@@ -1,10 +1,9 @@
 import {Fragment} from 'react';
 import {AnnouncementBar} from '../components';
-import {Banner, Filters, ProductCarousel, ProductSection} from '../features/productCatalog';
+import {Banner, Filters, ProductSection} from '../features/productCatalog';
 import {Loading} from '../components';
 import ShoppingLayout from '../containers/layouts/ShoppingLayout';
-
-import { useGetProductsQuery } from '../services/productsApi';
+import { useGetProductsQuery } from '../services/products';
 
 export default function HomePage(){
     const {isLoading, error, data:products} = useGetProductsQuery();
@@ -22,12 +21,6 @@ export default function HomePage(){
                 <Banner />
                 <Filters />
                 <ProductSection products={products} />
-                {/* <ProductCarousel
-                    title="Similar Items You Might Like"
-                    id="similar-products-section"
-                    style={{paddingBottom:"2em"}}
-                />
-                <ProductCarousel title="Recentedly Viewed" id="recentedly-viewed-section" /> */}
             </ShoppingLayout>
         </Fragment>
     )

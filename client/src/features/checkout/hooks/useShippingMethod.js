@@ -1,14 +1,10 @@
-import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {populateShipping} from '../state/checkoutSlice';
 import { shippingOptions } from '../../../utils/constants';
 
 export default function useShippingMethod(){
     // Dispatch API
     const dispatch = useDispatch();
-
-    // State of the shipping method
-    const [shippingMethod, setShippingMethod] = useState('free-shipping');
 
     // Handles shipping method as input changes
     const handleShippingMethodOnChange = event => {
@@ -25,11 +21,7 @@ export default function useShippingMethod(){
     }
 
     // Dispatches shipping actions against the Redux store on click
-    const handleShippingMethodOnClick = (event, payload) => dispatch(populateShipping(payload));
+    const handleShippingMethodOnClick = (event, payload) => dispatch(populateShipping({...payload, isFilled:true}));
 
-    return {
-        shippingMethod,
-        handleShippingMethodOnClick,
-        handleShippingMethodOnChange
-    }
+    return {handleShippingMethodOnClick, handleShippingMethodOnChange}
 }

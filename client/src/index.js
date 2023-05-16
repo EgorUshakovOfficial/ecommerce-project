@@ -5,10 +5,10 @@ import App from './App';
 import {store} from './app/store';
 import { Provider as StateProvider} from 'react-redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { productsApi } from './services/productsApi';
+import api from './services';
 
 // Retrieve products data from the endpoint
-store.dispatch(productsApi.endpoints.getProducts.initiate());
+store.dispatch(api.products.endpoints.getProducts.initiate());
 
 // Root element
 const root = ReactDOM.createRoot(document.getElementById('root'));

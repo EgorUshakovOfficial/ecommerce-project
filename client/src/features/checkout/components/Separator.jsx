@@ -1,7 +1,6 @@
 import {useSelector} from 'react-redux';
 import {Link, useParams} from 'react-router-dom';
 import {Breadcrumbs} from '@mui/material';
-import checkLinkDisableStatus from '../utils/checkLinkDisableStatus';
 
 export default function Separator(props){
     // Section
@@ -10,11 +9,8 @@ export default function Separator(props){
     // Checkout state
     const checkout = useSelector(state => state.checkout);
 
-    // Checks if shipping link is disabled
-    let isShippingLinkDisabled = checkLinkDisableStatus(checkout.personal);
-
-    // Checks if payment link is disabled
-    let isPaymentLinkDisabled = checkLinkDisableStatus(checkout.shipping);
+    // Personal and shipping states
+    const {personal, shipping} = checkout;
 
     // Current section
     const getSectionColor = sectionName => (section === sectionName) ? "black" : "gray";
@@ -29,7 +25,7 @@ export default function Separator(props){
                 to="/checkout/shipping"
                 style={{
                     color: getSectionColor('shipping'),
-                    pointerEvents: isShippingLinkDisabled ? "none" : ""
+                    pointerEvents: (personal.isFilled===false) ? "none" : ""
                 }}
             >
                 Shipping
@@ -38,7 +34,7 @@ export default function Separator(props){
                 to="/checkout/payment"
                 style={{
                     color: getSectionColor('payment'),
-                    pointerEvents: isPaymentLinkDisabled ? "none" : ""
+                    pointerEvents: (shipping.isFilled===false) ? "none" : ""
                 }}
             >
                 Payment

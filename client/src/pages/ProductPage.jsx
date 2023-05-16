@@ -1,4 +1,5 @@
 import {Fragment} from 'react';
+import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
@@ -6,7 +7,7 @@ import {Container} from '../containers';
 import {AnnouncementBar, Loading} from '../components';
 import {Nav} from '../features/nav';
 import { ImageGallery, Content} from "../features/shopping";
-import { useGetProductQuery } from '../services/productsApi';
+import { useGetProductQuery } from '../services/products';
 
 const ProductContainer = styled(Box)({
     display:"flex",

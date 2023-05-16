@@ -1,9 +1,9 @@
 import {useSelector} from 'react-redux';
 import {useParams, Navigate} from 'react-router-dom';
-import { Loading } from '../../components';
 import Information from './Information';
 import Payment from './Payment';
 import Shipping from './Shipping';
+import { Loading } from '../../components';
 
 // Sections in checkout
 const sectionLookup = {
@@ -13,14 +13,14 @@ const sectionLookup = {
 };
 
 export default function Checkout(){
-    // Cart
-    const {cart, loading} = useSelector(state => state);
-
     // Section parameter
     const { section } = useParams();
 
-    // Checkout is in loading state
-    if (loading.isLoading) return <Loading />
+    // Cart
+    const {cart, order} = useSelector(state => state);
+
+    // Payment is pending
+    if (order.isLoading) return <Loading />
 
     // Cart is empty
     if (cart.length === 0) return <Navigate to="/" replace />

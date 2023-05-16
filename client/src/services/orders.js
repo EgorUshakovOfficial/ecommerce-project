@@ -1,14 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../../../utils/constants';
+import { BASE_URL } from '../utils/constants';
 
 // Checkout API
-const checkoutApi = createApi({
-    // Base url is domain name/api
+const ordersApi = createApi({
+    reducerPath:"ordersApi",
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
-
     endpoints: builder => ({
         addNewOrder: builder.mutation({
-            // Checkout is payload attached to the body of the /api/orders POST request
+            // API endpoint: POST /api/orders
             query: checkout => ({
                 url: '/orders',
                 method: "POST",
@@ -18,6 +17,6 @@ const checkoutApi = createApi({
     })
 });
 
-export const {useAddNewOrderMutation} = checkoutApi;
+export const {useAddNewOrderMutation} = ordersApi;
 
-export default checkoutApi;
+export default ordersApi;

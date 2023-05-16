@@ -1,22 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { checkoutReducer } from "../features/checkout";
 import { cartReducer } from "../features/shopping";
-import { checkoutApi, checkoutSlice } from "../features/checkout";
-import loadingReducer from "./state/loadingSlice";
-import {productsApi} from "../services/productsApi";
+import orderReducer from './state/orderSlice';
+import api from "../services";
 
 
 export const store = configureStore({
     reducer: {
         cart:cartReducer,
-        checkout:checkoutSlice,
-        loading: loadingReducer,
-        [productsApi.reducerPath]:productsApi.reducer,
-        purchaseProducts: checkoutApi.reducer
+        checkout:checkoutReducer,
+        order: orderReducer,
+        [api.products.reducerPath]:api.products.reducer,
+        [api.orders.reducerPath]:api.orders.reducer
     },
 
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(
-        productsApi.middleware,
-        checkoutApi.middleware
-    )
+    middleware: getDefaultMiddleware => getDefaultMiddleware()
+    .concat(api.products.middleware)
+    .concat(api.orders.middleware)
 });
 

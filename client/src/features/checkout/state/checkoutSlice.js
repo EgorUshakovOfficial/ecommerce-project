@@ -13,12 +13,14 @@ const initialState = {
         apartmentSuite:'',
         city:'',
         region:'',
-        postalCode:''
+        postalCode:'',
+        isFilled: false
     },
     // Shipping address
     shipping:{
         shippingMethod:'free-shipping',
-        shippingCost:0
+        price:0,
+        isFilled: false
     }
 };
 
@@ -28,10 +30,10 @@ const checkoutSlice = createSlice({
     initialState,
     reducers:{
         // Populates personal information of the user in the checkout state
-        populatePersonal: (state, {payload}) => ({...state, personal:{...payload}}),
+        populatePersonal: (state, {payload}) => ({...state, personal:{...state.personal, ...payload}}),
 
         // Populates shipping information of the user in the checkout state
-        populateShipping: (state, {payload}) => ({...state, shipping:{...payload}}),
+        populateShipping: (state, {payload}) => ({...state, shipping:{...state.shipping, ...payload}}),
     }
 });
 

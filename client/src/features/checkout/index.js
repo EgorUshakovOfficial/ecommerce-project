@@ -1,5 +1,5 @@
-import checkoutApi from './services/checkoutApi';
-import checkoutSlice from './state/checkoutSlice';
+import checkoutApi from '../../services/orders';
+import checkoutReducer from './state/checkoutSlice';
 import ConfirmationMessage from './components/ConfirmationMessage';
 import InfoSummary from './components/InfoSummary';
 import Navigation from './components/Navigation';
@@ -13,7 +13,7 @@ import SummarySection from './components/SummarySection';
 
 export {
     checkoutApi,
-    checkoutSlice,
+    checkoutReducer,
     ConfirmationMessage,
     InfoSummary,
     Navigation,

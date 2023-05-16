@@ -17,11 +17,13 @@ export default function PaymentForm(){
     // Matches width screen size of at most 600px
     const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    // Order
+    const order = useSelector(state => state.order);
+
+    console.log(order);
+
     // Field values and callabcks on different trigger events
     const paymentProps = usePaymentForm();
-
-    // Loading state
-    const {loading} = useSelector(state => state);
 
     // Payload
     const payload = {
@@ -33,12 +35,12 @@ export default function PaymentForm(){
 
     return (
         <Fragment>
-            {loading.error !== null && <Alert
+            {order.error !== null && <Alert
                 severity="error"
                 color="error"
                 onClose={paymentProps.handleCardErrorOnClick}
             >
-                {loading.error.data.message}
+                {order.error.data.message}
             </Alert>}
             <Box>
                 <Typography

@@ -2,8 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
-import {useAddNewOrderMutation} from '../services/checkoutApi';
-import {clearError, clearLoading, setError, setLoading} from '../../../app/state/loadingSlice';
+import {useAddNewOrderMutation} from '../../../services/orders';
 import { validateCardNumber, validateExpirationDate, validateName, validateNumber } from '../../../utils/validators';
 import { calculateSubtotal } from '../../../helper';
 
@@ -35,7 +34,6 @@ export default function usePaymentForm(){
     // CSV code
     const [securityCode, setSecurityCode] = useState('');
 
-
     // Handles card number when input is changed
     const handleCardNumberOnChange = event => setCardNumber(event.target.value);
 
@@ -48,7 +46,7 @@ export default function usePaymentForm(){
     });
 
     // Clears error in Redux store on click
-    const handleCardErrorOnClick = () => dispatch(clearError());
+    const handleCardErrorOnClick = () => {};
 
     // Handles expiration date as input changes
     const handleExpirationDateOnChange = event => setExpirationDate(event.target.value);
@@ -95,26 +93,22 @@ export default function usePaymentForm(){
                 expirationDate,
                 securityCode,
                 subtotal,
-                shippingCost:checkout.shipping.shippingCost,
+                shippingCost:checkout.shipping.price,
             }
 
             try{
-                // Changes state of the loading state from false to true
-                dispatch(setLoading());
-
                 // Sends POST request /api/orders endpoint and processes payment using Stripe API
-                await addNewOrder(payload).unwrap()
+                addNewOrder(payload).unwrap();
 
                 // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
 
-                // Clears loading state and changes it from true to false
-                dispatch(clearLoading());
+                console.log("executed...")
             }
 
             catch(err){
                 // Sets error if response from the API is not okay
-                dispatch(setError(err));
+                console.log(err)
             }
         }
     }
