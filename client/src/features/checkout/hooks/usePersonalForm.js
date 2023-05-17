@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {populatePersonal} from '../state/checkoutSlice';
+import {populatePersonal} from '../../../app/state/checkoutSlice';
 import {validateAddress, validateEmail, validateName} from '../../../utils/validators';
 
 export default function usePersonalForm(){

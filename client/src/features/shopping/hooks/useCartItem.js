@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {decrementProduct, incrementProduct, removeProduct} from '../state/cartSlice';
+import {decrementProduct, incrementProduct, removeProduct} from '../../../app/state/cartSlice';
 import {useGetProductQuery} from '../../../services/products';
 
 export default function useCartItem(cartItem){

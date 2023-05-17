@@ -1,13 +1,22 @@
 import { useDispatch } from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
+import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
 
 export default function useLoginServices(){
     // Dispatch API
     const dispatch = useDispatch();
 
+    // Get Google credentials API
+    const [getGoogleCredentials] = useGetGoogleCredentialsMutation();
+
     // Google authorization is successful
     const googleLoginOnSuccess = response => {
-        console.log(response)
+        // Authorization code
+        const code = response.code;
+
+        // Retrieve access token from the endpoint
+        getGoogleCredentials({code})
+        .then(data => console.log(data));
     };
 
     // Google authorization failed

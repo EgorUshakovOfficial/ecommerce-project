@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {populateShipping} from '../state/checkoutSlice';
+import {populateShipping} from '../../../app/state/checkoutSlice';
 import { shippingOptions } from '../../../utils/constants';
 
 export default function useShippingMethod(){

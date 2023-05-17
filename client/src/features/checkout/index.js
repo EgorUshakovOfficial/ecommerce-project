@@ -1,5 +1,3 @@
-import checkoutApi from '../../services/orders';
-import checkoutReducer from './state/checkoutSlice';
 import ConfirmationMessage from './components/ConfirmationMessage';
 import InfoSummary from './components/InfoSummary';
 import Navigation from './components/Navigation';
@@ -12,8 +10,6 @@ import SummaryMobileSection from './components/SummaryMobileSection';
 import SummarySection from './components/SummarySection';
 
 export {
-    checkoutApi,
-    checkoutReducer,
     ConfirmationMessage,
     InfoSummary,
     Navigation,

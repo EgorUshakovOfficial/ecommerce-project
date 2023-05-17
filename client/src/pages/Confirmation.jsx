@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {clearCart} from '../features/shopping';
+import {clearCart} from '../app/state';
 import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 import {ConfirmationMessage} from '../features/checkout';
 
