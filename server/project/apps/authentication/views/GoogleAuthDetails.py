@@ -4,6 +4,7 @@ from rest_framework import status
 from google_auth_oauthlib.flow import Flow
 from django.conf import settings
 
+
 # Serializers
 from ..serializers import ExchangeCodeSerializer
 
@@ -11,8 +12,6 @@ from ..serializers import ExchangeCodeSerializer
 class GoogleAuthDetails(APIView):
     # Configures Google client flow
     def config_google_client(self):
-        # Client configuration options
-
          # Scopes
          scopes = [
             "openid",
@@ -38,7 +37,7 @@ class GoogleAuthDetails(APIView):
             flow = self.config_google_client()
 
             # Authorization code
-            code = serializer.validated_data['authorization_code']
+            code = serializer.validated_data['code']
 
             # Retrieve credentials from Google API
             flow.fetch_token(code=code)
@@ -47,15 +46,21 @@ class GoogleAuthDetails(APIView):
             # Access token
             access_token = credentials.token
 
-            # Refresh token
+            # Initialize response
+            response = Response({"accessToken":access_token}, status=status.HTTP_200_OK)
+
+            # Set refresh token as Http-only cookie
             refresh_token = credentials.refresh_token
+            response.set_cookie(
+                key="refresh",
+                value=refresh_token,
+                secure=True, # Change this to true in production
+                samesite="None",
+                httponly=True,
+                max_age=60*60*24*30
+            )
 
-            return Response({
-                "access_token":access_token,
-                "refresh_token":refresh_token
-            }, status=status.HTTP_200_OK)
-
-
+            return response
 # View
 google_auth_view = GoogleAuthDetails.as_view()
 

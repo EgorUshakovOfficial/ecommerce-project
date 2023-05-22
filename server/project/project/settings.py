@@ -8,8 +8,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Development only
-
 # Stripe environment variables
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
@@ -28,7 +26,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # CORS configuration
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
+
+
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -47,7 +51,7 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.reviews',
     'apps.transactions',
-    'apps.users'
+    'apps.users',
 ]
 
 # Customized User model
