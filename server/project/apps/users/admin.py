@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from .models.User import User
+from .models import User, UserAddress
 
-# Register User
+# Register user
 admin.site.register(User)
+
+# Register user address
+admin.site.register(UserAddress)
+
+
 

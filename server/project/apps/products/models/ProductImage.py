@@ -1,8 +1,9 @@
 import uuid
 from django.db import models
 
-# Product
+# User
 from .Product import Product
+from apps.users.models import User
 
 # Product Image
 class ProductImage(models.Model):

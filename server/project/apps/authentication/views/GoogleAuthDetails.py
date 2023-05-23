@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+# User model
 from google_auth_oauthlib.flow import Flow
 from django.conf import settings
 
@@ -8,7 +10,7 @@ from django.conf import settings
 # Serializers
 from ..serializers import ExchangeCodeSerializer
 
-
+# Google authentication
 class GoogleAuthDetails(APIView):
     # Configures Google client flow
     def config_google_client(self):
@@ -54,7 +56,7 @@ class GoogleAuthDetails(APIView):
             response.set_cookie(
                 key="refresh",
                 value=refresh_token,
-                secure=True, # Change this to true in production
+                secure=True,
                 samesite="None",
                 httponly=True,
                 max_age=60*60*24*30

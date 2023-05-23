@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from .models.Product import Product
-
-from .models.ProductImage import ProductImage
+from .models import Product, ProductImage
 
 # Register Product
 admin.site.register(Product)

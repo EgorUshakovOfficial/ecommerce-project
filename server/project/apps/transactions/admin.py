@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from .models.GiftCard import GiftCard
-
-from .models.PaymentDetails import PaymentDetails
+from .models import PaymentDetails, GiftCard
 
 # Register Gift Card
 admin.site.register(GiftCard)

@@ -29,5 +29,5 @@ urlpatterns = [
     path('users/google/me', google_user_view, name="google_user"),
 
     # Authentication views
-    path('auth/refresh', google_auth_view, name="google_auth")
+    path('auth/google/login', google_auth_view, name="google_auth")
 ]

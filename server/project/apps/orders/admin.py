@@ -1,10 +1,7 @@
 from django.contrib import admin
 
-# Order model
-from .models.Order import Order
-
-# Order Item model
-from .models.OrderItem import OrderItem
+# Order and Order Item models
+from .models import Order, OrderItem
 
 # Register Order Details
 admin.site.register(Order)

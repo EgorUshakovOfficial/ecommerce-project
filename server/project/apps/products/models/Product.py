@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 
 # User
-from apps.users.models.User import User
+from apps.users.models import User
 
 # Product
 class Product(models.Model):

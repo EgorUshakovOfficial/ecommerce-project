@@ -30,9 +30,12 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
+# Customized User model
+AUTH_USER_MODEL = 'users.User'
 
-
-
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend", # this line fixed my problem
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -53,9 +56,6 @@ INSTALLED_APPS = [
     'apps.transactions',
     'apps.users',
 ]
-
-# Customized User model
-AUTH_USER_MODEL = 'users.User'
 
 # Middleware
 MIDDLEWARE = [

@@ -2,8 +2,8 @@ import uuid
 from django.db import models
 
 # Product and User
-from apps.users.models.User import User
-from apps.products.models.Product import Product
+from apps.users.models import User
+from apps.products.models import Product
 
 # Review
 class Review(models.Model):
@@ -24,6 +24,3 @@ class Review(models.Model):
 
     # Review Feedback
     feedback = models.TextField(max_length=500)
-
-
-

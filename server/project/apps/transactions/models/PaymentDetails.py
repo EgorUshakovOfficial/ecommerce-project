@@ -2,10 +2,10 @@ import uuid
 from django.db import models
 
 # Order
-from apps.orders.models.Order import Order
+from apps.orders.models import Order
 
 # User
-from apps.users.models.User import User
+from apps.users.models import User
 
 # Order Details and User
 class PaymentDetails(models.Model):
@@ -23,4 +23,5 @@ class PaymentDetails(models.Model):
 
     # Payment amount
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
+
 

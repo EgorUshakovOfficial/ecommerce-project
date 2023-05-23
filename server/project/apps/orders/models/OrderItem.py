@@ -3,7 +3,8 @@ from django.db import models
 
 # Product
 from .Order import Order
-from apps.products.models.Product import Product
+from apps.products.models import Product
+
 
 # Order Item
 class OrderItem(models.Model):

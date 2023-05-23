@@ -1,7 +1,9 @@
-import uuid
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.utils import timezone
+import uuid
 
-# User
+# Custom user model
 from .User import User
 
 # User Address
@@ -10,7 +12,7 @@ class UserAddress(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # User
-    user = models.OneToOneField(User, on_delete=models.RESTRICT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # Street address
     street_address = models.CharField(max_length=60)

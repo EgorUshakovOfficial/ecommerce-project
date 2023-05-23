@@ -1,7 +1,7 @@
 from django.db import models
 
 # Product
-from apps.products.models.Product import Product
+from apps.products.models import Product
 
 class CartItem(models.Model):
     # Cart Item's quantity
