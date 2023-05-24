@@ -1,12 +1,15 @@
+import { useSelector } from "react-redux";
 import NavWrapper from "./NavWrapper";
-import NavLink from './NavLink';
 import { Login } from "../../../features/auth";
 import {ShoppingCart} from '../../../features/shopping';
 
 export default function NavRight(){
+    // User
+    const user = useSelector(state => state.user.data);
+
     return (
         <NavWrapper>
-            <Login />
+            {(user === null) ? <Login /> : <div>{user.name}</div>}
             <ShoppingCart  />
         </NavWrapper>
     );

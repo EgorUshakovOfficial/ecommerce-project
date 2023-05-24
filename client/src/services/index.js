@@ -1,11 +1,14 @@
+import authenticationApi from './authenticationApi';
 import ordersApi from './orders';
 import productsApi from './products';
-import authenticationApi from './authenticationApi';
+import usersApi from './usersApi';
+
 
 const api = {
+    authentication: authenticationApi,
     orders: ordersApi,
     products: productsApi,
-    authentication: authenticationApi
+    users: usersApi
 }
 
 export default api;

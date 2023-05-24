@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import api from "../../services";
 
 // Initial state
 const initialState = {
-    data: null,
+    accessToken: null,
     isLoading: false,
     error: null,
 };
 
-// Authentication API
-const fetchGoogleCredentials = api.authentication.endpoints.getGoogleCredentials;
+// Fetches Google credentials
+export const fetchGoogleCredentials = api.authentication.endpoints.getGoogleCredentials;
+
+// Fetches access token
+export const fetchAccessToken = api.authentication.endpoints.getAccessToken;
 
 // Authentication slice
 const authenticationSlice = createSlice({
@@ -23,6 +25,7 @@ const authenticationSlice = createSlice({
     },
     extraReducers: builder => {
         builder
+        // Fetches Google credentials
         .addMatcher(
             fetchGoogleCredentials.matchPending,
             (state, action) => {
@@ -33,11 +36,32 @@ const authenticationSlice = createSlice({
             fetchGoogleCredentials.matchFulfilled,
             (state, {payload}) => {
                 state.isLoading = false;
-                state.data = payload;
+                state.accessToken = payload.accessToken;
             }
         )
         .addMatcher(
             fetchGoogleCredentials.matchRejected,
+            (state, {payload}) => {
+                state.isLoading = false;
+                state.error = payload;
+            }
+        )
+        // Fetches access token
+        .addMatcher(
+            fetchAccessToken.matchPending,
+            (state, action) => {
+                state.isLoading = true;
+            }
+        )
+        .addMatcher(
+            fetchAccessToken.matchFulfilled,
+            (state, {payload}) => {
+                state.isLoading = false;
+                state.accessToken = payload.accessToken;
+            }
+        )
+        .addMatcher(
+            fetchAccessToken.matchRejected,
             (state, {payload}) => {
                 state.isLoading = false;
                 state.error = payload;

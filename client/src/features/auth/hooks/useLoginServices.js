@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
 import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
+import { fetchUser } from '../../../app/state/userSlice';
 
 export default function useLoginServices(){
     // Dispatch API
@@ -16,7 +17,21 @@ export default function useLoginServices(){
 
         // Retrieve access token from the endpoint
         getGoogleCredentials({code})
-        .then(data => console.log(data));
+        .then(response => response.data)
+        .then(data => {
+            // Access token
+            let accessToken = data.accessToken;
+
+            // Dispatch access token against store and retrieve user information
+            dispatch(fetchUser.initiate(accessToken));
+        })
+        .catch(err => {
+            // Check if access token is expired
+            // Check if refresh token is valid
+            // If it is, renew access token with refresh token
+            console.log(err)
+        })
+
     };
 
     // Google authorization failed

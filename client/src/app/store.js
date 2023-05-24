@@ -4,6 +4,7 @@ import {
     cartReducer,
     checkoutReducer,
     orderReducer,
+    userReducer
 } from './state';
 
 import api from "../services";
@@ -15,14 +16,17 @@ export const store = configureStore({
         cart:cartReducer,
         checkout:checkoutReducer,
         order: orderReducer,
+        user: userReducer,
         [api.authentication.reducerPath]: api.authentication.reducer,
         [api.products.reducerPath]:api.products.reducer,
-        [api.orders.reducerPath]:api.orders.reducer
+        [api.orders.reducerPath]:api.orders.reducer,
+        [api.users.reducerPath]: api.users.reducer
     },
 
     middleware: getDefaultMiddleware => getDefaultMiddleware()
+    .concat(api.authentication.middleware)
     .concat(api.products.middleware)
     .concat(api.orders.middleware)
-    .concat(api.authentication.middleware)
+    .concat(api.users.middleware)
 });
 

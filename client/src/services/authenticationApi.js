@@ -4,14 +4,17 @@ import { BASE_URL } from '../utils/constants';
 // Authentication API
 const authenticationApi = createApi({
     reducerPath:"authApi",
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
+    baseQuery: fetchBaseQuery({baseUrl: BASE_URL, credentials:"include"}),
     endpoints: builder => ({
         getGoogleCredentials: builder.mutation({
             query: body => ({
-                url: 'auth/refresh',
+                url: 'auth/google/login',
                 method: "POST",
                 body
             })
+        }),
+        getAccessToken: builder.query({
+            query: () => 'auth/google/refresh'
         })
     })
 });
