@@ -1,5 +1,6 @@
 import requests
 import re
+from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,6 +20,24 @@ class GoogleUser(APIView):
             return access_token
 
         return None
+
+    # def get_refresh_token(self, request):
+
+    #     # Check if refresh token exists
+    #     if refresh_token is None:
+    #         return None
+
+    #     # Get expiration date
+    #     expiration_date_str =refresh_token.get('expires')
+
+    #     # Parse the expiration date string to a datetime object
+    #     expiration_date = datetime.strptime(expiration_date_str, "%a, %d %b %Y %H:%M:%S %Z")
+
+    #     # Compare with the current datetime
+    #     current_date = datetime.now()
+
+    #     return expiration_date < current_date
+
 
     def get(self, request):
         # Extract the access token from the Authorization header

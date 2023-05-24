@@ -5,7 +5,7 @@ from apps.orders.views import order_view
 from apps.products.views import product_list, product_view
 
 # Authentication views
-from apps.authentication.views import google_auth_view
+from apps.authentication.views import google_auth_view, google_refresh_view
 
 # Users views
 from apps.users.views import google_user_view
@@ -29,5 +29,6 @@ urlpatterns = [
     path('users/google/me', google_user_view, name="google_user"),
 
     # Authentication views
-    path('auth/google/login', google_auth_view, name="google_auth")
+    path('auth/google/login', google_auth_view, name="google_auth"),
+    path('auth/google/refresh', google_refresh_view, name='google_refresh')
 ]

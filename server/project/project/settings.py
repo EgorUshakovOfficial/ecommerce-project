@@ -11,7 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Stripe environment variables
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
-# Google environment variables
+# Google API settings
+GOOGLE_CLIENT_SECRET= os.environ.get('GOOGLE_CLIENT_SECRET')
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_OAUTH2_CLIENT_SECRET = BASE_DIR / os.environ.get('GOOGLE_OAUTH2_CLIENT_SECRET')
 
 # Quick-start development settings - unsuitable for production
