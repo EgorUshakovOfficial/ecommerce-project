@@ -50,11 +50,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps',
     'apps.authentication',
-    'apps.cart',
     'apps.discount',
     'apps.orders',
     'apps.products',
     'apps.reviews',
+    'apps.shopping',
     'apps.transactions',
     'apps.users',
 ]
