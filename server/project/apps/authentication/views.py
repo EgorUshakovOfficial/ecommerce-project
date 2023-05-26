@@ -6,7 +6,7 @@ from rest_framework import status
 from .serializers import ExchangeCodeSerializer
 
 # Utilities
-from .utils import config_google_flow
+from .utils import config_google_flow, config_cookie_options
 
 # Services
 from .services import get_access_token
@@ -36,16 +36,8 @@ def google_auth_view(request):
 
         # Set refresh token as cookie
         refresh_token = credentials.refresh_token
-        print(refresh_token)
-        MONTH = 60*60*24*30
-        response.set_cookie(
-            key="refresh",
-            value=refresh_token,
-            secure=True,
-            samesite="None", # Change this in production
-            httponly=True,
-            max_age=MONTH
-        )
+        cookie_options = config_cookie_options("refresh", refresh_token)
+        response.set_cookie(**cookie_options)
 
         return response
 
@@ -66,4 +58,18 @@ def google_refresh_view(request):
 
     except:
         return Response({"error":"Unauthorized", "message":"Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET'])
+def google_logout_view(request):
+    # Read the refresh token value
+    refresh_token = request.COOKIES.get('refresh')
+
+    # Initialize response
+    response = Response()
+
+    # If refresh token exists, delete it
+    if refresh_token:
+        response.delete_cookie('refresh', path='/', domain=None, samesite="None")
+
+    return response
 

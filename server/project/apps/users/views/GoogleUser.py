@@ -21,24 +21,6 @@ class GoogleUser(APIView):
 
         return None
 
-    # def get_refresh_token(self, request):
-
-    #     # Check if refresh token exists
-    #     if refresh_token is None:
-    #         return None
-
-    #     # Get expiration date
-    #     expiration_date_str =refresh_token.get('expires')
-
-    #     # Parse the expiration date string to a datetime object
-    #     expiration_date = datetime.strptime(expiration_date_str, "%a, %d %b %Y %H:%M:%S %Z")
-
-    #     # Compare with the current datetime
-    #     current_date = datetime.now()
-
-    #     return expiration_date < current_date
-
-
     def get(self, request):
         # Extract the access token from the Authorization header
         authorization_header = request.headers.get('Authorization')
@@ -64,7 +46,15 @@ class GoogleUser(APIView):
 
         # Successful response (status code 200)
         if google_response.status_code == 200:
-            return Response(data, status=google_response.status_code)
+            return Response({
+                    "firstName":data['given_name'],
+                    "lastName":data['family_name'],
+                    "picture": data['picture'],
+                    "link":"locale"
+                },
+
+                status=google_response.status_code
+            )
 
         else:
             error = {"error":data['error']['status'], "message":"Invalid credentials"}
