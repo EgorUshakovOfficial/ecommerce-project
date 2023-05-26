@@ -13,9 +13,10 @@ const authenticationApi = createApi({
                 body
             })
         }),
+
         getAccessToken: builder.query({
             query: () => 'auth/google/refresh'
-        })
+        }),
     })
 });
 

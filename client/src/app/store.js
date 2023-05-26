@@ -9,7 +9,6 @@ import {
 
 import api from "../services";
 
-
 export const store = configureStore({
     reducer: {
         authentication: authenticationReducer,

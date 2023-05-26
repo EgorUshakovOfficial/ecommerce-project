@@ -4,7 +4,7 @@ import { clearCart } from './cartSlice';
 import checkoutReducer from './checkoutSlice';
 import orderReducer from './orderSlice';
 import productReducer from './productsSlice';
-import userReducer, {fetchUser} from './userSlice';
+import userReducer, {fetchUser, logoutUser} from './userSlice';
 
 export {
     authenticationReducer,
@@ -12,6 +12,7 @@ export {
     checkoutReducer,
     clearCart,
     fetchUser,
+    logoutUser,
     orderReducer,
     productReducer,
     userReducer

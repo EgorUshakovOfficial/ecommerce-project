@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "../../services";
+import { extraErrorReducer, extraLoadingReducer} from "../extraReducers";
 
 // Initial state
 const initialState = {
@@ -26,12 +27,7 @@ const authenticationSlice = createSlice({
     extraReducers: builder => {
         builder
         // Fetches Google credentials
-        .addMatcher(
-            fetchGoogleCredentials.matchPending,
-            (state, action) => {
-                state.isLoading = false;
-            }
-        )
+        .addMatcher(fetchGoogleCredentials.matchPending, extraLoadingReducer)
         .addMatcher(
             fetchGoogleCredentials.matchFulfilled,
             (state, {payload}) => {
@@ -39,20 +35,10 @@ const authenticationSlice = createSlice({
                 state.accessToken = payload.accessToken;
             }
         )
-        .addMatcher(
-            fetchGoogleCredentials.matchRejected,
-            (state, {payload}) => {
-                state.isLoading = false;
-                state.error = payload;
-            }
-        )
+        .addMatcher(fetchGoogleCredentials.matchRejected, extraErrorReducer)
+
         // Fetches access token
-        .addMatcher(
-            fetchAccessToken.matchPending,
-            (state, action) => {
-                state.isLoading = true;
-            }
-        )
+        .addMatcher( fetchAccessToken.matchPending, extraLoadingReducer)
         .addMatcher(
             fetchAccessToken.matchFulfilled,
             (state, {payload}) => {
@@ -60,13 +46,8 @@ const authenticationSlice = createSlice({
                 state.accessToken = payload.accessToken;
             }
         )
-        .addMatcher(
-            fetchAccessToken.matchRejected,
-            (state, {payload}) => {
-                state.isLoading = false;
-                state.error = payload;
-            }
-        )
+        .addMatcher(fetchAccessToken.matchRejected, extraErrorReducer)
+
     }
 });
 

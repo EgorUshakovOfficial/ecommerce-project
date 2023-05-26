@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "../../services";
+import { extraErrorReducer, extraLoadingReducer } from "../extraReducers";
 
 // Initial state
 const initialState = {
@@ -8,8 +9,8 @@ const initialState = {
     error: null
 };
 
-// Users API
-export const fetchUser = api.users.endpoints.getUser;
+// User API endpoints
+export const {getUser:fetchUser, logoutUser} = api.users.endpoints;
 
 // Users slice
 const userSlice = createSlice({
@@ -17,13 +18,9 @@ const userSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
+        // Retrieves user information
         builder
-        .addMatcher(
-            fetchUser.matchPending,
-            (state, action) => {
-                state.isLoading = true;
-            }
-        )
+        .addMatcher(fetchUser.matchPending, extraLoadingReducer)
         .addMatcher(
             fetchUser.matchFulfilled,
             (state, {payload}) => {
@@ -31,13 +28,19 @@ const userSlice = createSlice({
                 state.data = payload;
             }
         )
+        .addMatcher(fetchUser.matchRejected, extraErrorReducer)
+
+        // Logs user out
+        builder
+        .addMatcher(logoutUser.matchPending, extraLoadingReducer)
         .addMatcher(
-            fetchUser.matchRejected,
-            (state, {payload}) => {
+            logoutUser.matchFulfilled,
+            (state, action) => {
                 state.isLoading = false;
-                state.error = payload;
+                state.data = null;
             }
         )
+        .addMatcher(logoutUser.matchRejected, extraErrorReducer)
     }
 });
 

@@ -4,6 +4,7 @@ import {Logo} from '../../../components';
 import NavMobile from './NavMobile';
 import NavCenter from './NavCenter';
 import NavRight from './NavRight';
+import { NAV_MAX_MOBILE } from '../../../utils/constants/styles';
 
 
 const StyledNav = styled('nav')(({theme}) => ({
@@ -16,7 +17,7 @@ const StyledNav = styled('nav')(({theme}) => ({
 
 export default function Nav(){
     // Matches screen size of width of at most 1015px
-    const matchMobile = useMediaQuery('(max-width: 1015px)', {noSsr:true});
+    const matchMobile = useMediaQuery(`(max-width: ${NAV_MAX_MOBILE}px)`, {noSsr:true});
 
     return (
         <StyledNav

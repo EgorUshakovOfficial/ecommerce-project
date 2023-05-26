@@ -6,13 +6,7 @@ import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 import { useGetProductsQuery } from '../services/products';
 
 export default function HomePage(){
-    const {isLoading, error, data:products} = useGetProductsQuery();
-
-    // Application is loading
-    if (isLoading) return <Loading />;
-
-    // Application experiences an error
-    if (error) return <p>Error! Somethinh has gone wrong!</p>
+    const {data:products} = useGetProductsQuery();
 
     return (
         <Fragment>

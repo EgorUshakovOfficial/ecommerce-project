@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import NavWrapper from "./NavWrapper";
 import { Login } from "../../../features/auth";
 import {ShoppingCart} from '../../../features/shopping';
+import { UserMenu } from "../../settings";
 
 export default function NavRight(){
     // User
@@ -9,7 +10,7 @@ export default function NavRight(){
 
     return (
         <NavWrapper>
-            {(user === null) ? <Login /> : <div>{user.name}</div>}
+            {(user === null) ? <Login /> : <UserMenu />}
             <ShoppingCart  />
         </NavWrapper>
     );

@@ -99,9 +99,7 @@ export default function usePaymentForm(){
 
 
             // Sends POST request /api/orders endpoint and processes payment using Stripe API
-            let response = await addNewOrder(payload);
-
-            response
+            addNewOrder(payload)
             .then(data => {
                 // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
