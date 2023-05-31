@@ -1,5 +1,9 @@
 django
-djangorestframework
-stripe
-python-dotenv
 django-cors-headers
+djangorestframework
+google-auth-oauthlib
+google-auth-httplib2
+stripe
+psycopg2
+python-dotenv
+

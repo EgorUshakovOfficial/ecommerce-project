@@ -35,5 +35,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    # Searches for user by email in the database
+    def get_user_by_email(self, email):
+        try:
+            user = self.objects.get(email=email)
+
+            return user
+
+        except self.DoesNotExist:
+            return None
+
     def __str__(self):
         return self.email

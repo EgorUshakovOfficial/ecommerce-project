@@ -11,15 +11,6 @@ from apps.users.models import User
 from apps.users.serializers import UserSerializer
 
 class GoogleUser(APIView):
-
-    def get_user_by_email(request, email):
-        try:
-            user = User.objects.get(email=email)
-
-            return user
-        except User.DoesNotExist:
-            return None
-
     def get_user_info_url(self, token):
         user_info_url = f'https://www.googleapis.com/oauth2/v1/userinfo?access_token={token}'
 
@@ -68,7 +59,7 @@ class GoogleUser(APIView):
             }
 
             # Search for user using email in the database
-            user = self.get_user_by_email(email)
+            user = User.get_user_by_email(self=User, email=email)
 
             # If user is not found, create one in the database
             if user == None:
@@ -77,6 +68,9 @@ class GoogleUser(APIView):
 
                 # If data is valid, create new object in the database
                 if serializer.is_valid():
+                    # Save new user in the database
+                    serializer.save()
+
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             # Otherwise, update existing user in the database
@@ -87,6 +81,7 @@ class GoogleUser(APIView):
                 # If data is valid, update fields in the existing user object
                 if serializer.is_valid():
                     serializer.save()
+
                     return Response(serializer.data, status=status.HTTP_200_OK)
 
             return Response({"error":"Internal Server Error", "message":"Something went wrong on our server. We apologize for the inconvenience. Our team has been notified and is working to fix the issue. Please try again later."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
