@@ -8,7 +8,7 @@ from apps.orders.views import order_view
 from apps.products.views import product_list, product_view
 
 # Shopping session
-from apps.shopping.views import shopping_session_view
+from apps.shopping.views import cart_list_view, cart_item_view,  shopping_session_view
 
 # Users views
 from apps.users.views import google_user_view
@@ -34,7 +34,9 @@ urlpatterns = [
     path('products/<UUID:id>', product_view, name="product"),
 
     # Shopping
-    path('shopping_session', shopping_session_view, name="shopping_session"),
+    path('shopping_sessions', shopping_session_view, name="shopping_session"),
+    path('shopping_sessions/cart', cart_list_view, name="cart_list"),
+    path('shopping_sessions/cart/<UUID:cart_item_id>', cart_item_view, name="cart_item"),
 
     # Users views
     path('users/google/me', google_user_view, name="google_user")

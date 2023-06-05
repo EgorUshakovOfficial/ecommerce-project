@@ -3,103 +3,167 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # Models
-from apps.users.models import User
+from ..models import ShoppingSession
 
 # Serializer
-from apps.users.serializers import UserSerializer
-from ..serializers import CartItemSerializer, ShoppingSessionSerializer
+from ..serializers import ShoppingSessionSerializer
+
+# Utils
+from utils.config_cookie_options import config_cookie_options
 
 class ShoppingSessionDetails(APIView):
-    # Post
-    def post(self, request):
-        # Initialize user data
-        user_data = request.data.get('user')
 
-        # User data does not exist
-        if user_data == None:
-            return Response({"error":"Missing Field", "message":"The user field is required"}, status=status.HTTP_400_BAD_REQUEST)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.COOKIE_NAME = 'shopping_session'
+        self.COOKIE_ERROR_MESSAGE = {"error":"Missing Cookie", "message":"The required cookie 'shopping_session' is missing"}
+        self.INSTANCE_NOT_FOUND = {"error":"Not Found", "message":"The shopping session not found in the database"}
 
-        # Initialize email
-        email = user_data.get('email')
+    # Attempts to retrieve shopping session from the database
+    # Args:
+    #   shopping_session_id: Shopping session Id number
+    # Return:
+    #   Instance of shopping session or None
+    def get_shopping_session(self, shopping_session_id):
+        try:
+            shopping_session = ShoppingSession.objects.get(id=shopping_session_id)
+            return shopping_session
+        except ShoppingSession.DoesNotExist:
+            return None
 
-        # Email does not exist
-        if email == None:
-            return Response({"error":"Missing Field", "message":"The email field in user is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Search user by email in the database
-        user = User.get_user_by_email(self=User, email=email)
-
-        # User is not found in the database
-        if user == None:
-            return Response({"error":"Not Found", "message":"The user is not found in the database"}, status=status.HTTP_404_NOT_FOUND)
-
-        # Validate user data against the user serializer
-        user_serializer = UserSerializer(instance=user, data=user_data)
-
-        # User data is not valid
-        if user_serializer.is_valid() == False:
-            return Response({"error":"Missing Field", "message":"One or more required field(s) in user are missing"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Initialize subtotal
+    # Extracts subtotal and user from the request object
+    # Args:
+    #   request: Request object
+    # Return:
+    #   subtotal: Subtotal
+    #   user: User's Id number
+    def get_shopping_data(self, request):
+        # Retrieve subtotal and user data
         subtotal = request.data.get('subtotal')
+        user = request.data.get('user')
 
-        # Subtotal field does not exist
-        if subtotal == None:
-            return Response({"error":"Missing Field", "message":"The subtotal field is required"}, status=status.HTTP_400_BAD_REQUEST)
+        return subtotal, user
+
+    # Handles PUT /api/shopping
+    def put(self, request):
+        # Read the shopping session Id number from cookie
+        shopping_session_id = request.COOKIES.get(self.COOKIE_NAME)
+
+        # Shopping session cookie does not exist
+        if shopping_session_id is None:
+            return Response({"error":"Missing Cookie", "message":"The required cookie 'shopping_session' is missing"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Get shopping data from the request
+        subtotal, user = self.get_shopping_data(request)
+
+        # If user does not exist, add error to the list
+        if user is None:
+            return Response({"error":"Missing Field", "error":"The user field is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Initialize shopping data
-        shopping_data = {'subtotal': subtotal, 'user':user.pk}
+        subtotal, user = self.get_shopping_data(request)
+        shopping_data = {'subtotal':subtotal, 'user':user['id']}
 
-        # Create shopping session
-        shopping_session_serializer = ShoppingSessionSerializer(data=shopping_data)
+        # Search shopping session by shopping session Id number in the database
+        shopping_session = self.get_shopping_session(shopping_session_id)
 
-        # Shopping session data is valid
-        if shopping_session_serializer.is_valid():
-            # Save shopping session to the database
-            shopping_session_serializer.save()
+        # If shopping session is not found in the database, raise a not found error
+        if shopping_session is None:
+            return Response(self.INSTANCE_NOT_FOUND, status=status.HTTP_404_NOT_FOUND)
 
-            # Initialize cart and cart serializers list
-            cart_serializers = []
-            cart = request.data.get('cart')
+        # Validate the shopping session data against the shopping session serializer
+        shopping_session_serializer = ShoppingSessionSerializer(instance=shopping_session, data=shopping_data)
 
-            # Iterate through every item in cart
-            for cart_item in cart:
-                # Initialize quantity, product, and cart item data
-                cart_item_quantity = cart_item.get('quantity')
-                cart_item_product = cart_item.get('product')
-                cart_item_data = {
-                    'quantity': cart_item_quantity,
-                    'product': cart_item_product.get('id'),
-                    'shopping_session': shopping_session_serializer.data.get('id')
-                }
+        # If shopping session is invalid, raise a bad request error
+        if shopping_session_serializer.is_valid() == False:
+            return Response({"error":"Bad Request", "message":"The shopping session data is invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
-                # Initialize cart item serializer
-                cart_item_serializer = CartItemSerializer(data=cart_item_data)
+        # Save the existing shopping session in the database
+        shopping_session_serializer.save()
 
-                # Respond with an error message if data is not valid
-                if cart_item_serializer.is_valid():
-                    # Add it to the cart serializers list
-                    cart_serializers.append(cart_item_serializer)
+        return Response(status=status.HTTP_200_OK)
 
-                else:
-                    # Shopping session Id number
-                    shopping_session_id = shopping_session_serializer.data.get('id')
+    # Handles POST /api/shopping
+    def post(self, request):
+        # Get shopping data from the request
+        subtotal, user = self.get_shopping_data(request)
 
-                    # Delete shopping session in the database
-                    shopping_session_serializer.destroy(shopping_session_id)
+        # If subtotal does not exist, add error to the list
+        if subtotal is None:
+            return Response({"error":"Missing Field", "message":"The subtotal field is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-                    return Response({"error":"Missing field", "message":"One or more required field(s) in cart item are missing"}, status=status.HTTP_400_BAD_REQUEST)
+        # If user does not exist, add error to the list
+        if user is None:
+            return Response({"error":"Missing Field", "error":"The user field is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Iterate through every cart item serializer
-            for cart_item_serializer in cart_serializers:
-                if cart_item_serializer.is_valid(): # This line is needed. Otherwise, an assertion error is thrown
-                    # Save cart item object to the database
-                    cart_item_serializer.save()
+        # Initialize shopping session data
+        shopping_session_data = {"subtotal":subtotal, "user":user['id']}
 
-            return Response({"message":"Shopping session and cart items created"}, status=status.HTTP_201_CREATED)
+        # Validate the shopping session data against its serializer
+        shopping_session_serializer = ShoppingSessionSerializer(data=shopping_session_data)
 
-        else:
-            return Response({"error":"", "message":""}, status=status.HTTP_400_BAD_REQUEST)
+        # If shopping session data is invalid, raise a bad request error
+        if shopping_session_serializer.is_valid() == False:
+            return Response({"error":"Bad Request", "message":"The shopping session data is invalid or missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Save shopping session in the database
+        shopping_session_serializer.save()
+
+        # Initialize response
+        response = Response(status=status.HTTP_201_CREATED)
+
+        # Set shopping session cookie
+        cookie_options = config_cookie_options(self.COOKIE_NAME, shopping_session_serializer.data.get('id'))
+        response.set_cookie(**cookie_options)
+
+        return response
+
+    # Handles GET /api/shopping
+    def get(self, request):
+        # Read the value of the shopping session cookie
+        shopping_session_id = request.COOKIES.get(self.COOKIE_NAME)
+
+        # Shopping session cookie does not exist
+        if shopping_session_id is None:
+            return Response(self.COOKIE_ERROR_MESSAGE, status=status.HTTP_400_BAD_REQUEST)
+
+        # Search for shopping session using Id in the database
+        shopping_session = self.get_shopping_session(shopping_session_id)
+
+        # Shopping session is not found in the database
+        if shopping_session is None:
+            return Response(self.INSTANCE_NOT_FOUND, status=status.HTTP_404_NOT_FOUND)
+
+        # Initialize shopping session serializer
+        shopping_session_serializer = ShoppingSessionSerializer(shopping_session)
+
+        return Response(shopping_session_serializer.data, status=status.HTTP_200_OK)
+
+
+    # Handles DELETE /api/shopping
+    def delete(self, request):
+        # Read the value of the shopping session cookie
+        shopping_session_id = request.COOKIES.get(self.COOKIE_NAME)
+
+        # Shopping session cookie does not exist
+        if shopping_session_id is None:
+            return Response(self.COOKIE_ERROR_MESSAGE, status=status.HTTP_400_BAD_REQUEST)
+
+        # Search for shopping session using Id in the database
+        shopping_session = self.get_shopping_session(shopping_session_id)
+
+        # Delete shopping session from the database if it exists
+        if shopping_session is not None:
+            shopping_session.delete()
+
+        # Initialize response
+        response = Response()
+
+        # Remove cookie from response
+        response.delete_cookie(self.COOKIE_NAME, path='/', domain=None, samesite="None")
+
+        return response
+
 
 # View
 shopping_session_view = ShoppingSessionDetails.as_view()

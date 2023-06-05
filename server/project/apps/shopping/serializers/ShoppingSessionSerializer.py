@@ -3,16 +3,24 @@ from rest_framework import serializers
 # Models
 from apps.shopping.models import ShoppingSession
 
-
 # Shopping session serializer
 class ShoppingSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingSession
-        fields = ['id', 'subtotal', 'user']
-        extra_kwargs = {"user":{"write_only":True}}
+        fields = ['id', 'user', 'subtotal', 'created_at', 'modified_at']
+        extra_kwargs = {'user': {'write_only': True}}
 
+    # Deletes the shopping session from the database
+    # Args:
+    #   shopping_session_id: Shopping session Id number
+    # Return:
+    #   None
     def destroy(self, shopping_session_id):
-        # Retrieve instance of shopping session from the database using Id
-        instance = ShoppingSession.objects.filter(id=shopping_session_id)
+        try:
+            instance = ShoppingSession.objects.get(id=shopping_session_id)
+            instance.delete()
+        except ShoppingSession.DoesNotExist:
+            return None
 
-        instance.destroy()
+    def __str__(self):
+        return 'Shopping Session'

@@ -6,7 +6,8 @@ from rest_framework import status
 from .serializers import ExchangeCodeSerializer
 
 # Utilities
-from .utils import config_google_flow, config_cookie_options
+from utils.config_cookie_options import config_cookie_options
+from .utils import config_google_flow
 
 # Services
 from .services import get_access_token
