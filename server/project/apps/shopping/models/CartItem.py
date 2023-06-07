@@ -24,6 +24,19 @@ class CartItem(models.Model):
     # Time cart item is modified
     modified_at = models.DateField(auto_now=True, auto_now_add=False)
 
+    # Retrieves cart item using search filter from the database
+    # Args
+    #   search: Search filter
+    # Return
+    #   Instance of cart item or None
+    @classmethod
+    def get_cart_item(self, search):
+        try:
+            cart_item = self.objects.get(**search)
+            return cart_item
+        except self.DoesNotExist:
+            return None
+
     # # Gets cart item from the database using Id
     # # Args:
     # #   cart_item_id: Cart item Id number
