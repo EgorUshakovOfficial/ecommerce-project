@@ -4,16 +4,18 @@ import { clearCart } from './cartSlice';
 import checkoutReducer from './checkoutSlice';
 import orderReducer from './orderSlice';
 import productReducer from './productsSlice';
-import userReducer, {fetchUser, logoutUser} from './userSlice';
+import shoppingReducer, {createShoppingSession} from './shoppingSlice';
+import userReducer, {fetchUser} from './userSlice';
 
 export {
     authenticationReducer,
     cartReducer,
     checkoutReducer,
     clearCart,
+    createShoppingSession,
     fetchUser,
-    logoutUser,
     orderReducer,
     productReducer,
+    shoppingReducer,
     userReducer
 };

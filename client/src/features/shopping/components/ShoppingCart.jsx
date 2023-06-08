@@ -1,6 +1,5 @@
 import {Fragment} from 'react';
-import {useSelector} from 'react-redux';
-import {Badge, Box, Drawer, Typography, IconButton} from '@mui/material';
+import {Badge, Box, Drawer, Typography, IconButton, Tooltip} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
@@ -37,16 +36,15 @@ const Main = styled('main', {shouldForwardProp: prop => prop !== 'open'})
 }));
 
 export default function ShoppingCart(){
-    // Cart state
-    const cart = useSelector(state => state.cart);
-
-    const {handleCartClose, handleCartOpen, openCart} = useShoppingCart(cart);
-
-    // Subtotal
-    let subtotal = calculateSubtotal(cart);
-
-    // Number of products in the shopping cart
-    const numItems = cart.length;
+    const {
+        cart,
+        handleCartClose,
+        handleCartOpen,
+        numItems,
+        openCart,
+        subtotal,
+        userData
+    } = useShoppingCart();
 
     return (
         <Fragment>
@@ -109,10 +107,15 @@ export default function ShoppingCart(){
                         <Typography variant="h6" fontWeight="600">Total</Typography>
                         <Typography variant="h6">{subtotal}</Typography>
                     </Box>
+                    {userData === null && <Typography variant="h6" fontWeight="600">
+                        Log in to purchase products
+                    </Typography>}
                     <Button
                         disableRipple
                         variant="contained"
                         color="success"
+                        disabled={userData === null}
+                        onClick={() => {}}
                         href="/checkout/information"
                         sx={{mb:"0.5em"}}
                     >

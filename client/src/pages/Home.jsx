@@ -8,6 +8,8 @@ import { useGetProductsQuery } from '../services/products';
 export default function HomePage(){
     const {data:products} = useGetProductsQuery();
 
+    console.log(products);
+
     return (
         <Fragment>
             <AnnouncementBar />

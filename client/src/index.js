@@ -7,7 +7,8 @@ import { Provider as StateProvider} from 'react-redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import api from './services';
 import { fetchAccessToken } from './app/state/authenticationSlice';
-import { fetchUser } from './app/state';
+import { createShoppingSession, fetchUser } from './app/state';
+
 
 (async () => {
   // Retrieve products data from the endpoint
@@ -20,7 +21,13 @@ import { fetchUser } from './app/state';
   const accessToken = store.getState().authentication.accessToken;
 
   // Check if access token exists
-  if (accessToken !== null) await store.dispatch(fetchUser.initiate(accessToken));
+  if (accessToken !== null){
+    // Retrieve user's profile information
+    await store.dispatch(fetchUser.initiate({accessToken}));
+
+    // Retrieve shopping session associated with the user
+    await store.dispatch(api.shopping.endpoints.getShoppingSession.initiate({user: store.getState().user.data.id}))
+  }
 
   // Root element
   const root = ReactDOM.createRoot(document.getElementById('root'));

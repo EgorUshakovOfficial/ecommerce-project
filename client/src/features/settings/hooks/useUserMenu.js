@@ -4,7 +4,7 @@ import { useMediaQuery } from '@mui/material';
 import { logoutUser } from '../../../app/state';
 import getInitials from '../utils/getInitials';
 import { NAV_MAX_MOBILE } from '../../../utils/constants/styles';
-
+import { useLogoutUserMutation } from '../../../services/usersApi';
 
 export default function useUserMenu(){
     // Dispatch API
@@ -12,6 +12,9 @@ export default function useUserMenu(){
 
     // User state
     const user = useSelector(state => state.user.data);
+
+    // Logout mutation function
+    const [logoutUser] = useLogoutUserMutation();
 
     // First and last name of user
     const {firstName, lastName} = user;
@@ -38,7 +41,7 @@ export default function useUserMenu(){
     const handleUserMenuOnClose = () => setAnchorElement(null);
 
     // Logouts user on click
-    const handleLogout = () => dispatch(logoutUser.initiate())
+    const handleLogout = () => logoutUser();
 
     return {
         anchorElement,
