@@ -3,7 +3,7 @@ def config_cookie_options(key, value, **kwargs):
     MONTH = 60*60*24*30
 
     # Set default values
-    kwargs.setdefault('secure', False) # Change this to True in production
+    kwargs.setdefault('secure', True) # Change this to True in production
     kwargs.setdefault('samesite', "None")
     kwargs.setdefault('httponly', True)
     kwargs.setdefault('max_age', MONTH)

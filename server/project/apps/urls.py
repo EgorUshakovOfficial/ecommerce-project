@@ -34,11 +34,11 @@ urlpatterns = [
     path('products/<UUID:id>', product_view, name="product"),
 
     # Shopping
-    path('shopping_sessions', shopping_session_create_destroy_update, name="shopping_session_operations"),
-    path('shopping_sessions/data', shopping_session_retrieve, name='shopping_session_retrieve'),
-    path('shopping_sessions/cart', cart_item_list_view, name="cart_list"),
-    path('shopping_sessions/cart/cart_items', cart_item_create, name="cart_item_create"),
-    path('shopping_sessions/cart/cart_items/<UUID:cart_item_id>', cart_item_retrieve_update_delete, name="cart_item"),
+    path('shopping_session', shopping_session_create_destroy_update, name="shopping_session_operations"),
+    path('shopping_session/data', shopping_session_retrieve, name='shopping_session_retrieve'),
+    path('shopping_session/cart', cart_item_list_view, name="cart_list"),
+    path('shopping_session/cart/cart_items', cart_item_create, name="cart_item_create"),
+    path('shopping_session/cart/cart_items/<UUID:cart_item_id>', cart_item_retrieve_update_delete, name="cart_item"),
 
     # Users views
     path('users/google/me', google_user_view, name="google_user")

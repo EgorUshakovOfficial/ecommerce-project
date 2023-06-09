@@ -75,6 +75,7 @@ class CartItemRetrieveUpdateDelete(APIView):
 
         # Initialize cart item data
         cart_item_data = {
+            'id': cart_item_id,
             'quantity': quantity,
             'product':product,
             'shopping_session': shopping_session_id
@@ -85,6 +86,7 @@ class CartItemRetrieveUpdateDelete(APIView):
 
         # If cart item data is invalid, raise a bad request error
         if serializer.is_valid() == False:
+            print(serializer.errors)
             return Response(self.INVALID_CART_ITEM, status=status.HTTP_400_BAD_REQUEST)
 
         # Save the updated instace in the database

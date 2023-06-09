@@ -29,7 +29,8 @@ def cart_item_create(request):
     if shopping_session_id is None:
         return Response(COOKIE_NOT_FOUND, status=status.HTTP_400_BAD_REQUEST)
 
-    # Retrieve quantity and product from the request object
+    # Retrieve cart item's Id number, quantity, and product from the request object
+    cart_item_id = request.data.get('id')
     quantity = request.data.get('quantity')
     product = request.data.get('product')
 
@@ -43,6 +44,7 @@ def cart_item_create(request):
 
     # Initialize cart item data
     cart_item_data = {
+        "id":cart_item_id,
         "quantity": quantity,
         "product": product,
         "shopping_session": shopping_session_id
