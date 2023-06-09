@@ -56,7 +56,7 @@ export default function FilterDropdown({typeFilter, typeFilterOptions}){
                     horizontal: 'right',
                 }}
             >
-                {typeFilterOptions.map(filter => <MenuItem onClick={handleClick}>{filter}</MenuItem>)}
+                {typeFilterOptions.map(filter => <MenuItem key={`${id}-${filter}`} onClick={handleClick}>{filter}</MenuItem>)}
             </Menu>
         </Fragment>
     )

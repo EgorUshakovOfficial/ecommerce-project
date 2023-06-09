@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from '../../services';
+import { extraLoadingReducer, extraErrorReducer} from "../extraReducers";
 
 // Initial state
 const initialState = {
@@ -8,32 +9,24 @@ const initialState = {
     error: null
 };
 
+const {getProducts: fetchProducts} = api.products.endpoints;
+
 // Products slice
 const productsSlice = createSlice({
     name:"products",
     initialState,
     extraReducers: builder => {
+        // Retrieves list of all products from the API endpoint
         builder
+        .addMatcher(fetchProducts.matchPending, extraLoadingReducer)
         .addMatcher(
-            api.products.endpoints.getProducts.matchPending,
-            (state, action) => {
-                state.loading = true
-            }
-        )
-        .addMatcher(
-            api.products.endpoints.getProducts.matchFulfilled,
+            fetchProducts.matchFulfilled,
             (state, {payload}) => {
                 state.loading = false
                 state.data = payload
             }
         )
-        .addMatcher(
-            api.products.endpoints.getProducts.matchRejected,
-            (state, {payload}) => {
-                state.loading = false
-                state.error = payload
-            }
-        )
+        .addMatcher(fetchProducts.matchRejected, extraErrorReducer)
     }
 });
 

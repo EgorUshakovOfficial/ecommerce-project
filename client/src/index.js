@@ -7,7 +7,8 @@ import { Provider as StateProvider} from 'react-redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import api from './services';
 import { fetchAccessToken } from './app/state/authenticationSlice';
-import { createShoppingSession, fetchUser } from './app/state';
+import { fetchCartItems } from './app/state/cartSlice';
+import { fetchUser } from './app/state';
 
 
 (async () => {
@@ -25,8 +26,14 @@ import { createShoppingSession, fetchUser } from './app/state';
     // Retrieve user's profile information
     await store.dispatch(fetchUser.initiate({accessToken}));
 
+    // User Id number
+    const userId = store.getState().user.data.id;
+
     // Retrieve shopping session associated with the user
-    await store.dispatch(api.shopping.endpoints.getShoppingSession.initiate({user: store.getState().user.data.id}))
+    await store.dispatch(api.shopping.endpoints.getShoppingSession.initiate({user: userId}))
+
+    // Retrieve cart items associated with the user
+    await store.dispatch(fetchCartItems.initiate())
   }
 
   // Root element

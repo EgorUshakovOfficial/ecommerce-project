@@ -1,7 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
+import api from '../../services';
 
 // Initial state
 const initialState = [];
+
+// Initialize fetch cart items
+export const {getCartItems: fetchCartItems} = api.shopping.endpoints;
 
 // Cart slice
 export const cartSlice = createSlice({
@@ -12,10 +16,10 @@ export const cartSlice = createSlice({
         clearCart: () => [],
 
         // Adds new product into the cart
-        addProduct: (state, action) => state.concat(action.payload),
+        addProduct: (state, action) => state.concat(action.payload), // Rename to addProduct
 
         // Removes product from the cart
-        removeProduct: (state, action) => {
+        removeProduct: (state, action) => { // Rename to removeCartItem
             const { payload } = action;
 
             // Index of the cart item in the array to be removed
@@ -28,7 +32,7 @@ export const cartSlice = createSlice({
         },
 
         // Increments the quantity of the product in the shopping cart
-        incrementProduct: (state, action) => {
+        incrementProduct: (state, action) => { // Rename to incrementCartItem
             const { payload } = action;
 
             // Index of the cart item to be incremented
@@ -44,7 +48,7 @@ export const cartSlice = createSlice({
         },
 
         // Decrements the quantity of the product in the shopping cart
-        decrementProduct: (state, action) => {
+        decrementProduct: (state, action) => { // Rename to decrementCartItem
             const { payload } = action;
 
             // Index of the cart item to be decremented
@@ -58,6 +62,40 @@ export const cartSlice = createSlice({
 
             return state;
         }
+    },
+    extraReducers: builder => {
+        // Retrieve cart items from the API endpoint
+        builder
+        .addMatcher(fetchCartItems.matchPending, (state, action) => state)
+        .addMatcher(fetchCartItems.matchFulfilled, (state, {payload}) => {
+            // Cart items retrieved from the API endpoint
+            let cart = payload.cart;
+
+            // Extract the needed fields from every item in the cart
+            cart = cart.map( ({id:cartItemId, quantity, product}) => {
+                // Extract title, price, and product images fields of the product
+                const {id:productId, title, price, product_images} = product;
+
+                // Finds the main image
+                const mainImage = product_images.filter(image => image.main_image)[0];
+
+                return {
+                    id:cartItemId,
+                    productId,
+                    title,
+                    price,
+                    quantity,
+                    image: mainImage.image_url,
+                    color: mainImage.color_name
+                }
+            });
+
+            // Update state to be the cart
+            state = [...cart];
+
+            return state;
+        })
+        .addMatcher(fetchCartItems.matchRejected, (state, action) => state)
     }
 });
 

@@ -28,7 +28,7 @@ export default function Filters(){
             }}
         >
             <Container>
-                {filters.map(filter => <Filter {...filter} />)}
+                {filters.map(filter => <Filter key={filter.id} {...filter} />)}
                 <Button
                     id="all-filters-btn"
                     color="inherit"

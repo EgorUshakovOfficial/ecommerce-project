@@ -1,3 +1,4 @@
+import {forwardRef} from 'react';
 import {Box, IconButton, styled} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LoginHeader from './LoginHeader';
@@ -15,9 +16,9 @@ const StyledForm = styled(Box)( ({theme}) => ({
     padding:"1em"
 }));
 
-export default function LoginForm({handleOpenModalOnClose}){
+const LoginForm = forwardRef(({handleOpenModalOnClose}, ref) => {
     return (
-        <StyledForm>
+        <StyledForm ref={ref}>
             <IconButton
                 disableRipple
                 onClick={handleOpenModalOnClose}
@@ -34,4 +35,6 @@ export default function LoginForm({handleOpenModalOnClose}){
            <LoginServices />
         </StyledForm>
     )
-}
+});
+
+export default LoginForm;

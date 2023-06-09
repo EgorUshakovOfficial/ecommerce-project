@@ -75,6 +75,7 @@ export default function NavMobile(){
                 <Box variant="nav">
                     {navLinks.map(navLink => (
                         <Button
+                            key={`${navLink}-mobile`}
                             disableRipple
                             color="inherit"
                             onClick={handleMobileOpenOnClose}
@@ -102,6 +103,7 @@ export default function NavMobile(){
                     <Collapse in={expandCategories} timeout="auto">
                         {types.map(type => (
                         <Button
+                            key={`${type}-mobile`}
                             disableRipple
                             style={btnStyle}
                             color="inherit"

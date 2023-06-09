@@ -1,12 +1,11 @@
 import {Fragment} from 'react';
-import {Badge, Box, Drawer, Typography, IconButton, Tooltip} from '@mui/material';
+import {Badge, Box, Drawer, Typography, IconButton} from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import {styled} from '@mui/material/styles';
 import {Button} from '../../../components';
 import CartItem from './CartItem';
 import useShoppingCart from '../hooks/useShoppingCart';
-import {calculateSubtotal} from '../../../helper';
 
 // Cart header
 const DrawerHeader = styled('div')(({theme}) => ({

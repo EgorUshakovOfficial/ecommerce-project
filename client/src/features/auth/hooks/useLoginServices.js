@@ -1,14 +1,22 @@
+import { useSelector } from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
 import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
-import { useCreateShoppingSessionMutation, useGetShoppingSessionMutation} from '../../../services/shoppingApi';
+import { useCreateCartMutation, useCreateShoppingSessionMutation, useGetShoppingSessionMutation} from '../../../services/shoppingApi';
 import { useGetUserMutation} from '../../../services/usersApi';
 
 export default function useLoginServices(){
+    // Cart state
+    let cart = useSelector(state => state.cart);
+    cart = cart.map(({id:productId, quantity}) => ({quantity, product:productId}));
+
     // Get Google credentials mutation function
     const [getGoogleCredentials] = useGetGoogleCredentialsMutation();
 
     // Create shopping session mutation function
     const [createShoppingSession] = useCreateShoppingSessionMutation();
+
+    // Create cart mutation function
+    const [createCart] = useCreateCartMutation();
 
     // Get user mutation function
     const [getUser] = useGetUserMutation();
@@ -29,9 +37,11 @@ export default function useLoginServices(){
             getUser({accessToken})
             .then(response => response.data)
             .then(async ({status, user}) => {
-                // If user profile is created, create a shopping session for it
+                // Create shopping session and cart after user profile is registered
                 if (status === 201){
                     createShoppingSession({user: user.id})
+                    .then(response => response.data)
+                    .then(data => createCart({cart}))
                 }
                 // Otherwise, get existing shopping session from the database
                 else{
@@ -39,19 +49,6 @@ export default function useLoginServices(){
                 }
             })
         })
-        // getGoogleCredentials({code})
-        // .then(response => response.data)
-        // .then(async ({accessToken}) => {
-        //     // Dispatch user information mutation against the store
-        //     getUser({accessToken})
-        //     .then(response => response.data)
-        //     .then( ({response, user}) =>  {
-        //         // If user profile is created, create a shopping session for it
-        //         if (response.status === 201){
-        //             createShoppingSession({user});
-        //         }
-        //     })
-        // })
     };
 
     // Google authorization failed

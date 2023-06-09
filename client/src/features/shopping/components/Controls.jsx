@@ -14,8 +14,6 @@ const ControlContainer = styled('div')({
 });
 
 export default function Controls({selectedColor, quantity}){
-    // Retrieve product id from the url
-    const {productId} = useParams();
 
     const {
         addCartItemOnClick,

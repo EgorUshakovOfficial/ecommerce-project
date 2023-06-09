@@ -40,7 +40,7 @@ export default function ProductSection({products}){
                     ? "repeat(auto-fill, minmax(350px, 1fr))" : "100%"
                 }}
             >
-                {products.map(product => <Product product={product} />)}
+                {products.map(product => <Product key={product.id} product={product} />)}
             </ProductGallery>
         </Box>
     )

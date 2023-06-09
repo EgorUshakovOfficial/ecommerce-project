@@ -15,10 +15,10 @@ const shoppingApi = createApi({
             })
         }),
 
-        // Retrieve shopping sessions from the API
+        // Retrieves shopping session from the API
         getShoppingSession: builder.mutation({
             query: body => ({
-                url: `/shopping_session/data`,
+                url: "/shopping_session/data",
                 method: "POST",
                 body
             })
@@ -31,14 +31,60 @@ const shoppingApi = createApi({
                 method: "PUT",
                 body
             })
+        }),
+
+        // Creates new cart in the database
+        createCart: builder.mutation({
+            query: body => ({
+                url: "/shopping_session/cart",
+                method: "POST",
+                body
+            })
+        }),
+
+        // Retrieve all cart items from the shopping session
+        getCartItems: builder.query({
+            query: () => ({url: '/shopping_session/cart'})
+        }),
+
+        // Adds new product to the cart
+        addProductToCart: builder.mutation({
+            query: body => ({
+                url: "/shopping_session/cart/cart_items",
+                method:"POST",
+                body
+            })
+        }),
+
+        // Updates cart item in the database
+        updateCartItem: builder.mutation({
+            query: ({id, ...body}) => ({
+                url: `/shopping_session/cart/cart_items/${id}`,
+                method:"PUT",
+                body
+            })
+        }),
+
+        // Delete cart item in the database
+        deleteCartItem: builder.mutation({
+            query: body => ({
+                url:`/shopping_session/cart/cart_items/${body.id}`,
+                method: "DELETE",
+                body
+            })
         })
     })
 });
 
 export const {
     useCreateShoppingSessionMutation,
+    useCreateCartMutation,
+    useGetShoppingSessionMutation,
+    useGetCartItemsQuery,
+    useAddProductToCartMutation,
+    useDeleteCartItemMutation,
+    useUpdateCartItemMutation,
     useUpdateShoppingSessionMutation,
-    useGetShoppingSessionMutation
 } = shoppingApi;
 
 export default shoppingApi;
