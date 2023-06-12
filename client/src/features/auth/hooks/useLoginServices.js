@@ -7,7 +7,7 @@ import { useGetUserMutation} from '../../../services/usersApi';
 export default function useLoginServices(){
     // Cart state
     let cart = useSelector(state => state.cart);
-    cart = cart.map(({id:productId, quantity}) => ({quantity, product:productId}));
+    cart = cart.map(({id, productId, quantity}) => ({id, quantity, product:productId}));
 
     // Get Google credentials mutation function
     const [getGoogleCredentials] = useGetGoogleCredentialsMutation();

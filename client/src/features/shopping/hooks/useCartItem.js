@@ -6,8 +6,10 @@ import {
 import {decrementProduct, incrementProduct, removeProduct} from '../../../app/state/cartSlice';
 
 export default function useCartItem(cartItem){
-    // Products state
-    const products = useSelector(state => state.products.data);
+    // User and products state
+    const {products, user} = useSelector(state => state);
+
+    console.log(useSelector(state => state.cart));
 
     // Delete cart item mutation function
     const [deleteCartItem] = useDeleteCartItemMutation();
@@ -19,7 +21,7 @@ export default function useCartItem(cartItem){
     const dispatch = useDispatch();
 
     // Specified product that is in cart
-    let product = products.filter(product => product.id === cartItem.productId)[0];
+    let product = products.data.filter(product => product.id === cartItem.productId)[0];
 
     // Increment the quantity of the product in the shopping cart
     const incrementQuantityOnClick = () => {
@@ -34,15 +36,18 @@ export default function useCartItem(cartItem){
         if (newQuantity <= product.quantity){
             dispatch(incrementProduct({id: cartItem.id, quantityToAdd}));
 
-            // Send PUT /api/shopping_session/cart/cart_items
-            updateCartItem({
-                id:cartItem.id,
-                product: product.id,
-                quantity:newQuantity
-            })
-            .then(response => response.data)
-            .then(data => {})
-            .catch(err => {})
+            // If user is authenticated, permit them to update the quantity of the selected cart item
+            if (user.data !== null){
+                // Send PUT /api/shopping_session/cart/cart_items
+                updateCartItem({
+                    id:cartItem.id,
+                    product: product.id,
+                    quantity:newQuantity
+                })
+                .then(response => response.data)
+                .then(data => {})
+                .catch(err => {})
+            }
         }
     };
 
@@ -57,11 +62,14 @@ export default function useCartItem(cartItem){
         if (cartItem.quantity === 1){
             dispatch(removeProduct(payload));
 
-            // Send DELETE /api/shopping_session/cart/cart_items
-            deleteCartItem({id: cartItem.id})
-            .then(response => response.data)
-            .then(data => {})
-            .catch(err => {})
+            // If the user is authenticated, permit them to delete selected cart items
+            if (user.data !== null){
+                // Send DELETE /api/shopping_session/cart/cart_items
+                deleteCartItem({id: cartItem.id})
+                .then(response => response.data)
+                .then(data => {})
+                .catch(err => {})
+            }
 
             return;
         }
@@ -73,11 +81,14 @@ export default function useCartItem(cartItem){
         // New quantity
         let newQuantity = cartItem.quantity-payload.quantityToRemove;
 
-        // Sends PUT /api/shopping_session/cart/cart_items request
-        updateCartItem({id:cartItem.id, product:product.id , quantity: newQuantity})
-        .then(response => response.data)
-        .then(data => {})
-        .catch(err => {})
+        // If user is authenticated, permit them to update the quantity of the selected cart item
+        if (user.data !== null){
+            // Sends PUT /api/shopping_session/cart/cart_items request
+            updateCartItem({id:cartItem.id, product:product.id , quantity: newQuantity})
+            .then(response => response.data)
+            .then(data => {})
+            .catch(err => {})
+        }
     }
 
     return {decrementQuantityOnClick, incrementQuantityOnClick}

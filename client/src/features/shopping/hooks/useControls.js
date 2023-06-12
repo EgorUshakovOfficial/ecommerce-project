@@ -7,7 +7,7 @@ import {addProduct, incrementProduct} from '../../../app/state/cartSlice';
 
 export default function useControls(selectedColor){
     // Cart and products state
-    const {cart, products} = useSelector(state => state);
+    const {cart, products, user} = useSelector(state => state);
 
     // Product Id
     const {productId} = useParams();
@@ -50,11 +50,14 @@ export default function useControls(selectedColor){
             // Adds product to the cart
             dispatch(addProduct(payload));
 
-            // Sends POST /api/shopping_session/cart/cart_items
-            addProductToCart({id:payload.id, quantity:quantityToAdd, product:productId})
-            .then(response => response.data)
-            .then(data => {})
-            .catch(err => {})
+            // If user is authenticated, create new cart item and save it in the database
+            if (user.data !== null){
+                // Sends POST /api/shopping_session/cart/cart_items
+                addProductToCart({id:payload.id, quantity:quantityToAdd, product:productId})
+                .then(response => response.data)
+                .then(data => {})
+                .catch(err => {})
+            }
 
             return;
         }
@@ -71,11 +74,16 @@ export default function useControls(selectedColor){
             // Dispatch increment product action creator against the store
             dispatch(incrementProduct({id:cartItem.id, quantityToAdd}));
 
-            // Sends PUT /api/shopping_session/cart/cart_items request
-            updateCartItem({id:cartItem.id, product:productId, quantity: newQuantity})
-            .then(response => response.data)
-            .then(data => {})
-            .catch(err => {})
+            console.log(user.data);
+
+            // If user is authenticated, update the quantity of the cart item and save it
+            if (user.data !== null){
+                // Sends PUT /api/shopping_session/cart/cart_items request
+                updateCartItem({id:cartItem.id, product:productId, quantity: newQuantity})
+                .then(response => response.data)
+                .then(data => {})
+                .catch(err => {})
+            }
         }
 
     };
