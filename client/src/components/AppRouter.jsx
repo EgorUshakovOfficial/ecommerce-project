@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 import { Checkout, Confirmation, Home, ProductPage } from '../pages';
 
 export default function AppRouter(){
@@ -7,7 +8,7 @@ export default function AppRouter(){
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/success" element={<Confirmation />} />
-                <Route path="/checkout/:section" element={<Checkout />} />
+                <PrivateRoute path="/checkout/:section" element={<Checkout />} />
                 <Route path="/product-page/:productId" element={<ProductPage />} />
             </Routes>
         </Router>
