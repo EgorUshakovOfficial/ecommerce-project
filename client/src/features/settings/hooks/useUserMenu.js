@@ -1,17 +1,17 @@
 import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import { useMediaQuery } from '@mui/material';
-import { logoutUser } from '../../../app/state';
 import getInitials from '../utils/getInitials';
+import { clearCart } from '../../../app/state/cartSlice';
 import { NAV_MAX_MOBILE } from '../../../utils/constants/styles';
 import { useLogoutUserMutation } from '../../../services/usersApi';
 
 export default function useUserMenu(){
-    // Dispatch API
-    const dispatch = useDispatch();
-
     // User state
     const user = useSelector(state => state.user.data);
+
+    // Dispatch API
+    const dispatch = useDispatch();
 
     // Logout mutation function
     const [logoutUser] = useLogoutUserMutation();
@@ -29,7 +29,7 @@ export default function useUserMenu(){
     const [anchorElement, setAnchorElement] = useState(null);
 
     // Determines if user menu is open or closed
-    const openUserMenu = (anchorElement !== null)
+    const openUserMenu = (anchorElement !== null);
 
     // Match mobile
     const matchMobile = useMediaQuery(`(max-width: ${NAV_MAX_MOBILE}px)`, {noSsr:true});
@@ -40,8 +40,14 @@ export default function useUserMenu(){
     // Closes user menu when clicked
     const handleUserMenuOnClose = () => setAnchorElement(null);
 
-    // Logouts user on click
-    const handleLogout = () => logoutUser();
+    // Logs out user on click
+    const handleLogout = () => {
+        // Removes refresh and shopping session cookies
+        logoutUser();
+
+        // Dispatch clear cart action against the store
+        dispatch(clearCart());
+    }
 
     return {
         anchorElement,

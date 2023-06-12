@@ -38,7 +38,7 @@ const userSlice = createSlice({
         )
         .addMatcher(fetchUser.matchRejected, extraErrorReducer)
 
-        // Logs user out
+        // Logs out user
         builder
         .addMatcher(logoutUser.matchPending, extraLoadingReducer)
         .addMatcher(

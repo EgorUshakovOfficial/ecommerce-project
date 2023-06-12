@@ -1,13 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
 import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
 import { useCreateCartMutation, useCreateShoppingSessionMutation, useGetShoppingSessionMutation} from '../../../services/shoppingApi';
 import { useGetUserMutation} from '../../../services/usersApi';
+import { fetchCartItems } from '../../../app/state/cartSlice';
 
 export default function useLoginServices(){
     // Cart state
     let cart = useSelector(state => state.cart);
     cart = cart.map(({id, productId, quantity}) => ({id, quantity, product:productId}));
+
+    // Dispatch API
+    const dispatch = useDispatch();
 
     // Get Google credentials mutation function
     const [getGoogleCredentials] = useGetGoogleCredentialsMutation();
@@ -43,9 +47,15 @@ export default function useLoginServices(){
                     .then(response => response.data)
                     .then(data => createCart({cart}))
                 }
-                // Otherwise, get existing shopping session from the database
+                // Otherwise, retrieve shopping session and cart items
                 else{
+                    // Gets shopping session from the API enpoint
                     getShoppingSession({user: user.id})
+                    .then(response => response.data)
+                    // Fetches cart items after shopping session
+                    .then(data => dispatch(fetchCartItems.initiate(undefined, {forceRefetch:true})))
+                    .catch(err => {
+                    })
                 }
             })
         })

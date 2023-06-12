@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
     initialState,
     reducers:{
         // Clears cart of all products
-        clearCart: () => [],
+        clearCart: (state, action) => [],
 
         // Adds new product into the cart
         addProduct: (state, action) => state.concat(action.payload), // Rename to addProduct
