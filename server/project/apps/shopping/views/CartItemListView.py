@@ -23,14 +23,13 @@ class CartItemListView(APIView):
         self.MISSING_CART = create_error("Missing Field", "The cart field is required")
         self.BAD_REQUEST = create_error('Bad Request', 'The cart item data is invalid')
 
-    # Things to do: Deprecate this endpoint
-    # Handles POST /api/shopping/cart
+    # Handles PUT /api/shopping/cart
     # Args:
     #   self: Instance of the class
     #   request: Request object
     # Return
     #   Response object
-    def post(self, request):
+    def put(self, request):
         # Retrieve the shopping session value from cookie
         shopping_session_id = request.COOKIES.get(self.COOKIE_NAME)
 
@@ -45,22 +44,81 @@ class CartItemListView(APIView):
         if cart is None:
             return Response(self.MISSING_CART, status=status.HTTP_400_BAD_REQUEST)
 
+        # Memoize the cart Id number for each item in the cart
+        cart_lookup = {cart_item['id']: True for cart_item in cart}
+
+        # Retrieve existing cart items from the database
+        cart_instance = CartItem.objects.filter(shopping_session=shopping_session_id)
+
+        # Compare the items in the cart instance with those in the cart from the request object
+        for cart_item in cart_instance:
+            # Initialize cart item Id number
+            id = cart_item.id
+
+            # If the cart item already exists in the database, ignore it
+            if id in cart_lookup:
+                cart_lookup[id] = False
+
+        # Filter the cart and instance by the lookup table
+        cart = [cart_item for cart_item in cart if cart_lookup[cart_item['id']]]
+
         # Alter each product in the cart to have shopping session Id number
         for product in cart:
             product['shopping_session'] = shopping_session_id
 
         # Validate data against the cart item serializer
-        serializer = CartItemSerializer(data=cart, many=True)
+        cart_serializer = CartItemSerializer(data=cart, many=True)
 
         # If data is invalid, raise a bad request error
-        if serializer.is_valid() == False:
-            print(serializer.errors)
+        if cart_serializer.is_valid() == False:
             return Response(self.BAD_REQUEST, status=status.HTTP_400_BAD_REQUEST)
 
         # Save new cart items to the database
+        cart_serializer.save()
+
+        # Concatenated existing cart items in the database with the new ones
+        cart_instance_serializer = CartItemSerializer(cart_instance, many=True)
+        data = cart_instance_serializer.data + cart_serializer.data
+
+        return Response({"cart":data}, status=status.HTTP_200_OK)
+
+    # Things to do: Deprecate this endpoint
+    # Handles PUT /api/shopping/cart
+    # Args:
+    #   self: Instance of the class
+    #   request: Request object
+    # Return
+    #   Response object
+    def post(self, request):
+        # Retrieve the shopping session value from cookie
+        shopping_session_id = request.COOKIES.get(self.COOKIE_NAME)
+
+        # Shopping session Id cookie does not exist
+        if shopping_session_id is None:
+            return Response(self.COOKIE_NOT_FOUND, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve cart field from the request object
+        cart = request.data.get('cart')
+
+        # Cart field is missing
+        if cart is None:
+            return Response(self.MISSING_CART, status=status.HTTP_400_BAD_REQUEST)
+
+        # Associate each cart item with the shopping session Id number
+        for cart_item in cart:
+            cart_item['shopping_session'] = shopping_session_id
+
+        # Validate the cart against the cart item serializer
+        serializer = CartItemSerializer(data=cart, many=True)
+
+        # If the cart item serializer invalidates data, raise a bad request error
+        if serializer.is_valid() == False:
+            return Response(self.BAD_REQUEST, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create new cart items and associate them with shopping session in the database
         serializer.save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({"cart":serializer.data}, status=status.HTTP_400_BAD_REQUEST)
 
     # Handles GET /api/shopping/cart
     # Args:
