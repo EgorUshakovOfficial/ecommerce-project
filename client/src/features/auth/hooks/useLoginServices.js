@@ -1,9 +1,13 @@
 import { useSelector, useDispatch} from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
 import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
-import { useCreateCartMutation, useCreateShoppingSessionMutation, useGetShoppingSessionMutation} from '../../../services/shoppingApi';
+import {
+    useCreateCartMutation,
+    useCreateShoppingSessionMutation,
+    useGetShoppingSessionMutation,
+    useUpdateCartMutation
+} from '../../../services/shoppingApi';
 import { useGetUserMutation} from '../../../services/usersApi';
-import { fetchCartItems } from '../../../app/state/cartSlice';
 
 export default function useLoginServices(){
     // Cart state
@@ -27,6 +31,9 @@ export default function useLoginServices(){
 
     // Get shopping session mutation function
     const [getShoppingSession] = useGetShoppingSessionMutation();
+
+    // Update cart mutation function
+    const [updateCart] = useUpdateCartMutation();
 
     // Google authorization is successful
     const googleLoginOnSuccess = async response => {
@@ -52,8 +59,8 @@ export default function useLoginServices(){
                     // Gets shopping session from the API enpoint
                     getShoppingSession({user: user.id})
                     .then(response => response.data)
-                    // Fetches cart items after shopping session
-                    .then(data => dispatch(fetchCartItems.initiate(undefined, {forceRefetch:true})))
+                    // Updates cart after user logs in
+                    .then(data => updateCart({cart}))
                     .catch(err => {})
                 }
             })

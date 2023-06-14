@@ -42,6 +42,15 @@ const shoppingApi = createApi({
             })
         }),
 
+        // Updates cart in the database
+        updateCart: builder.mutation({
+            query: body => ({
+                url: "/shopping/cart",
+                method: "PUT",
+                body
+            })
+        }),
+
         // Retrieve all cart items from the shopping session
         getCartItems: builder.query({
             query: () => ({url: '/shopping/cart'})
@@ -83,6 +92,7 @@ export const {
     useGetCartItemsQuery,
     useAddProductToCartMutation,
     useDeleteCartItemMutation,
+    useUpdateCartMutation,
     useUpdateCartItemMutation,
     useUpdateShoppingSessionMutation,
 } = shoppingApi;
