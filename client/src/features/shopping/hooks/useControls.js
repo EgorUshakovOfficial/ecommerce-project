@@ -52,7 +52,7 @@ export default function useControls(selectedColor){
 
             // If user is authenticated, create new cart item and save it in the database
             if (user.data !== null){
-                // Sends POST /api/shopping_session/cart/cart_items
+                // Sends POST /api/shopping/cart/cart_items
                 addProductToCart({id:payload.id, quantity:quantityToAdd, product:productId})
                 .then(response => response.data)
                 .then(data => {})
@@ -78,7 +78,7 @@ export default function useControls(selectedColor){
 
             // If user is authenticated, update the quantity of the cart item and save it
             if (user.data !== null){
-                // Sends PUT /api/shopping_session/cart/cart_items request
+                // Sends PUT /api/shopping/cart/cart_items request
                 updateCartItem({id:cartItem.id, product:productId, quantity: newQuantity})
                 .then(response => response.data)
                 .then(data => {})

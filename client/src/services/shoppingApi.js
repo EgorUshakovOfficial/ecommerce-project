@@ -9,7 +9,7 @@ const shoppingApi = createApi({
         // Creates new shopping session for new user
         createShoppingSession: builder.mutation({
             query: body => ({
-                url:"/shopping_session",
+                url:"/shopping",
                 method:"POST",
                 body
             })
@@ -18,7 +18,7 @@ const shoppingApi = createApi({
         // Retrieves shopping session from the API
         getShoppingSession: builder.mutation({
             query: body => ({
-                url: "/shopping_session/data",
+                url: "/shopping/data",
                 method: "POST",
                 body
             })
@@ -27,7 +27,7 @@ const shoppingApi = createApi({
         // Updates shopping session fields
         updateShoppingSession: builder.mutation({
             query: body => ({
-                url: "/shopping_session",
+                url: "/shopping",
                 method: "PUT",
                 body
             })
@@ -36,7 +36,7 @@ const shoppingApi = createApi({
         // Creates new cart in the database
         createCart: builder.mutation({
             query: body => ({
-                url: "/shopping_session/cart",
+                url: "/shopping/cart",
                 method: "POST",
                 body
             })
@@ -44,13 +44,13 @@ const shoppingApi = createApi({
 
         // Retrieve all cart items from the shopping session
         getCartItems: builder.query({
-            query: () => ({url: '/shopping_session/cart'})
+            query: () => ({url: '/shopping/cart'})
         }),
 
         // Adds new product to the cart
         addProductToCart: builder.mutation({
             query: body => ({
-                url: "/shopping_session/cart/cart_items",
+                url: "/shopping/cart/cart_items",
                 method:"POST",
                 body
             })
@@ -59,7 +59,7 @@ const shoppingApi = createApi({
         // Updates cart item in the database
         updateCartItem: builder.mutation({
             query: ({id, ...body}) => ({
-                url: `/shopping_session/cart/cart_items/${id}`,
+                url: `/shopping/cart/cart_items/${id}`,
                 method:"PUT",
                 body
             })
@@ -68,7 +68,7 @@ const shoppingApi = createApi({
         // Delete cart item in the database
         deleteCartItem: builder.mutation({
             query: body => ({
-                url:`/shopping_session/cart/cart_items/${body.id}`,
+                url:`/shopping/cart/cart_items/${body.id}`,
                 method: "DELETE",
                 body
             })

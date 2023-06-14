@@ -9,8 +9,6 @@ export default function useCartItem(cartItem){
     // User and products state
     const {products, user} = useSelector(state => state);
 
-    console.log(useSelector(state => state.cart));
-
     // Delete cart item mutation function
     const [deleteCartItem] = useDeleteCartItemMutation();
 
@@ -38,7 +36,7 @@ export default function useCartItem(cartItem){
 
             // If user is authenticated, permit them to update the quantity of the selected cart item
             if (user.data !== null){
-                // Send PUT /api/shopping_session/cart/cart_items
+                // Send PUT /api/shopping/cart/cart_items
                 updateCartItem({
                     id:cartItem.id,
                     product: product.id,
@@ -64,7 +62,7 @@ export default function useCartItem(cartItem){
 
             // If the user is authenticated, permit them to delete selected cart items
             if (user.data !== null){
-                // Send DELETE /api/shopping_session/cart/cart_items
+                // Send DELETE /api/shopping/cart/cart_items
                 deleteCartItem({id: cartItem.id})
                 .then(response => response.data)
                 .then(data => {})
@@ -83,7 +81,7 @@ export default function useCartItem(cartItem){
 
         // If user is authenticated, permit them to update the quantity of the selected cart item
         if (user.data !== null){
-            // Sends PUT /api/shopping_session/cart/cart_items request
+            // Sends PUT /api/shopping/cart/cart_items request
             updateCartItem({id:cartItem.id, product:product.id , quantity: newQuantity})
             .then(response => response.data)
             .then(data => {})

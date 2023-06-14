@@ -54,8 +54,7 @@ export default function useLoginServices(){
                     .then(response => response.data)
                     // Fetches cart items after shopping session
                     .then(data => dispatch(fetchCartItems.initiate(undefined, {forceRefetch:true})))
-                    .catch(err => {
-                    })
+                    .catch(err => {})
                 }
             })
         })
