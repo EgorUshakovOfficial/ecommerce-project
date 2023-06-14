@@ -65,12 +65,19 @@ def google_logout_view(request):
     # Read the refresh token value
     refresh_token = request.COOKIES.get('refresh')
 
+    # Read the shopping session value
+    shopping_session = request.COOKIES.get('shopping_session')
+
     # Initialize response
     response = Response()
 
     # If refresh token exists, delete it
     if refresh_token:
         response.delete_cookie('refresh', path='/', domain=None, samesite="None")
+
+    # If shopping session exists, delete it
+    if shopping_session:
+        response.delete_cookie('shopping_session', path='/', domain=None, samesite="None")
 
     return response
 

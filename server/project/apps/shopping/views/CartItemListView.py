@@ -23,6 +23,7 @@ class CartItemListView(APIView):
         self.MISSING_CART = create_error("Missing Field", "The cart field is required")
         self.BAD_REQUEST = create_error('Bad Request', 'The cart item data is invalid')
 
+    # Things to do: Deprecate this endpoint
     # Handles POST /api/shopping/cart
     # Args:
     #   self: Instance of the class

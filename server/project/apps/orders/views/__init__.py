@@ -1,3 +1,3 @@
-from .OrderDetail import order_view
+from .OrderCreateView import order_create_view
 
-__all__ = ['order_view']
+__all__ = ['order_create_view']

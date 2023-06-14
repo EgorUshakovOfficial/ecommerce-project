@@ -55,7 +55,6 @@ def cart_item_create(request):
 
     # If data is invalid, raise a bad request error
     if serializer.is_valid() == False:
-        print(serializer.errors)
         return Response(INVALID_CART_ITEM, status=status.HTTP_400_BAD_REQUEST)
 
     # Save the cart item to the database

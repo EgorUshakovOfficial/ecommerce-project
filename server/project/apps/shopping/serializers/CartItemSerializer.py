@@ -19,8 +19,6 @@ class CartItemSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        print(validated_data)
-
         # Remove cart item Id field from the validated data
         cart_item_id = validated_data.pop('id', None)
 

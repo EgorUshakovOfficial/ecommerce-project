@@ -5,7 +5,6 @@ from django.db import models
 from .Order import Order
 from apps.products.models import Product
 
-
 # Order Item
 class OrderItem(models.Model):
     # Order ID number
@@ -16,3 +15,12 @@ class OrderItem(models.Model):
 
     # Product
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
+
+    # Quantity
+    quantity = models.PositiveIntegerField(default=1)
+
+    # Created at
+    created_at = models.DateField(auto_now=False, auto_now_add=True)
+
+    # Modified at
+    modified_at = models.DateField(auto_now=True, auto_now_add=False)

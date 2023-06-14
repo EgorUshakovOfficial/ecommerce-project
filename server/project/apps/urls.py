@@ -2,7 +2,7 @@
 from apps.authentication.views import google_auth_view, google_refresh_view, google_logout_view
 
 # Order views
-from apps.orders.views import order_view
+from apps.orders.views import order_create_view
 
 #  Product views
 from apps.products.views import product_list, product_view
@@ -27,7 +27,7 @@ urlpatterns = [
     path('auth/logout', google_logout_view, name="google_logout"),
 
     # Order views
-    path('orders', order_view, name="orders"),
+    path('orders', order_create_view, name="orders_create"),
 
     # Products views
     path('products', product_list, name="products"),
