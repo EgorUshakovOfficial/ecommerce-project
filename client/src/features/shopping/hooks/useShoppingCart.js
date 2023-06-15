@@ -13,7 +13,7 @@ export default function useShoppingCart(){
     const numItems = cart.length;
 
     // Subtotal
-    const subtotal = calculateSubtotal(cart);
+    const subtotal = calculateSubtotal(cart); // Replace this with the state
 
     // User data
     const userData = user.data;

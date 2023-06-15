@@ -5,7 +5,7 @@ import getAuthComponent from '../helper/getAuthComponent';
 
 export default function AppRouter(){
     // User state
-    const user = useSelector(state => state.user.data);
+    const user = useSelector(state => state);
 
     // Checks if the user is authenticated
     const isAuthenticated = (user !== null);

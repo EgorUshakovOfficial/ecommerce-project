@@ -3,7 +3,7 @@ import {
     useDeleteCartItemMutation,
     useUpdateCartItemMutation
 } from '../../../services/shoppingApi';
-import {decrementProduct, incrementProduct, removeProduct} from '../../../app/state/cartSlice';
+import {decrementCartItem, incrementCartItem, removeCartItem} from '../../../app/state/cartSlice';
 
 export default function useCartItem(cartItem){
     // User and products state
@@ -32,7 +32,7 @@ export default function useCartItem(cartItem){
         // Quantity of the cart item with addition to the quantity to be added
         // does not exceed the product supply
         if (newQuantity <= product.quantity){
-            dispatch(incrementProduct({id: cartItem.id, quantityToAdd}));
+            dispatch(incrementCartItem({id: cartItem.id, quantityToAdd}));
 
             // If user is authenticated, permit them to update the quantity of the selected cart item
             if (user.data !== null){
@@ -58,7 +58,7 @@ export default function useCartItem(cartItem){
         // and the desired action is to decrement it,
         // remove the product from the cart
         if (cartItem.quantity === 1){
-            dispatch(removeProduct(payload));
+            dispatch(removeCartItem(payload));
 
             // If the user is authenticated, permit them to delete selected cart items
             if (user.data !== null){
@@ -74,7 +74,7 @@ export default function useCartItem(cartItem){
 
         // Otherwise, decrement the quantity by one
         payload.quantityToRemove = 1;
-        dispatch(decrementProduct(payload));
+        dispatch(decrementCartItem(payload));
 
         // New quantity
         let newQuantity = cartItem.quantity-payload.quantityToRemove;

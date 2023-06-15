@@ -12,7 +12,6 @@ const extraLoadingReducer = (state, action) => state;
 
 // Extra fulfilled reducer
 const extraFulfilledReducer = (state, {payload}) => {
-    console.log("executed...")
     // Cart items retrieved from the API endpoint
     let cart = payload.cart;
 
@@ -53,10 +52,10 @@ export const cartSlice = createSlice({
         clearCart: (state, action) => [],
 
         // Adds new product into the cart
-        addProduct: (state, action) => state.concat(action.payload), // Rename to addProduct
+        addProduct: (state, action) => state.concat(action.payload),
 
         // Removes product from the cart
-        removeProduct: (state, action) => { // Rename to removeCartItem
+        removeCartItem: (state, action) => { // Rename to removeCartItem
             const { payload } = action;
 
             // Index of the cart item in the array to be removed
@@ -69,7 +68,7 @@ export const cartSlice = createSlice({
         },
 
         // Increments the quantity of the product in the shopping cart
-        incrementProduct: (state, action) => { // Rename to incrementCartItem
+        incrementCartItem: (state, action) => { // Rename to incrementCartItem
             const { payload } = action;
 
             // Index of the cart item to be incremented
@@ -85,7 +84,7 @@ export const cartSlice = createSlice({
         },
 
         // Decrements the quantity of the product in the shopping cart
-        decrementProduct: (state, action) => { // Rename to decrementCartItem
+        decrementCartItem: (state, action) => { // Rename to decrementCartItem
             const { payload } = action;
 
             // Index of the cart item to be decremented
@@ -125,9 +124,9 @@ export const cartSlice = createSlice({
 export const {
     addProduct,
     clearCart,
-    removeProduct,
-    incrementProduct,
-    decrementProduct
+    removeCartItem,
+    incrementCartItem,
+    decrementCartItem
 } = cartSlice.actions;
 
 // Reducer

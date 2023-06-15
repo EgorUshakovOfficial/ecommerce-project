@@ -3,7 +3,7 @@ import {useState} from 'react';
 import { useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { useAddProductToCartMutation, useUpdateCartItemMutation} from '../../../services/shoppingApi';
-import {addProduct, incrementProduct} from '../../../app/state/cartSlice';
+import {addProduct, incrementCartItem} from '../../../app/state/cartSlice';
 
 export default function useControls(selectedColor){
     // Cart and products state
@@ -72,9 +72,7 @@ export default function useControls(selectedColor){
         // is at most equal to the product quantity, dispatch the increment product against the Redux store
         if (newQuantity <= product.quantity){
             // Dispatch increment product action creator against the store
-            dispatch(incrementProduct({id:cartItem.id, quantityToAdd}));
-
-            console.log(user.data);
+            dispatch(incrementCartItem({id:cartItem.id, quantityToAdd}));
 
             // If user is authenticated, update the quantity of the cart item and save it
             if (user.data !== null){
