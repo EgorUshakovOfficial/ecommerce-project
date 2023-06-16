@@ -1,18 +1,14 @@
 import { useSelector, useDispatch} from 'react-redux';
 import {useGoogleLogin} from '@react-oauth/google';
 import { useGetGoogleCredentialsMutation } from '../../../services/authenticationApi';
-import {
-    useCreateCartMutation,
-    useCreateShoppingSessionMutation,
-    useGetShoppingSessionMutation,
-    useUpdateCartMutation
-} from '../../../services/shoppingApi';
+import {useCreateCartMutation, useCreateShoppingSessionMutation, useGetShoppingSessionMutation} from '../../../services/shoppingApi';
+import { fetchCartItems } from '../../../app/state/cartSlice';
 import { useGetUserMutation} from '../../../services/usersApi';
+import calculateSubtotal from '../../../helper/calculateSubtotal'
 
 export default function useLoginServices(){
     // Cart state
-    let cart = useSelector(state => state.cart);
-    cart = cart.map(({id, productId, quantity}) => ({id, quantity, product:productId}));
+    const cart = useSelector(state => state.cart);
 
     // Dispatch API
     const dispatch = useDispatch();
@@ -32,9 +28,6 @@ export default function useLoginServices(){
     // Get shopping session mutation function
     const [getShoppingSession] = useGetShoppingSessionMutation();
 
-    // Update cart mutation function
-    const [updateCart] = useUpdateCartMutation();
-
     // Google authorization is successful
     const googleLoginOnSuccess = async response => {
         // Authorization code
@@ -48,19 +41,31 @@ export default function useLoginServices(){
             getUser({accessToken})
             .then(response => response.data)
             .then(async ({status, user}) => {
-                // Create shopping session and cart after user profile is registered
+                // Create shopping session and cart, if not empty, after user profile is registered
                 if (status === 201){
-                    createShoppingSession({user: user.id})
+                    // Initialize total
+                    let subtotal = calculateSubtotal(cart);
+
+                    // Creates shopping session in the database
+                    createShoppingSession({user: user.id, total:subtotal})
                     .then(response => response.data)
-                    .then(data => createCart({cart}))
+                    .then(() => {
+                        // Cart data
+                        const cartData = cart.map(({id, productId, quantity}) => ({id, product:productId, quantity}));
+
+                        // If cart has items in it, create and save them in the database
+                        if (cart.length > 0){
+                            createCart({cart:cartData})
+                        }
+                    })
                 }
                 // Otherwise, retrieve shopping session and cart items
                 else{
-                    // Gets shopping session from the API enpoint
+                    // Gets shopping session from the API endpoint
                     getShoppingSession({user: user.id})
                     .then(response => response.data)
-                    // Updates cart after user logs in
-                    .then(data => updateCart({cart}))
+                    // Fetches cart items from the endpoint
+                    .then(data => dispatch(fetchCartItems.initiate(undefined, {forceRefetch:true})))
                     .catch(err => {})
                 }
             })

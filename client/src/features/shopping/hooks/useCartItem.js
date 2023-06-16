@@ -1,22 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    useDeleteCartItemMutation,
-    useUpdateCartItemMutation
-} from '../../../services/shoppingApi';
+import {useDeleteCartItemMutation, useUpdateCartItemMutation,} from '../../../services/shoppingApi';
 import {decrementCartItem, incrementCartItem, removeCartItem} from '../../../app/state/cartSlice';
 
 export default function useCartItem(cartItem){
     // User and products state
     const {products, user} = useSelector(state => state);
 
+    // Dispatch API
+    const dispatch = useDispatch();
+
     // Delete cart item mutation function
     const [deleteCartItem] = useDeleteCartItemMutation();
 
     // Update cart item mutation function
     const [updateCartItem] = useUpdateCartItemMutation();
-
-    // Dispatch API
-    const dispatch = useDispatch();
 
     // Specified product that is in cart
     let product = products.data.filter(product => product.id === cartItem.productId)[0];
@@ -43,7 +40,8 @@ export default function useCartItem(cartItem){
                     quantity:newQuantity
                 })
                 .then(response => response.data)
-                .then(data => {})
+                .then(data => {
+                })
                 .catch(err => {})
             }
         }

@@ -1,10 +1,10 @@
 import {useSelector} from 'react-redux';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {Breadcrumbs} from '@mui/material';
 
 export default function Separator(props){
     // Section
-    const {section} = useParams();
+    const {pathname} = useLocation();
 
     // Checkout state
     const checkout = useSelector(state => state.checkout);
@@ -13,7 +13,7 @@ export default function Separator(props){
     const {personal, shipping} = checkout;
 
     // Current section
-    const getSectionColor = sectionName => (section === sectionName) ? "black" : "gray";
+    const getSectionColor = sectionName => (pathname === `/checkout/${sectionName}`) ? "black" : "gray";
 
     return (
         <Breadcrumbs separator=">" {...props}>
@@ -25,7 +25,7 @@ export default function Separator(props){
                 to="/checkout/shipping"
                 style={{
                     color: getSectionColor('shipping'),
-                    pointerEvents: (personal.isFilled===false) ? "none" : ""
+                    pointerEvents: (personal.isSubmitted===false) ? "none" : ""
                 }}
             >
                 Shipping
@@ -34,7 +34,7 @@ export default function Separator(props){
                 to="/checkout/payment"
                 style={{
                     color: getSectionColor('payment'),
-                    pointerEvents: (shipping.isFilled===false) ? "none" : ""
+                    pointerEvents: (shipping.isSubmitted===false) ? "none" : ""
                 }}
             >
                 Payment

@@ -21,7 +21,7 @@ export default function useShippingMethod(){
     }
 
     // Dispatches shipping actions against the Redux store on click
-    const handleShippingMethodOnClick = (event, payload) => dispatch(populateShipping({...payload, isFilled:true}));
+    const handleShippingMethodOnClick = (event, payload) => dispatch(populateShipping({...payload, isSubmitted:true}));
 
     return {handleShippingMethodOnClick, handleShippingMethodOnChange}
 }

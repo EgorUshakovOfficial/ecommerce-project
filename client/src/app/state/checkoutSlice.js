@@ -14,13 +14,13 @@ const initialState = {
         city:'',
         region:'',
         postalCode:'',
-        isFilled: false
+        isSubmitted: false
     },
     // Shipping address
     shipping:{
         shippingMethod:'free-shipping',
         price:0,
-        isFilled: false
+        isSubmitted: false
     }
 };
 

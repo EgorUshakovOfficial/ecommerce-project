@@ -1,21 +1,19 @@
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
-import { Checkout, Confirmation, Home, ProductPage } from '../pages';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Confirmation, Home, Information, Payment, ProductPage, Shipping} from '../pages';
+import { useAppRouter } from '../hooks';
 import getAuthComponent from '../helper/getAuthComponent';
 
 export default function AppRouter(){
-    // User state
-    const user = useSelector(state => state);
-
-    // Checks if the user is authenticated
-    const isAuthenticated = (user !== null);
+    const {isAuthenticated} = useAppRouter();
 
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/success" element={<Confirmation />} />
-                <Route path="/checkout/:section" element={getAuthComponent(isAuthenticated, Checkout)} />
+                <Route path="/checkout/information" element={getAuthComponent(isAuthenticated, Information)} />
+                <Route path="/checkout/shipping" element={getAuthComponent(isAuthenticated, Shipping)} />
+                <Route path="/checkout/payment" element={getAuthComponent(isAuthenticated, Payment)} />
                 <Route path="/product-page/:productId" element={<ProductPage />} />
             </Routes>
         </Router>

@@ -119,7 +119,7 @@ export default function usePersonalForm(){
 
         if (missingFields.length === 0 && validData){
             // Populate personal form
-            dispatch(populatePersonal({...payload, isFilled:true}));
+            dispatch(populatePersonal({...payload, isSubmitted:true}));
 
             // Navigate to the shipping method of the checkout form
             navigate('/checkout/shipping', {replace:true});
