@@ -7,7 +7,7 @@ from apps.shopping.models import ShoppingSession
 class ShoppingSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingSession
-        fields = ['id', 'user', 'subtotal', 'created_at', 'modified_at']
+        fields = ['id', 'user', 'total', 'created_at', 'modified_at']
         extra_kwargs = {'user': {'write_only': True}}
 
     # Deletes the shopping session from the database

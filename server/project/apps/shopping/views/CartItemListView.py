@@ -45,7 +45,7 @@ class CartItemListView(APIView):
             return Response(self.MISSING_CART, status=status.HTTP_400_BAD_REQUEST)
 
         # Memoize the cart Id number for each item in the cart
-        cart_lookup = {cart_item['id']: True for cart_item in cart}
+        cart_lookup = {cart_item['product']: True for cart_item in cart}
 
         # Retrieve existing cart items from the database
         cart_instance = CartItem.objects.filter(shopping_session=shopping_session_id)
@@ -53,21 +53,21 @@ class CartItemListView(APIView):
         # Compare the items in the cart instance with those in the cart from the request object
         for cart_item in cart_instance:
             # Initialize cart item Id number
-            id = cart_item.id
+            id = str(cart_item.product.id)
 
             # If the cart item already exists in the database, ignore it
             if id in cart_lookup:
                 cart_lookup[id] = False
 
-        # Filter the cart and instance by the lookup table
-        cart = [cart_item for cart_item in cart if cart_lookup[cart_item['id']]]
+        # Filters the cart for new items
+        new_cart_items = [cart_item for cart_item in cart if cart_lookup[cart_item['product']]]
 
         # Alter each product in the cart to have shopping session Id number
-        for product in cart:
+        for product in new_cart_items:
             product['shopping_session'] = shopping_session_id
 
         # Validate data against the cart item serializer
-        cart_serializer = CartItemSerializer(data=cart, many=True)
+        cart_serializer = CartItemSerializer(data=new_cart_items, many=True)
 
         # If data is invalid, raise a bad request error
         if cart_serializer.is_valid() == False:
@@ -83,7 +83,7 @@ class CartItemListView(APIView):
         return Response({"cart":data}, status=status.HTTP_200_OK)
 
     # Things to do: Deprecate this endpoint
-    # Handles PUT /api/shopping/cart
+    # Handles POST /api/shopping/cart
     # Args:
     #   self: Instance of the class
     #   request: Request object
@@ -118,7 +118,7 @@ class CartItemListView(APIView):
         # Create new cart items and associate them with shopping session in the database
         serializer.save()
 
-        return Response({"cart":serializer.data}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"cart":serializer.data}, status=status.HTTP_200_OK)
 
     # Handles GET /api/shopping/cart
     # Args:

@@ -13,7 +13,7 @@ class ShoppingSession(models.Model):
     user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
 
     # Subtotal
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     # Time shopping session is created
     created_at = models.DateField(auto_now=False, auto_now_add=True)
