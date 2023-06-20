@@ -3,16 +3,19 @@ from apps.transactions.config.stripe import StripeSingleton
 # Stripe instance
 stripe = StripeSingleton.get_instance()
 
+# Utilities
+from utils.calculate_total import calculate_total
+
 class PaymentCard:
-    def __init__(self, card_info):
+    def __init__(self, **kwargs):
         # 16 digit debit or credit card number
-        self.card_number = card_info.get('card_number')
+        self.card_number = kwargs.get('card_number')
 
         # Card holder name
-        self.cardholder = card_info.get('cardholder')
+        self.cardholder = kwargs.get('cardholder')
 
-        # Expiration date
-        expiration_date = card_info.get('expiration_date')
+        # Expiration date (mm/yy)
+        expiration_date = kwargs.get('expiration_date')
 
         # Extract month and year values from expiration date
         month, year = self.get_month_year(expiration_date)
@@ -24,7 +27,7 @@ class PaymentCard:
         self.year = year
 
         # CSV code
-        self.security_code = card_info.get('security_code')
+        self.security_code = kwargs.get('security_code')
 
     # Converts expiration date in mm/yy format to integer month and year values
     # Args:
@@ -76,16 +79,14 @@ class PaymentCard:
     # Return
     #   Charge or Error object
     def charge(self, **kwargs):
-        # Retrieve card, subtotal, and shipping cost from the keyword arguments
-        card = kwargs.get('card')
+        # Retrieve subtotal and shipping cost from the keyword arguments
         subtotal = kwargs.get('subtotal')
         shipping_cost = kwargs.get('shipping_cost')
 
         # Attempt to charge card
         try:
             # Initialize charge object
-            charge = card.process_payment(subtotal, shipping_cost)
-
+            charge = self.process_payment(subtotal, shipping_cost)
             return charge
 
         # Handles any error pertaining to the attempt to charge card
@@ -105,11 +106,12 @@ class PaymentCard:
             payment_method = self.create_payment_method()
 
             # Calculates total amount owed in pennies
-            amount = self.calculate_total(subtotal, shipping_cost)
+            total = calculate_total(subtotal, shipping_cost)
+            total_in_pennies = int(100*total)
 
             # Initialize charge
             charge = stripe.PaymentIntent.create(
-                amount=amount,
+                amount=total_in_pennies,
                 currency="cad",
                 payment_method=payment_method["id"],
                 confirm=True
@@ -120,32 +122,6 @@ class PaymentCard:
         # Handles any error pertaining to the attempt of processing payment
         except Exception as e:
             raise e
-
-    # Calculates the total amount owed in pennies
-    # Args:
-    #   subtotal: Amount owed for the cart items
-    #   total: Sum of subtotal and shipping cost
-    # Return:
-    #   amount_in_pennies: Total amount owed in pennies
-    def calculate_total(self, subtotal, shipping_cost):
-        # Initialize total amount owed
-        total_amount = subtotal + shipping_cost
-
-        # Rounds amount to two decimal places
-        total_amount = round(total_amount, 2)
-
-        # Convert total amount to pennies
-        total_amount_in_pennies = int(total_amount*100)
-
-        return total_amount_in_pennies
-
-
-
-
-
-
-
-
 
 
 

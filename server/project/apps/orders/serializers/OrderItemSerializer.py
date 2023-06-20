@@ -16,8 +16,3 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'created_at',
             'modified_at'
         ]
-
-        extra_kwargs = {
-            'order_details': {'write_only': True},
-            'product': {'write_only': True},
-        }

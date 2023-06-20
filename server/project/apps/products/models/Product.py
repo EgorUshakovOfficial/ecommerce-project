@@ -24,6 +24,7 @@ class Product(models.Model):
     # Product price
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
+    @classmethod
     # Retrieves instance of the product from the database using Id
     # Args:
     #   product_id: Product Id number
@@ -35,6 +36,15 @@ class Product(models.Model):
             return product
         except self.DoesNotExist:
             return None
+
+    # Updates the instance of the product's quantity
+    # Args:
+    #   new_quantity: New quantity
+    # Return:
+    #   Nothing
+    def set_quantity(self, new_quantity):
+        self.quantity = new_quantity
+        self.save()
 
     def __str__(self):
         return self.title

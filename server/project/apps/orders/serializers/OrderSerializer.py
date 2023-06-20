@@ -9,10 +9,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
 
         # Fields
-        fields = ['total',  'user', 'order_number', 'created_at', 'modified_at']
+        fields = ['id', 'total',  'user', 'order_number', 'created_at', 'modified_at']
 
         # Extra keyword arguments
-        extra_kwargs = {
-            'user': {'write_only': True},
-            'order_number': {'read_only':True}
-        }
+        extra_kwargs = {'user': {'write_only': True}}

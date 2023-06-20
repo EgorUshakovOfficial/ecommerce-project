@@ -1,10 +1,12 @@
+from django.db import transaction
 from stripe.error import CardError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 # Models
-from apps.shopping.models import CartItem
+from apps.shopping.models import CartItem, ShoppingSession
+from apps.products.models import Product
 
 # Serializers
 from ..serializers import OrderSerializer, OrderItemSerializer
@@ -13,6 +15,7 @@ from ..serializers import OrderSerializer, OrderItemSerializer
 from apps.transactions.services.stripe.PaymentCard import PaymentCard
 
 # Utilities
+from utils.calculate_total import calculate_total
 from utils.create_error import create_error
 from ..utils import generate_order_number
 
@@ -20,38 +23,8 @@ from ..utils import generate_order_number
 class OrderCreateView(APIView):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.MISSING_COOKIE = create_error('Missing Cookie', 'The shopping session cookie is missing')
         self.MISSING_USER = create_error('Missing field', 'The user field is required')
-        self.MISSING_SUBTOTAL = create_error('Missing field', 'The subtotal field is required')
-        self.MISSING_SHIPPING = create_error('Missing field', 'The shipping field is required')
-        self.QUANTITY_EXCEEDED_STOCK = create_error('Quantity Exceeds Available Stock', 'One or more cart items is not available for purchase')
-
-    # Retrieves card information from the request object
-    # Args:
-    #   request: Request object
-    # Return:
-    #   card_info: Card information dictionary that includes card number, cardholder, expiration date, and security code
-    def get_card_info(self, request):
-        # 16 card number
-        card_number = request.data.get('cardNumber')
-
-        # Name of the cardholder
-        cardholder = request.data.get('cardholder')
-
-        # Expiration date
-        expiration_date = request.data.get('expirationDate')
-
-        # CSV code
-        security_code = request.data.get('securityCode')
-
-        # Initialize card information dictionary
-        card_info = {
-            'card_number': card_number,
-            'cardholder': cardholder,
-            'expiration_date': expiration_date,
-            'security_code': security_code
-        }
-
-        return card_info
 
     # Validate the quantity of each cart item associated with the user against the product's available stock
     # Args:
@@ -72,59 +45,131 @@ class OrderCreateView(APIView):
     # Return
     #   response: Response object
     def post(self, request):
-        # Extract card data from the request object
-        card_info = self.get_card_info(self, request)
+        # Retrieve the shopping session value from cookies
+        shopping_session_id = request.COOKIES.get('shopping_session')
 
-        # Initialize user Id number, subtotal, and shipping cost
+        # If cookie does not exist, raise a missing cookie error
+        if shopping_session_id is None:
+            return Response(self.MISSING_COOKIE, status=status.HTTP_400_BAD_REQUEST)
+
+        # Extract user, personal, shipping method, card information, and subtotal fields from the request object
+        personal_info = request.data.get('personal')
+        shipping_method = request.data.get('shipping')
+        card_info = request.data.get('payment')
         user_id = request.data.get('user')
         subtotal = request.data.get('subtotal')
-        shipping_cost = request.data.get('shipping_cost')
+
+        # If the personal information does not exist, raise a missing field error
+        if personal_info is None:
+            MISSING_PERSONAL_INFO = create_error('Missing Field', 'Personal information is required')
+            return Response(MISSING_PERSONAL_INFO, status=status.HTTP_400_BAD_REQUEST)
+
+        # If the shipping method does not exist, raise a missing field error
+        if shipping_method is None:
+            MISSING_SHIPPING_METHOD = create_error('Missing Field', 'Shipping is required')
+            return Response(MISSING_SHIPPING_METHOD, status=status.HTTP_400_BAD_REQUEST)
+
+        # If the payment information does not exist, raise a missing field error
+        if card_info is None:
+            MISSING_CARD_INFO = create_error('Missing Payment', 'Card information is required')
+            return Response(MISSING_CARD_INFO, status=status.HTTP_400_BAD_REQUEST)
 
         # If the user does not exist, raise a missing field error
         if user_id is None:
             return Response(self.MISSING_USER, status=status.HTTP_400_BAD_REQUEST)
 
-        # If the subtotal does not exist, raise a missing field error
+        # If subtotal does not exist, raise a missing field error
         if subtotal is None:
-            return Response(self.MISSING_SUBTOTAL, status=status.HTTP_400_BAD_REQUEST)
+            MISSING_SUBTOTAL = create_error('Missing Field', 'The subtotal field is required')
+            return Response(MISSING_SUBTOTAL, status=status.HTTP_400_BAD_REQUEST)
 
-        # If shipping does not exist, raise a missing field error
-        if shipping_cost is None:
-            return Response(self.MISSING_SHIPPING, status=status.HTTP_400_BAD_REQUEST)
+        # Find cart items in the database by the user Id number
+        cart = CartItem.objects.filter(shopping_session=shopping_session_id)
 
-        # Initialize search filter
-        search = {'user_id': user_id}
-
-        cart = CartItem.objects.filter(search)
+        print(cart)
 
         # Check if each item in cart associated the user is avaiable for purchase
         all_items_available = self.validate_quantity_available(cart)
 
         # If at least one of the items in cart is not available for purchase, raise a bad request error
         if all_items_available == False:
-            return Response(self.QUANTITY_EXCEEDED_STOCK, status=status.HTTP_400_BAD_REQUEST)
+            QUANTITY_EXCEEDED_STOCK = create_error('Quantity Exceeds Available Stock', 'One or more cart items is not available for purchase')
+            return Response(QUANTITY_EXCEEDED_STOCK, status=status.HTTP_400_BAD_REQUEST)
 
         # Attempt to charge card
         try:
-            # Initialize payment card
-            payment_card = PaymentCard(card_info)
+            # Initialize payment card and shipping cost
+            payment_card = PaymentCard(
+                card_number=card_info.get('cardNumber'),
+                cardholder=card_info.get('cardholder'),
+                expiration_date=card_info.get('expirationDate'),
+                security_code=card_info.get('securityCode')
+            )
+            shipping_cost = shipping_method.get('price')
 
             # Charges the specified payment card
-            payment_card.charge(
-                card=card_info,
-                subtotal=subtotal,
-                shipping_cost=shipping_cost
-            )
+            payment_card.charge(subtotal=subtotal, shipping_cost=shipping_cost)
 
-            # Generate an order number after card has been charged
-            order_number = generate_order_number()
+            # Ensures atomicity
+            with transaction.atomic():
+                # Decrease the quantity of each product in the database by the purchased amount
+                for cart_item in cart:
+                    # Search product by its Id number
+                    product = cart_item.product
 
-            # # Order details data
-            # order_details_data = {
-            #     'total': total,
-            #     'order_number':order_number,
-            #     'user': user
-            # }
+                    # Calculate new quantity using the product
+                    new_quantity = product.quantity-cart_item.quantity
+
+                    # Update the quantity of the product using new quantity
+                    Product.objects.filter(id=product.id).update(quantity=new_quantity)
+
+                # Generate an order number after card has been charged
+                order_number = generate_order_number()
+
+                # Initialize total amount
+                total = calculate_total(subtotal, shipping_cost)
+
+                # Create new order in the database and save it
+                order_data = {
+                    'total':total,
+                    'order_number':order_number,
+                    'user': user_id
+                }
+
+                # Validate the data against the order serializer
+                order_serializer = OrderSerializer(data=order_data)
+
+                # If the order data is valid, create new order and save it to the database
+                if order_serializer.is_valid():
+                    order_serializer.save()
+
+                # Create new order items in the database
+                for cart_item in cart:
+                    print(order_serializer.data)
+                    # Initialize order item data
+                    order_item_data = {
+                        'product': cart_item.product.id,
+                        'quantity': cart_item.quantity,
+                        'order_details': order_serializer.data.get('id')
+                    }
+
+                    # Validate each order item's data against the order item serializer
+                    order_item_serializer = OrderItemSerializer(data=order_item_data)
+
+                    # If data is valid, save it in the database
+                    if order_item_serializer.is_valid():
+                        order_item_serializer.save()
+
+                    else:
+                        raise(order_item_serializer.errors)
+
+                # Deletes shopping session and cart items associated with it from the database
+                shopping_session = ShoppingSession.get_shopping_session_by_id(shopping_session_id)
+                if shopping_session is not None:
+                    shopping_session.delete()
+
+            return Response({"message":"User has been successfully charged"}, status=status.HTTP_201_CREATED)
+
 
         # Handles errors that pertain to the process of card payment
         except CardError as e:
@@ -137,7 +182,11 @@ class OrderCreateView(APIView):
             message = e.message if hasattr(e, 'message') else e
             error = create_error('Internal Server Error', message)
 
-            return Response(error, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response("Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# Things left to do
+# Compose a summary email with order details and order items information, and send it to the user using SMT transport
+# Respond with an email and the user's first and last names
 
 # View
 order_create_view = OrderCreateView.as_view()

@@ -9,6 +9,6 @@ def generate_order_number():
     order_number = str(random.randint(1, 9))
 
     # Remaining 7 digits
-    order_number += ''.join(random.choices('0123456789'), k=7)
+    order_number += ''.join(random.choice('0123456789') for _ in range(7))
 
     return order_number
