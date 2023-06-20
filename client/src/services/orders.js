@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/constants';
 // Checkout API
 const ordersApi = createApi({
     reducerPath:"ordersApi",
-    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials:"include"}),
     endpoints: builder => ({
         addNewOrder: builder.mutation({
             // API endpoint: POST /api/orders

@@ -5,13 +5,13 @@ import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 import {ConfirmationMessage} from '../features/checkout';
 
 export default function Confirmation(){
-    // Dispatch
-    const dispatch = useDispatch();
+    // // Dispatch
+    // const dispatch = useDispatch();
 
-    useLayoutEffect(() => {
-        // Clears cart
-        dispatch(clearCart())
-    }, [dispatch]);
+    // useLayoutEffect(() => {
+    //     // Clears cart
+    //     dispatch(clearCart())
+    // }, [dispatch]);
 
     return (
         <ShoppingLayout>

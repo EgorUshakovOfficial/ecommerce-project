@@ -18,7 +18,7 @@ export default function usePaymentForm(){
     const [addNewOrder] = useAddNewOrderMutation();
 
     // Checkout
-    const {cart, checkout} = useSelector(state => state);
+    const {cart, checkout, user} = useSelector(state => state);
 
     // Subtotal
     let subtotal = calculateSubtotal(cart);
@@ -89,23 +89,30 @@ export default function usePaymentForm(){
 
             // Payload
             const payload = {
-                cardNumber,
-                cardholder,
-                expirationDate,
-                securityCode,
-                subtotal,
-                shippingCost:checkout.shipping.price,
+                user: user.data.id,
+                personal: checkout.personal,
+                shipping: checkout.shipping,
+                payment:{
+                    cardNumber,
+                    cardholder,
+                    expirationDate,
+                    securityCode
+                },
+                subtotal: subtotal,
             }
-
 
             // Sends POST request /api/orders endpoint and processes payment using Stripe API
             addNewOrder(payload)
+            .then(response => {
+                if (response.ok){
+                    return Promise.resolve(response.data)
+                }
+                return Promise.reject(response.error)
+            })
             .then(data => {
                 // Navigates user to the thank you page if payment is successful
                 navigate('/success', {replace:true});
             })
-            .catch(err => console.log('Do something with the error')) // Fix this and handle error more elegantly
-
         }
     }
 
