@@ -86,8 +86,6 @@ class OrderCreateView(APIView):
         # Find cart items in the database by the user Id number
         cart = CartItem.objects.filter(shopping_session=shopping_session_id)
 
-        print(cart)
-
         # Check if each item in cart associated the user is avaiable for purchase
         all_items_available = self.validate_quantity_available(cart)
 
@@ -145,7 +143,6 @@ class OrderCreateView(APIView):
 
                 # Create new order items in the database
                 for cart_item in cart:
-                    print(order_serializer.data)
                     # Initialize order item data
                     order_item_data = {
                         'product': cart_item.product.id,
@@ -159,9 +156,6 @@ class OrderCreateView(APIView):
                     # If data is valid, save it in the database
                     if order_item_serializer.is_valid():
                         order_item_serializer.save()
-
-                    else:
-                        raise(order_item_serializer.errors)
 
                 # Deletes shopping session and cart items associated with it from the database
                 shopping_session = ShoppingSession.get_shopping_session_by_id(shopping_session_id)
@@ -183,10 +177,6 @@ class OrderCreateView(APIView):
             error = create_error('Internal Server Error', message)
 
             return Response("Error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# Things left to do
-# Compose a summary email with order details and order items information, and send it to the user using SMT transport
-# Respond with an email and the user's first and last names
 
 # View
 order_create_view = OrderCreateView.as_view()

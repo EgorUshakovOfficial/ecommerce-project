@@ -14,7 +14,7 @@ class OrderItem(models.Model):
     order_details = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     # Product
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     # Quantity
     quantity = models.PositiveIntegerField(default=1)

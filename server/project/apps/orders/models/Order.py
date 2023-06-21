@@ -13,7 +13,7 @@ class Order(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
 
     # User
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # Order number
     order_number = models.CharField(max_length=8)
