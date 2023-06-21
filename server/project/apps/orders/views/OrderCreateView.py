@@ -162,7 +162,13 @@ class OrderCreateView(APIView):
                 if shopping_session is not None:
                     shopping_session.delete()
 
-            return Response({"message":"User has been successfully charged"}, status=status.HTTP_201_CREATED)
+            # Initialize response
+            response = Response({"message":"User has been successfully charged"}, status=status.HTTP_201_CREATED)
+
+            # Delete shopping session from cookies
+            response.delete_cookie('shopping_session', path='/', domain=None, samesite="None")
+
+            return response
 
 
         # Handles errors that pertain to the process of card payment
