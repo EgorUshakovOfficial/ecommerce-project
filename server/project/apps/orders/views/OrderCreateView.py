@@ -157,19 +157,10 @@ class OrderCreateView(APIView):
                     if order_item_serializer.is_valid():
                         order_item_serializer.save()
 
-                # Deletes shopping session and cart items associated with it from the database
-                shopping_session = ShoppingSession.get_shopping_session_by_id(shopping_session_id)
-                if shopping_session is not None:
-                    shopping_session.delete()
+                # Delete cart items associated with it from the database
+                cart.delete()
 
-            # Initialize response
-            response = Response({"message":"User has been successfully charged"}, status=status.HTTP_201_CREATED)
-
-            # Delete shopping session from cookies
-            response.delete_cookie('shopping_session', path='/', domain=None, samesite="None")
-
-            return response
-
+            return Response({"message":"User has been successfully charged"}, status=status.HTTP_201_CREATED)
 
         # Handles errors that pertain to the process of card payment
         except CardError as e:
