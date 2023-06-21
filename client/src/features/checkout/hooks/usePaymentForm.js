@@ -1,22 +1,9 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import { useDispatch } from 'react-redux';
-import {useAddNewOrderMutation} from '../../../services/orders';
 import { validateCardNumber, validateExpirationDate, validateName, validateNumber } from '../../../utils/validators';
 import { calculateSubtotal } from '../../../helper';
-import { clearOrderError } from '../../../app/state/orderSlice';
 
-export default function usePaymentForm(){
-    // Navigate
-    const navigate = useNavigate();
-
-    // Dispatch
-    const dispatch = useDispatch();
-
-    // Adds new order mutation
-    const [addNewOrder] = useAddNewOrderMutation();
-
+export default function usePaymentForm({addNewOrder, setError}){
     // Checkout
     const {cart, checkout, user} = useSelector(state => state);
 
@@ -46,8 +33,8 @@ export default function usePaymentForm(){
         return validateName(newCardholder) ? newCardholder : prevState;
     });
 
-    // Clears error in Redux store on click
-    const handleCardErrorOnClick = () => dispatch(clearOrderError());
+    // // Clears error in Redux store on click
+    const handleCardErrorOnClick = () => setError('');
 
     // Handles expiration date as input changes
     const handleExpirationDateOnChange = event => setExpirationDate(event.target.value);
@@ -62,7 +49,7 @@ export default function usePaymentForm(){
     });
 
     // Handles payment form on click
-    const handlePaymentFormOnClick = async () => {
+    const handlePaymentFormOnClick = () => {
         // Required payment form fields
         const requiredFields = document.querySelectorAll('input[required]');
 
@@ -103,16 +90,6 @@ export default function usePaymentForm(){
 
             // Sends POST request /api/orders endpoint and processes payment using Stripe API
             addNewOrder(payload)
-            .then(response => {
-                if (response.ok){
-                    return Promise.resolve(response.data)
-                }
-                return Promise.reject(response.error)
-            })
-            .then(data => {
-                // Navigates user to the thank you page if payment is successful
-                navigate('/success', {replace:true});
-            })
         }
     }
 

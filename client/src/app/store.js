@@ -3,7 +3,6 @@ import {
     authenticationReducer,
     cartReducer,
     checkoutReducer,
-    orderReducer,
     productReducer,
     shoppingReducer,
     userReducer
@@ -17,7 +16,6 @@ export const store = configureStore({
         cart:cartReducer,
         checkout:checkoutReducer,
         products: productReducer,
-        order: orderReducer,
         user: userReducer,
         [api.authentication.reducerPath]: api.authentication.reducer,
         [api.products.reducerPath]:api.products.reducer,

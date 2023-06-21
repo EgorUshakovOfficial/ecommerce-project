@@ -1,11 +1,17 @@
+import {Fragment} from 'react';
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import CheckoutLayout from "../../containers/layouts/CheckoutLayout";
+import { Loading } from "../../components";
 import {PaymentForm} from '../../features/checkout';
+import { useAddNewOrderMutation } from "../../services/orders";
 
 export default function Payment(){
-    // Shipping state
+    // Personal and shipping states
     const {personal, shipping} = useSelector(state => state.checkout);
+
+    // Add order mutation function
+    const [addNewOrder, {data, error:orderError, isLoading}] = useAddNewOrderMutation();
 
     // Redirects user to /checkout/information if personal information form is not submitted
     if (personal.isSubmitted === false){
@@ -18,8 +24,18 @@ export default function Payment(){
     }
 
     return (
-        <CheckoutLayout>
-            <PaymentForm />
-        </CheckoutLayout>
+        <Fragment>
+            {isLoading ? (<Loading />)
+                : data ?
+                (<Navigate to="/success" replace={true} />)
+                :
+                (<CheckoutLayout>
+                    <PaymentForm
+                        addNewOrder={addNewOrder}
+                        orderError={orderError}
+                    />
+                </CheckoutLayout>)
+            }
+        </Fragment>
     );
 }

@@ -1,17 +1,27 @@
-import { useLayoutEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 import {clearCart} from '../app/state';
 import ShoppingLayout from '../containers/layouts/ShoppingLayout';
 import {ConfirmationMessage} from '../features/checkout';
+import { useCreateShoppingSessionMutation } from '../services/shoppingApi';
 
 export default function Confirmation(){
-    // // Dispatch
-    // const dispatch = useDispatch();
+    // User state
+    const {user} = useSelector(state => state);
 
-    // useLayoutEffect(() => {
-    //     // Clears cart
-    //     dispatch(clearCart())
-    // }, [dispatch]);
+    // Dispatch API
+    const dispatch = useDispatch();
+
+    // Create shopping session mutation function
+    const [createShoppingSession] = useCreateShoppingSessionMutation();
+
+    useEffect(() => {
+        // Clear cart from all items
+        dispatch(clearCart())
+
+        // Creates new shopping session in the database
+        createShoppingSession({user:user.data.id, total: 0})
+    }, [])
 
     return (
         <ShoppingLayout>

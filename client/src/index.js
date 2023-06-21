@@ -10,7 +10,6 @@ import { fetchAccessToken } from './app/state/authenticationSlice';
 import { fetchCartItems } from './app/state/cartSlice';
 import { fetchUser } from './app/state';
 
-
 (async () => {
   // Retrieve products data from the endpoint
   await store.dispatch(api.products.endpoints.getProducts.initiate());
@@ -30,7 +29,10 @@ import { fetchUser } from './app/state';
     const userId = store.getState().user.data.id;
 
     // Retrieve shopping session associated with the user
-    await store.dispatch(api.shopping.endpoints.getShoppingSession.initiate({user: userId}))
+    await store.dispatch(api.shopping.endpoints
+      .getShoppingSession
+      .initiate({user: userId})
+    )
 
     // Retrieve cart items associated with the user
     await store.dispatch(fetchCartItems.initiate())

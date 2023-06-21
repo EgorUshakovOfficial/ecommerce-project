@@ -9,7 +9,7 @@ export default function useAppRouter(){
     const {user, cart, checkout:{shipping}} = useSelector(state => state);
 
     // Checks if the user is authenticated
-    const isAuthenticated = (user !== null);
+    const isAuthenticated = (user.data !== null);
 
     // Update shopping session mutation function
     const [updateShoppingSession] = useUpdateShoppingSessionMutation();
@@ -17,17 +17,19 @@ export default function useAppRouter(){
     // Checks if component initially renders
     const isMounted = useIsMount();
 
-    // Calculates total amount owed by the customer
+    // Calculates subtotal owed by the customer
     let subtotal = calculateSubtotal(cart);
 
+    // Shipping cost
     let shippingCost = shipping.price;
 
+    // Calculates total owed by the subtotal and shipping cost
     let total = calculateTotal(subtotal, shippingCost);
 
     // Updates shopping session in the database whenever cart or shipping cost is changed
     useEffect(() => {
         // Skips initial render
-        if (isMounted){
+        if (isMounted && user.data !== null){
             updateShoppingSession({user:user.data.id, total})
         }
     }, [JSON.stringify(cart), JSON.stringify(shipping)])

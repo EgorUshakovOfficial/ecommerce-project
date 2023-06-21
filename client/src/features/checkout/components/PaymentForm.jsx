@@ -1,5 +1,4 @@
-import {Fragment} from 'react';
-import { useSelector } from 'react-redux';
+import {Fragment, useState} from 'react';
 import {Alert, Box, TextField, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {
     HttpsOutlined as HttpsOutlinedIcon,
@@ -10,18 +9,20 @@ import {helpCaption, secureCaption} from '../../../utils/constants';
 import Navigation from './Navigation';
 import { validateCardNumber, validateExpirationDate} from '../../../utils/validators';
 
-export default function PaymentForm(){
+export default function PaymentForm({addNewOrder, orderError}){
+    // Error state
+    const [error, setError] = useState(() => orderError ? orderError.data.message : '')
+
     // Theme API
     const theme = useTheme();
 
     // Matches width screen size of at most 600px
     const matchMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    // Order
-    const order = useSelector(state => state.order);
-
     // Field values and callabcks on different trigger events
-    const paymentProps = usePaymentForm();
+    const paymentProps = usePaymentForm({addNewOrder, setError});
+
+
 
     // Payload
     const payload = {
@@ -33,12 +34,12 @@ export default function PaymentForm(){
 
     return (
         <Fragment>
-            {order.error !== null && <Alert
+            {error && <Alert
                 severity="error"
                 color="error"
                 onClose={paymentProps.handleCardErrorOnClick}
             >
-                {order.error.data.message}
+                {error}
             </Alert>}
             <Box>
                 <Typography
