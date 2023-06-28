@@ -13,3 +13,14 @@ The following is the list of all the features I have implemented so far in the p
 ## Authentication
 1. Google OAuth 2.0
 2. Logout
+
+## Tech Stack Used For Project
+### Front-end
+1. React and MUI library
+2. Redux
+
+### Server side
+1. Django Rest Framework
+2. Stripe
+3. Google API
+4. Amazon S3
