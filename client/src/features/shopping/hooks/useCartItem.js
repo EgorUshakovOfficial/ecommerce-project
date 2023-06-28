@@ -40,8 +40,7 @@ export default function useCartItem(cartItem){
                     quantity:newQuantity
                 })
                 .then(response => response.data)
-                .then(data => {
-                })
+                .then(data => {})
                 .catch(err => {})
             }
         }

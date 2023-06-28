@@ -10,7 +10,7 @@ export default function NavCenter(){
             <NavWrapper>
                 <CategoriesDropdown />
                 <NavLinks />
-                <SearchBar />
+                {/* <SearchBar /> */}
             </NavWrapper>
         </SearchProvider>
     );

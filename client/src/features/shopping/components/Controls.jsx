@@ -71,6 +71,7 @@ export default function Controls({selectedColor, quantity}){
                 variant="outlined"
                 size="large"
                 onClick={addCartItemOnClick}
+                disabled={quantity === 0}
             >
                 Add to Cart
             </Button>
