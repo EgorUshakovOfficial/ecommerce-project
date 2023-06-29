@@ -16,7 +16,7 @@ const ContentContainer = styled('div')({
 export default function Content({product}){
     // Colors
     const colors = product.product_images
-    .map(({color_name:colorName, hexacode, main_image:mainImage}) => ({colorName, hexacode, mainImage}));
+    .map(({id:colorId, color_name:colorName, hexacode, main_image:mainImage}) => ({colorId, colorName, hexacode, mainImage}));
 
     const {selectedColor, handleColorClick} = useColors(colors);
 

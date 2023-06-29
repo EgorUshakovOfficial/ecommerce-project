@@ -1,6 +1,5 @@
 import {Tooltip, Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
-import useColors from '../hooks/useColors';
 
 // Color Container
 const ColorContainer = styled('div')(({theme}) => ({
@@ -23,8 +22,8 @@ export default function Colors({colors, handleColorClick, selectedColor}){
                 Choose a Color
             </Typography>
             <ColorContainer>
-                {colors.map( ({colorName, hexacode}) => (
-                    <Tooltip title={colorName}>
+                {colors.map( ({colorId, colorName, hexacode}) => (
+                    <Tooltip title={colorName} key={colorId}>
                         <Box
                             style={{
                                 padding:"0.25em",

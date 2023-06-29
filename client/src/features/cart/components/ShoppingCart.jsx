@@ -97,7 +97,7 @@ export default function ShoppingCart(){
                 {cart.length > 0 ?
                 <Fragment>
                     <Main>
-                        {cart.map(cartItem => <CartItem cartItem={cartItem} />)}
+                        {cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}
                     </Main>
                     <Box
                         display="flex"
