@@ -1,3 +1,4 @@
+import Cart from './Cart';
 import Confirmation from './Confirmation';
 import Home from './Home';
 import Information from './checkout/Information';
@@ -7,6 +8,7 @@ import Shipping from './checkout/Shipping';
 
 
 export {
+    Cart,
     Confirmation,
     Home,
     Information,

@@ -18,6 +18,21 @@ export default function useCartItem(cartItem){
     // Specified product that is in cart
     let product = products.data.filter(product => product.id === cartItem.productId)[0];
 
+    // Removes cart item from the cart
+    const removeCartItemOnClick = () => {
+        // Dispatch remove cart item action with Id number against the store
+        dispatch(removeCartItem({id: cartItem.id}));
+
+        // Delete specified cart item from the database if user is authenticated
+        if (user.data !== null){
+            // Send DELETE /api/shopping/cart/cart_items
+            deleteCartItem({id: cartItem.id})
+            .then(response => response.data)
+            .then(data => {})
+            .catch(err => {})
+        }
+    }
+
     // Increment the quantity of the product in the shopping cart
     const incrementQuantityOnClick = () => {
         // Quantity to add
@@ -55,11 +70,11 @@ export default function useCartItem(cartItem){
         // and the desired action is to decrement it,
         // remove the product from the cart
         if (cartItem.quantity === 1){
+            // Dispatch remove cart item with Id number against the store
             dispatch(removeCartItem(payload));
 
-            // If the user is authenticated, permit them to delete selected cart items
+            // Delete specified cart item from the database if the user is authenticated
             if (user.data !== null){
-                // Send DELETE /api/shopping/cart/cart_items
                 deleteCartItem({id: cartItem.id})
                 .then(response => response.data)
                 .then(data => {})
@@ -86,5 +101,6 @@ export default function useCartItem(cartItem){
         }
     }
 
-    return {decrementQuantityOnClick, incrementQuantityOnClick}
+
+    return {decrementQuantityOnClick, incrementQuantityOnClick, removeCartItemOnClick}
 }

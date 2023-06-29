@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material';
 import {styled} from '@mui/material/styles';
 import {Image} from '../../../components';
+import QuantityControls from './QuantityControls';
 import useCartItem from '../hooks/useCartItem';
 
 // Cart item container
@@ -54,32 +55,11 @@ export default function CartItem({cartItem, style}){
                 <Typography variant="body2">
                     {color}
                 </Typography>
-                <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="0.5em"
-                    minHeight="100"
-                >
-                    <IconButton
-                        disableRipple
-                        onClick={decrementQuantityOnClick}
-                    >
-                        <SubtractIcon />
-                    </IconButton>
-                    <Typography
-                        variant="subtitle1"
-                        align="center"
-                    >
-                        {quantity}
-                    </Typography>
-                    <IconButton
-                        disableRipple
-                        onClick={incrementQuantityOnClick}
-                    >
-                        <AddIcon />
-                    </IconButton>
-                </Box>
+                <QuantityControls
+                    quantity={quantity}
+                    incrementQuantityOnClick={incrementQuantityOnClick}
+                    decrementQuantityOnClick={decrementQuantityOnClick}
+                />
             </Box>
             <Typography variant="subtitle2" fontWeight="600">
                 {price}

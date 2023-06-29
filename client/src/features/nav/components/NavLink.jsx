@@ -1,6 +1,6 @@
 import {Button} from '@mui/material';
 
-export default function NavLink({name, icon}){
+export default function NavLink({name, icon, href}){
     return (
         <Button
             disableRipple
@@ -12,7 +12,7 @@ export default function NavLink({name, icon}){
                 fontSize:"1em",
                 fontWeight:"600"
             }}
-            href="#"
+            href={href}
             endIcon={icon}
         >
             {name}
