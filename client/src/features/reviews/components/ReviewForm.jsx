@@ -4,7 +4,12 @@ import { REVIEW_MAIN_COLOR } from "../../../utils/constants/review";
 
 export default function ReviewForm(){
     return (
-        <Box>
+        <Box
+            sx={{
+                display:"none",
+                transition:"display ease-in 1s"
+            }}
+        >
             <Typography
                 variant="h2"
                 fontSize="1.5em"
@@ -74,19 +79,26 @@ export default function ReviewForm(){
                     gap="0.25em"
                 >
                     <Button
+                        disableRipple
                         variant="contained"
                         sx={{
                             background:REVIEW_MAIN_COLOR,
+                            ':hover':{background:REVIEW_MAIN_COLOR},
                             maxWidth:"max-content"
                         }}
                     >
                         Submit Review
                     </Button>
                     <Button
+                        disableRipple
                         variant="outlined"
                         sx={{
                             color:REVIEW_MAIN_COLOR,
                             maxWidth:"max-width",
+                            ':hover':{
+                                border:`1px solid ${REVIEW_MAIN_COLOR}`,
+                                background:"transparent"
+                            },
                             border:`1px solid ${REVIEW_MAIN_COLOR}`
                         }}
                     >
