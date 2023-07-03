@@ -67,7 +67,14 @@ export default function CategoriesDropdown(){
                 transformOrigin={{horizontal:"right", vertical:"top"}}
                 anchorOrigin={{horizontal:"right", vertical:"bottom"}}
             >
-                {categories.map(category => (<MenuItem onClick={handleClose}>{category}</MenuItem>))}
+                {categories.map(category => (
+                    <MenuItem
+                        onClick={handleClose}
+                        key={`${category}-mobile`}
+                    >
+                        {category}
+                    </MenuItem>
+                ))}
             </Menu>
 
         </Fragment>
