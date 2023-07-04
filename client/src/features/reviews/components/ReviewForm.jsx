@@ -1,15 +1,15 @@
 import {Box, Button, Rating, TextField, Typography} from "@mui/material";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import ReviewImage from "./ReviewImage";
 import { REVIEW_MAIN_COLOR } from "../../../utils/constants/review";
+import useReviewForm from "../hooks/useReviewForm";
 
-export default function ReviewForm(){
+export default function ReviewForm({closeReviewFormOnClick, ...rest}){
+    // Review form custom hook
+    const reviewFormHook = useReviewForm();
+
     return (
-        <Box
-            sx={{
-                display:"none",
-                transition:"display ease-in 1s"
-            }}
-        >
+        <Box component="form">
             <Typography
                 variant="h2"
                 fontSize="1.5em"
@@ -34,15 +34,26 @@ export default function ReviewForm(){
                     </Box>
                     <Rating
                         defaultValue={0}
+                        getLabelText={reviewFormHook.getLabelText}
+                        onChangeActive={reviewFormHook.handleRatingLabelChange}
                         size="large"
-
+                        value={reviewFormHook.rating}
+                        onChange={reviewFormHook.handleRatingOnChange}
                     />
                 </Box>
+                {(reviewFormHook.fileContent !== null) &&
+                    <ReviewImage
+                        closePreviewImageOnClick={reviewFormHook.closePreviewImageOnClick}
+                        previewImage={reviewFormHook.previewImage}
+                        style={{width:300, height:300}}
+                    />
+                }
                 <Button
                     disableRipple
                     variant="outlined"
                     component="label"
                     startIcon={<UploadFileIcon />}
+                    disabled={reviewFormHook.fileContent !== null}
                     fullWidth
                     sx={{
                         color:"black",
@@ -54,7 +65,14 @@ export default function ReviewForm(){
                     }}
                 >
                     Add Media
-                    <input type="file" hidden />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        ref={reviewFormHook.hiddenInputRef}
+                        onChange={reviewFormHook.handleFileUpload}
+                        required
+                    />
                 </Button>
                 <Box
                     display="grid"
@@ -71,6 +89,10 @@ export default function ReviewForm(){
                         fullWidth
                         multiline={true}
                         InputLabelProps={{shrink:false}}
+                        rows={4}
+                        onChange={reviewFormHook.handleFeedbackOnChange}
+                        value={reviewFormHook.feedback}
+                        required
                     />
                 </Box>
                 <Box
@@ -81,6 +103,7 @@ export default function ReviewForm(){
                     <Button
                         disableRipple
                         variant="contained"
+                        type="submit"
                         sx={{
                             background:REVIEW_MAIN_COLOR,
                             ':hover':{background:REVIEW_MAIN_COLOR},
@@ -101,6 +124,7 @@ export default function ReviewForm(){
                             },
                             border:`1px solid ${REVIEW_MAIN_COLOR}`
                         }}
+                        onClick={closeReviewFormOnClick}
                     >
                         Cancel
                     </Button>

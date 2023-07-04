@@ -3,15 +3,20 @@ import ReviewFilter from './ReviewFilter';
 import ReviewForm from './ReviewForm';
 import ReviewSummary from './ReviewSummary';
 import { REVIEW_MAIN_COLOR } from '../../../utils/constants/review';
+import useReview from '../hooks/useReview';
 
 export default function Review(){
     // Matches width screen size of at most 1016px
     const matchMobile = useMediaQuery('(max-width:1016px)', {noSsr:true});
 
+    const {
+        closeReviewFormOnClick,
+        handleReviewFormOnClick,
+        isReviewFormVisible
+    } = useReview();
+
     return (
-        <Box
-            padding={matchMobile ? "2em" : 0}
-        >
+        <Box padding={matchMobile ? "2em" : 0}>
             <Typography
                 variant="h2"
                 fontSize="1.5em"
@@ -42,11 +47,12 @@ export default function Review(){
                         left:"calc(100% - 160px)",
                         whiteSpace:"nowrap"
                     }}
+                    onClick={handleReviewFormOnClick}
                 >
                     Write Review
                 </Button>
             </Box>
-            <ReviewForm />
+            {isReviewFormVisible && <ReviewForm closeReviewFormOnClick={closeReviewFormOnClick} />}
         </Box>
     );
 }

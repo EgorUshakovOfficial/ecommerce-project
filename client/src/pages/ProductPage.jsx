@@ -1,5 +1,6 @@
 import {Fragment} from 'react';
 import {useParams} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container} from '../containers';
@@ -18,6 +19,9 @@ const ProductContainer = styled(Box)({
 });
 
 export default function ProductPage(props){
+    // User state
+    const user = useSelector(state => state.user.data);
+
     // Matches width screen size of at most 1016px
     const matchMobile = useMediaQuery('(max-width:1016px)', {noSsr:true});
 
@@ -63,7 +67,7 @@ export default function ProductPage(props){
                     />
                     <Content product={product} />
                 </ProductContainer>
-                <Review />
+                {user !== null && <Review />}
             </Container>
         </Fragment>
     )
