@@ -46,6 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         except self.DoesNotExist:
             return None
 
+    @classmethod
     # Searches for user object by user Id in the database
     # Args:
     #   user_id: User's Id number
@@ -57,8 +58,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             return user
         except self.DoesNotExist:
             return None
-
-
 
     def __str__(self):
         return self.email

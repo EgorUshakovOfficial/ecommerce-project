@@ -7,6 +7,9 @@ from apps.orders.views import order_create_view
 #  Product views
 from apps.products.views import product_list, product_view
 
+# Reviews
+from apps.reviews.views import review_create_retrieve_list_view
+
 # Shopping session
 from apps.shopping.views import cart_item_retrieve_update_delete, cart_item_create, cart_item_list_view, shopping_session_create_destroy_update, shopping_session_retrieve
 
@@ -32,6 +35,7 @@ urlpatterns = [
     # Products views
     path('products', product_list, name="products"),
     path('products/<UUID:id>', product_view, name="product"),
+    path('products/<UUID:product_id>/reviews', review_create_retrieve_list_view, name="review_create_retrieve_list"),
 
     # Shopping
     path('shopping', shopping_session_create_destroy_update, name="shopping_session_operations"),
