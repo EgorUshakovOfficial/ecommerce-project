@@ -20,6 +20,7 @@ export const store = configureStore({
         [api.authentication.reducerPath]: api.authentication.reducer,
         [api.products.reducerPath]:api.products.reducer,
         [api.orders.reducerPath]:api.orders.reducer,
+        [api.reviews.reducerPath]: api.reviews.reducer,
         [api.shopping.reducerPath]: api.shopping.reducer,
         [api.users.reducerPath]: api.users.reducer,
     },
@@ -28,6 +29,7 @@ export const store = configureStore({
     .concat(api.authentication.middleware)
     .concat(api.products.middleware)
     .concat(api.orders.middleware)
+    .concat(api.reviews.middleware)
     .concat(api.shopping.middleware)
     .concat(api.users.middleware)
 });

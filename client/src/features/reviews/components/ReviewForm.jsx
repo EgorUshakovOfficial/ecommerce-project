@@ -4,12 +4,15 @@ import ReviewImage from "./ReviewImage";
 import { REVIEW_MAIN_COLOR } from "../../../utils/constants/review";
 import useReviewForm from "../hooks/useReviewForm";
 
-export default function ReviewForm({closeReviewFormOnClick, ...rest}){
+export default function ReviewForm({closeReviewFormOnClick}){
     // Review form custom hook
     const reviewFormHook = useReviewForm();
 
     return (
-        <Box component="form">
+        <Box
+            component="form"
+            onSubmit={reviewFormHook.handleReviewFormOnSubmit}
+        >
             <Typography
                 variant="h2"
                 fontSize="1.5em"

@@ -1,6 +1,18 @@
 import {useState, useRef} from 'react';
+import {useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import { useAddReviewMutation } from '../../../services/reviewsApi';
 
 export default function useReviewForm(){
+    // User
+    const user = useSelector(state => state.user.data);
+
+    // Add review mutation function
+    const [addReview] = useAddReviewMutation();
+
+    // Product ID
+    const {productId} = useParams();
+
     // Rating
     const [rating, setRating] = useState(-1);
 
@@ -54,6 +66,29 @@ export default function useReviewForm(){
     // Handles any feedback on change
     const handleFeedbackOnChange = event => setFeedback(event.target.value);
 
+    // Handles review form submission
+    const handleReviewFormOnSubmit = event => {
+        // Prevent form from being submitted to the server
+        event.preventDefault();
+
+        // Initialize new form data
+        const formData = new FormData();
+
+        // Append image, rating, feedback, user and product to the form
+        formData.append('image', fileContent);
+        formData.append('rating', rating);
+        formData.append('feedback', feedback);
+        formData.append('user', user.id);
+        formData.append('product', productId);
+
+        // Sends POST /api/products/:productId/reviews
+        // Creates new review in the database
+        addReview(formData)
+        .then(response => response.data)
+        .then(data => console.log('New review created on submit'))
+        .catch(err => {})
+    }
+
     return {
         rating,
         fileContent,
@@ -62,6 +97,7 @@ export default function useReviewForm(){
         hiddenInputRef,
         closePreviewImageOnClick,
         handleFileUpload,
+        handleReviewFormOnSubmit,
         handleRatingOnChange,
         handleFeedbackOnChange
     }
