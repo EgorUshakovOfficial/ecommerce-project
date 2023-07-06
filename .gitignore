@@ -5,7 +5,7 @@
 *venv
 
 # Environment variables
-*.env
+**/.env
 
 # Configuration file
 *google_oauth2_config.json
