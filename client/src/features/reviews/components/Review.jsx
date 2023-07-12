@@ -1,58 +1,57 @@
-import {Box, Button, Typography, useMediaQuery} from '@mui/material';
-import ReviewFilter from './ReviewFilter';
-import ReviewForm from './ReviewForm';
-import ReviewSummary from './ReviewSummary';
-import { REVIEW_MAIN_COLOR } from '../../../utils/constants/review';
-import useReview from '../hooks/useReview';
+import {Box, Rating, styled, Typography} from '@mui/material';
+import {Image} from '../../../components';
+import { REVIEW_CARD_WIDTH, REVIEW_CARD_HEIGHT } from '../../../utils/constants/review';
+import ReviewCautionModal from './ReviewCautionModal';
 
-export default function Review(){
-    // Matches width screen size of at most 1016px
-    const matchMobile = useMediaQuery('(max-width:1016px)', {noSsr:true});
 
-    const {
-        closeReviewFormOnClick,
-        handleReviewFormOnClick,
-        isReviewFormVisible
-    } = useReview();
+// Card
+const Card = styled(Box)({
+    position:"relative",
+    display:"grid",
+    padding:"0.5em",
+    border:"1px solid lightgray",
+    borderRadius:"0.5em",
+    gap:"0.25em",
+    boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px"
+});
+
+export default function Review({
+    id,
+    feedback,
+    media_url,
+    rating,
+    user,
+}){
+    // Extract first and last names from the user object
+    const {first_name, last_name} = user;
+
+    // Initialize full name
+    const fullName = `${first_name} ${last_name}`
 
     return (
-        <Box padding={matchMobile ? "2em" : 0}>
-            <Typography
-                variant="h2"
-                fontSize="1.5em"
-                fontWeight="600"
-                marginBottom="0.5em"
-            >
-                Customer Reviews
-            </Typography>
+        <Card overflow="hidden">
+            <Image
+                image={media_url}
+                style={{
+                    maxWidth:REVIEW_CARD_WIDTH,
+                    height:REVIEW_CARD_HEIGHT,
+                }}
+            />
+            <ReviewCautionModal id={id} />
             <Box
-                display="flex"
-                flexDirection={matchMobile ? "column" : "row"}
-                gap="2em"
-                sx={{position:"relative"}}
-                marginBottom="1em"
+                display="grid"
+                gap="0.25em"
             >
-                <ReviewSummary />
-                <ReviewFilter />
-                <Button
-                    disableRipple
-                    disableElevation
-                    variant="contained"
-                    size="large"
-                    sx={{
-                        "&:hover":{background:REVIEW_MAIN_COLOR},
-                        background:REVIEW_MAIN_COLOR,
-                        position:"absolute",
-                        top:0,
-                        left:"calc(100% - 160px)",
-                        whiteSpace:"nowrap"
-                    }}
-                    onClick={handleReviewFormOnClick}
+                <Typography
+                    variant="h3"
+                    fontSize="1.125em"
+                    fontWeight="600"
                 >
-                    Write Review
-                </Button>
+                    {fullName}
+                </Typography>
+                <Rating value={rating} readOnly />
+                <Typography>{feedback}</Typography>
             </Box>
-            {isReviewFormVisible && <ReviewForm closeReviewFormOnClick={closeReviewFormOnClick} />}
-        </Box>
-    );
+        </Card>
+    )
 }

@@ -43,6 +43,7 @@ export default function ReviewForm({closeReviewFormOnClick}){
                         value={reviewFormHook.rating}
                         onChange={reviewFormHook.handleRatingOnChange}
                     />
+                    {reviewFormHook.ratingHelperText!=="" && <Typography variant="span" color="red">{reviewFormHook.ratingHelperText}</Typography>}
                 </Box>
                 {(reviewFormHook.fileContent !== null) &&
                     <ReviewImage
@@ -74,7 +75,6 @@ export default function ReviewForm({closeReviewFormOnClick}){
                         hidden
                         ref={reviewFormHook.hiddenInputRef}
                         onChange={reviewFormHook.handleFileUpload}
-                        required
                     />
                 </Button>
                 <Box

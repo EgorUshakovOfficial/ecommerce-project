@@ -13,15 +13,23 @@ const ContentContainer = styled('div')({
     gap:"2em"
 });
 
-export default function Content({product}){
+export default function Content({product, reviews}){
     // Colors
     const colors = product.product_images
     .map(({id:colorId, color_name:colorName, hexacode, main_image:mainImage}) => ({colorId, colorName, hexacode, mainImage}));
 
+    // Extract selected color and call back associated with it from colors object
     const {selectedColor, handleColorClick} = useColors(colors);
 
     // Half-monthly payment
     const halfYearlyPrice = calculateHalfCost(product.price);
+
+    // Initialize the total number of reviews associated with the product
+    const totalReviews = reviews.length;
+
+    // Calculates the average rating of the product
+    const avgRating = reviews
+    .reduce((avgRating, {rating}) => (rating/totalReviews) + rating, 0);
 
     return (
         <ContentContainer>
@@ -40,7 +48,7 @@ export default function Content({product}){
                 >
                     {product.description}
                 </Typography>
-                <Ratings numReviews={21} avgRating={4} />
+                <Ratings numReviews={totalReviews} avgRating={avgRating} />
             </Box>
             <Box
                 pt="2em"

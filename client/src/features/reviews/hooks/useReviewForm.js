@@ -16,6 +16,9 @@ export default function useReviewForm(){
     // Rating
     const [rating, setRating] = useState(-1);
 
+    // Rating helper text
+    const [ratingHelperText, setRatingHelperText] = useState('');
+
     // File content
     const [fileContent, setFileContent] = useState(null);
 
@@ -61,7 +64,10 @@ export default function useReviewForm(){
     };
 
     // Handles rating on change with the new value provided
-    const handleRatingOnChange = (event, newValue) => setRating(newValue);
+    const handleRatingOnChange = (event, newValue) => {
+        setRating(newValue);
+        setRatingHelperText('');
+    }
 
     // Handles any feedback on change
     const handleFeedbackOnChange = event => setFeedback(event.target.value);
@@ -70,6 +76,15 @@ export default function useReviewForm(){
     const handleReviewFormOnSubmit = event => {
         // Prevent form from being submitted to the server
         event.preventDefault();
+
+        // Validate rating has been selected
+        if (rating === -1){
+            setRatingHelperText('Please give us your rating');
+            return;
+        }
+
+        // Checks if the file content has been selected
+        if (fileContent === null) return;
 
         // Initialize new form data
         const formData = new FormData();
@@ -85,12 +100,18 @@ export default function useReviewForm(){
         // Creates new review in the database
         addReview(formData)
         .then(response => response.data)
-        .then(data => console.log('New review created on submit'))
-        .catch(err => {})
+        .then(() => {
+            setRating(-1);
+            setFileContent(null);
+            setPreviewImage(null);
+            setFeedback('');
+
+        })
     }
 
     return {
         rating,
+        ratingHelperText,
         fileContent,
         feedback,
         previewImage,

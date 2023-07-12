@@ -1,3 +1,4 @@
-import Review from './components/Review';
+import {ReviewProvider} from './context/ReviewProvider';
+import ReviewSection from './components/ReviewSection';
 
-export {Review};
+export {ReviewProvider, ReviewSection};

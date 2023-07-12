@@ -9,7 +9,7 @@ export default function Image({image, style}){
                 style={{ // Inline style-fix this
                     width:"100%",
                     height:"100%",
-                    objectFit:"contain"
+                    objectFit:"contain",
                 }}
                 loading="lazy"
                 alt="Picture of headphones"

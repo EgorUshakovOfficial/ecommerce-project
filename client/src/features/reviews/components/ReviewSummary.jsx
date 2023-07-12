@@ -1,6 +1,7 @@
+import {useContext} from 'react';
 import {Box, styled, Typography} from '@mui/material';
-
 import { REVIEW_MAIN_COLOR } from '../../../utils/constants/review';
+import { ReviewContext } from '../context/ReviewProvider';
 
 // Initialize rating box dimensions
 const RATING_BOX_WIDTH = 72, RATING_BOX_HEIGHT = 72;
@@ -21,10 +22,20 @@ const RatingBox = styled(Box)({
 });
 
 export default function ReviewSummary(){
+    // Reviews
+    const reviews = useContext(ReviewContext);
+
+    // Initialize number of reviews
+    const numReviews = reviews.length;
+
+    // Computes the average of all reviews associated with the product
+    const avgRating = reviews
+    .reduce((avgRating, {rating}) => avgRating + (rating/numReviews), 0);
+
     return (
         <Box>
             <RatingBox>
-                4.9
+                {avgRating}
             </RatingBox>
             <Typography>Based on
                 <Typography
@@ -32,7 +43,7 @@ export default function ReviewSummary(){
                     fontWeight="600"
                     marginLeft="0.25em "
                 >
-                    10 reviews
+                    {numReviews} reviews
                 </Typography>
             </Typography>
         </Box>

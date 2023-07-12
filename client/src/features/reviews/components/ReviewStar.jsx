@@ -1,16 +1,22 @@
+import {useContext} from 'react';
 import {Box, Typography} from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { REVIEW_MAIN_COLOR } from '../../../utils/constants/review';
+import { ReviewContext } from '../context/ReviewProvider';
 
 // Dimensions of the metric bar
 const METRIC_WIDTH = 176, METRIC_HEIGHT = 6;
 
-export default function ReviewStar({rating, numReviews}){
-    // Total number of reviews
-    const totalReviews = 10;
+export default function ReviewStar({rating, handleRatingFilterOnClick}){
+    // Reviews associated the product
+    const reviews = useContext(ReviewContext);
+
+    // Initialize number of reviews with the specified rating and total reviews
+    const totalReviews = reviews.length;
+    const numReviews = reviews.filter(review => review.rating === rating).length;
 
     // Width of the yellow metric bar
-    const yellowBarWidth = numReviews / totalReviews;
+    const yellowBarWidth = (totalReviews > 0) ? (numReviews / totalReviews) : 0;
 
     return (
         <Box
@@ -21,6 +27,7 @@ export default function ReviewStar({rating, numReviews}){
                 cursor:"pointer",
                 "&:hover":{opacity:"0.7"}
             }}
+            onClick={event => handleRatingFilterOnClick(event, rating)}
         >
             <Box
                 display="flex"

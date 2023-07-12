@@ -1,14 +1,14 @@
 import {Fragment} from 'react';
 import {useParams} from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import {Box, useMediaQuery} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {Container} from '../containers';
 import {AnnouncementBar, Loading} from '../components';
 import {Nav} from '../features/nav';
-import { Review } from '../features/reviews';
+import { ReviewProvider, ReviewSection } from '../features/reviews';
 import { ImageGallery, Content} from "../features/shopping";
 import { useGetProductQuery } from '../services/products';
+import { useGetReviewsQuery } from '../services/reviewsApi';
 
 const ProductContainer = styled(Box)({
     display:"flex",
@@ -19,25 +19,31 @@ const ProductContainer = styled(Box)({
 });
 
 export default function ProductPage(props){
-    // User state
-    const user = useSelector(state => state.user.data);
-
     // Matches width screen size of at most 1016px
     const matchMobile = useMediaQuery('(max-width:1016px)', {noSsr:true});
 
-    // Url parameters
+    // Extract specified product Id number from the path name
     const {productId} = useParams();
 
-    const {error, isLoading, data:product} = useGetProductQuery(productId);
+    // Sends GET /api/products/:productId
+    // Retrieves specified product from the API endpoint
+    const product = useGetProductQuery(productId);
+
+    // Sends GET /api/products/:productId/reviews
+    // Retrieves all reviews associated with the product from the API
+    const reviewsResponse = useGetReviewsQuery(productId);
 
     // Application is loading
-    if (isLoading) return <Loading />
+    if (product.isLoading || reviewsResponse.isLoading) return <Loading />
 
     // Application experiences an error
-    if (error) return <div>Error! Something has gone wrong!</div>
+    if (product.error) return <div>Error! Something has gone wrong!</div>
+
+    // Extract reviews from the reviews API's response
+    const reviews = reviewsResponse.data.reviews;
 
     // Product images
-    const productImages = product.product_images;
+    const productImages = product.data.product_images;
 
     // Main image
     const mainImage = productImages.filter(image => image.main_image)[0];
@@ -65,9 +71,14 @@ export default function ProductPage(props){
                         otherImages={otherImages}
                         colors={colors}
                     />
-                    <Content product={product} />
+                    <Content
+                        product={product.data}
+                        reviews={reviews}
+                    />
                 </ProductContainer>
-                {user !== null && <Review />}
+                <ReviewProvider reviews={reviews}>
+                    <ReviewSection />
+                </ReviewProvider>
             </Container>
         </Fragment>
     )
